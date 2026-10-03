@@ -1,0 +1,30 @@
+{
+  "name": "codeddesign",
+  "version": "0.1.1",
+  "private": true,
+  "description": "CodedDesign design system",
+  "scripts": {
+    "build": "node scripts/build.js && tsc -p tsconfig.build.json"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme": "./src/theme/darkTheme.ts",
+    "./tokens/colors.stylex": "./src/tokens/colors.stylex.ts",
+    "./tokens/typography.stylex": "./src/tokens/typography.stylex.ts",
+    "./tokens/space.stylex": "./src/tokens/space.stylex.ts",
+    "./tokens/shadows.stylex": "./src/tokens/shadows.stylex.ts"
+  },
+  "peerDependencies": {
+    "@stylexjs/stylex": "0.19.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "^5.2.10",
+    "@fontsource/nunito": "^5.2.7"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5"
+  }
+}
