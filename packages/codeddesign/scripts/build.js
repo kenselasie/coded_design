@@ -103,11 +103,25 @@ const sourcePackage = JSON.parse(fs.readFileSync(path.join(packageRoot, "package
 const published = {
   name: "@kenselasie/codeddesign",
   version: sourcePackage.version,
-  description: "CodedDesign design system",
-  homepage: "https://www.npmjs.com/package/@kenselasie/codeddesign",
+  description:
+    "Cartoon React design system with StyleX tokens, Fredoka + Nunito, and light/dark palettes.",
+  license: "MIT",
+  keywords: [
+    "react",
+    "design-system",
+    "ui",
+    "components",
+    "stylex",
+    "theme",
+    "cartoon",
+  ],
+  homepage: "https://github.com/kenselasie/coded_design",
   repository: {
     type: "git",
     url: "git+https://github.com/kenselasie/coded_design.git",
+  },
+  bugs: {
+    url: "https://github.com/kenselasie/coded_design/issues",
   },
   publishConfig: {
     registry: "https://registry.npmjs.org",
@@ -129,6 +143,8 @@ const published = {
   dependencies: sourcePackage.dependencies,
 };
 fs.writeFileSync(path.join(outRoot, "package.json"), `${JSON.stringify(published, null, 2)}\n`);
+fs.copyFileSync(path.join(packageRoot, "README.md"), path.join(outRoot, "README.md"));
+fs.copyFileSync(path.join(packageRoot, "LICENSE"), path.join(outRoot, "LICENSE"));
 
 if (!componentCss.includes("--codeddesign")) {
   throw new Error("Compiled CSS is missing design tokens");
