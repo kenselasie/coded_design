@@ -29,7 +29,7 @@ const styles = stylex.create({
     paddingInline: "10px",
     borderRadius: "6px",
     backgroundColor: colors.black,
-    color: colors.snow,
+    color: colors.onAccent,
     fontFamily: font.family,
     fontSize: font.xs,
   },

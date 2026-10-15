@@ -42,7 +42,7 @@ const styles = stylex.create({
     borderWidth: 0,
     borderRadius: "50%",
     backgroundColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
     cursor: "pointer",
     boxShadow: shadows.s3,
     ":focus-visible": {

@@ -44,12 +44,12 @@ const styles = stylex.create({
   active: {
     backgroundColor: colors.blue,
     borderColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
   },
   done: {
     backgroundColor: colors.success,
     borderColor: colors.success,
-    color: colors.snow,
+    color: colors.onAccent,
   },
   label: {
     color: colors.steel,

@@ -19,6 +19,7 @@ import {
   Divider,
   FaqSection,
   Heading,
+  Icon,
   Inline,
   LanguageSelect,
   LinearProgress,
@@ -34,10 +35,10 @@ import {
   Skeleton,
   Slider,
   SpeechBubble,
-  Spacer,
   TextArea,
   TextField,
   SpeedDial,
+  Spinner,
   Stack,
   Status,
   Sticker,
@@ -54,22 +55,8 @@ import {
   useToast,
 } from "codeddesign";
 import { Catalog } from "./catalog";
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section>
-      <Title>{title}</Title>
-      <Spacer size="s" />
-      {children}
-    </section>
-  );
-}
+import { DemoChapter, DemoList, DemoSection as Section } from "./demo-section";
+import { ComponentOverview } from "./overview";
 
 export function ComponentGallery() {
   const toast = useToast();
@@ -87,17 +74,12 @@ export function ComponentGallery() {
 
   return (
     <Stack gap="xl">
-      <Stack gap="xs">
-        <Heading size="xxl" withoutMargins>
-          Components
-        </Heading>
-        <Body>
-          Controls, feedback, and typography used across the product. The catalog
-          below covers the same jobs as the shadcn set, drawn in CodedDesign.
-        </Body>
-      </Stack>
+      <ComponentOverview />
 
-      <Section title="Button">
+      <DemoList>
+      <DemoChapter>Live demos</DemoChapter>
+
+      <Section id="button" title="Button">
         <Inline>
           <Button>Default</Button>
           <Button variant="primary">Primary</Button>
@@ -110,7 +92,18 @@ export function ComponentGallery() {
         </Inline>
       </Section>
 
-      <Section title="Typography">
+      <Section id="icon" title="Icon">
+        <Inline>
+          <Icon name="spark" size={24} />
+          <Icon name="check" size={24} />
+          <Icon name="message" size={24} />
+          <Icon name="home" size={24} />
+          <Icon name="settings" size={24} />
+          <Icon name="calendar" size={24} />
+        </Inline>
+      </Section>
+
+      <Section id="typography" title="Typography">
         <Stack gap="xs">
           <Heading size="l" withoutMargins>
             Heading
@@ -127,29 +120,48 @@ export function ComponentGallery() {
         </Stack>
       </Section>
 
-      <Section title="Avatar, tag, and status">
+      <Section id="avatar" title="Avatar, tag, and status">
         <Inline>
           <Avatar name="Ada Lovelace" />
           <Avatar name="Ken Selasie" size="lg" />
-          <Tag status="success">Live</Tag>
+          <span id="tag">
+            <Tag status="success">Live</Tag>
+          </span>
           <Tag status="warning" variant="outlined">
             Review
           </Tag>
           <Tag status="danger">Failed</Tag>
-          <Status status="live">Live</Status>
+          <span id="status">
+            <Status status="live">Live</Status>
+          </span>
           <Status status="pending">Pending</Status>
           <Status status="error">Error</Status>
         </Inline>
       </Section>
 
-      <Section title="Selection">
+      <Section id="stack" title="Stack">
+        <Stack gap="xs">
+          <Body>Stack lays blocks down the page.</Body>
+          <Inline>
+            <Tag status="active">Inline</Tag>
+            <Tag status="subtle">sits beside</Tag>
+          </Inline>
+        </Stack>
+      </Section>
+
+      <Section id="selection" title="Selection">
         <Stack gap="s">
-          <Checkbox checked={checked} onChange={setChecked}>
-            Email me product updates
-          </Checkbox>
-          <Switch checked={enabled} onChange={setEnabled}>
-            Notifications
-          </Switch>
+          <span id="checkbox">
+            <Checkbox checked={checked} onChange={setChecked}>
+              Email me product updates
+            </Checkbox>
+          </span>
+          <span id="switch">
+            <Switch checked={enabled} onChange={setEnabled}>
+              Notifications
+            </Switch>
+          </span>
+          <span id="radio">
           <Radio
             legend="Delivery"
             options={[
@@ -159,6 +171,8 @@ export function ComponentGallery() {
             value={choice}
             onChange={setChoice}
           />
+          </span>
+          <span id="toggle-group">
           <ToggleButton
             options={[
               { label: "List", value: "list" },
@@ -167,18 +181,23 @@ export function ComponentGallery() {
             value={view}
             onChange={setView}
           />
-          <Slider label="Volume" value={volume} onChange={setVolume} />
+          </span>
+          <span id="slider">
+            <Slider label="Volume" value={volume} onChange={setVolume} />
+          </span>
         </Stack>
       </Section>
 
-      <Section title="Inputs">
+      <Section id="inputs" title="Inputs">
         <Stack gap="s">
+          <span id="text-field">
           <TextField
             label="Display name"
             defaultValue="Ada"
             placeholder="Ada"
             hint="Shown next to comments."
           />
+          </span>
           <TextField
             label="Work email"
             type="email"
@@ -187,7 +206,10 @@ export function ComponentGallery() {
           />
           <TextArea label="Bio" defaultValue="I keep the catalog honest." rows={3} />
           <Inline>
-            <SearchInput value={query} onChange={setQuery} />
+            <span id="search">
+              <SearchInput value={query} onChange={setQuery} />
+            </span>
+            <span id="select">
             <Select
               label="Plan"
               value={plan}
@@ -198,12 +220,13 @@ export function ComponentGallery() {
                 { label: "Enterprise", value: "enterprise" },
               ]}
             />
+            </span>
             <LanguageSelect value={language} onChange={setLanguage} />
           </Inline>
         </Stack>
       </Section>
 
-      <Section title="Tabs">
+      <Section id="tabs" title="Tabs">
         <Tabs defaultValue="one">
           <TabList>
             <Tab value="one">Account</Tab>
@@ -214,18 +237,23 @@ export function ComponentGallery() {
         </Tabs>
       </Section>
 
-      <Section title="Feedback">
+      <Section id="feedback-bar" title="Feedback">
         <Stack gap="s">
+          <span id="section-message">
           <SectionMessage variant="success" title="Published">
             The change is live for every workspace.
           </SectionMessage>
           <SectionMessage variant="warning" title="Review required">
             A teammate still needs to approve this.
           </SectionMessage>
+          </span>
           <Inline>
+            <span id="tooltip">
             <Tooltip content="Shown on hover and focus">
               <Button variant="subtle">Hover for tooltip</Button>
             </Tooltip>
+            </span>
+            <span id="toast">
             <Button
               variant="primary"
               onClick={() =>
@@ -234,9 +262,14 @@ export function ComponentGallery() {
             >
               Show toast
             </Button>
-            <Shortcut keys={["⌘", "K"]} />
+            </span>
+            <span id="shortcut">
+              <Shortcut keys={["⌘", "K"]} />
+            </span>
           </Inline>
-          <LinearProgress value={64} />
+          <span id="progress">
+            <LinearProgress value={64} />
+          </span>
           <Inline>
             <CircularProgress value={72} />
             <CircularProgress />
@@ -244,21 +277,28 @@ export function ComponentGallery() {
         </Stack>
       </Section>
 
-      <Section title="Navigation pieces">
+      <Section id="nav-pieces" title="Navigation pieces">
         <Stack gap="m">
+          <span id="steps">
           <SteppedHeader
             current={step}
             onChange={setStep}
             steps={[{ label: "Details" }, { label: "Review" }, { label: "Done" }]}
           />
-          <Divider />
+          </span>
+          <span id="divider">
+            <Divider />
+          </span>
           <Inline>
+            <span id="overflow">
             <OverflowPopover label="More actions">
               <Stack gap="xs">
                 <Button variant="subtle">Duplicate</Button>
                 <Button variant="dangerSubtle">Archive</Button>
               </Stack>
             </OverflowPopover>
+            </span>
+            <span id="speed-dial">
             <SpeedDial
               actions={[
                 {
@@ -271,7 +311,9 @@ export function ComponentGallery() {
                 },
               ]}
             />
+            </span>
           </Inline>
+          <span id="faq">
           <FaqSection
             items={[
               {
@@ -284,25 +326,30 @@ export function ComponentGallery() {
               },
             ]}
           />
+          </span>
         </Stack>
       </Section>
 
-      <Section title="Stickers and speech">
+      <Section id="stickers" title="Stickers and speech">
         <Stack gap="m">
           <Inline>
-            <Sticker tone="pink">New</Sticker>
+            <span id="sticker">
+              <Sticker tone="pink">New</Sticker>
+            </span>
             <Sticker tone="blue">Soft</Sticker>
             <Sticker tone="yellow">Squish</Sticker>
             <Sticker tone="mint">Saved</Sticker>
           </Inline>
+          <span id="speech-bubble">
           <SpeechBubble>
             Press a button and it dips. Hover a sticker and it sits up straight.
           </SpeechBubble>
           <SpeechBubble tone="pink">Pink is for the cheerful notes.</SpeechBubble>
+          </span>
         </Stack>
       </Section>
 
-      <Section title="Badge, rating, and pages">
+      <Section id="badge" title="Badge, rating, and pages">
         <Stack gap="m">
           <Inline>
             <Badge count={3}>
@@ -311,8 +358,13 @@ export function ComponentGallery() {
             <Badge count={12} tone="blue" />
             <Badge count={128} tone="ink" label="128 updates" />
           </Inline>
-          <Rating label="How does this feel?" value={stars} onChange={setStars} />
-          <Pagination page={page} pageCount={4} onChange={setPage} />
+          <span id="rating">
+            <Rating label="How does this feel?" value={stars} onChange={setStars} />
+          </span>
+          <span id="pagination">
+            <Pagination page={page} pageCount={4} onChange={setPage} />
+          </span>
+          <span id="breadcrumb">
           <Breadcrumb
             items={[
               { label: "Workspace", href: "/" },
@@ -320,11 +372,15 @@ export function ComponentGallery() {
               { label: "Badge" },
             ]}
           />
+          </span>
         </Stack>
       </Section>
 
-      <Section title="Loading">
+      <Section id="skeleton" title="Loading">
         <Inline>
+          <span id="spinner">
+            <Spinner size="large" />
+          </span>
           <Skeleton shape="circle" width={40} />
           <Stack gap="xs">
             <Skeleton width={180} />
@@ -334,7 +390,7 @@ export function ComponentGallery() {
         </Inline>
       </Section>
 
-      <Section title="Chart labels">
+      <Section id="chart" title="Chart labels">
         <Stack gap="s">
           <ChartLegend
             items={[
@@ -351,6 +407,7 @@ export function ComponentGallery() {
       </Section>
 
       <Catalog />
+      </DemoList>
     </Stack>
   );
 }

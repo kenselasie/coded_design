@@ -51,7 +51,7 @@ const styles = stylex.create({
     paddingInline: "6px",
     borderRadius: "4px",
     backgroundColor: colors.snowDark,
-    color: colors.whaleDark,
+    color: colors.black,
     fontFamily: font.mono,
     fontSize: "0.92em",
   },

@@ -5,11 +5,20 @@
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
   html,
   body {
     margin: 0;
     padding: 0;
     min-height: 100%;
+  }
+
+  [id] {
+    scroll-margin-top: 88px;
   }
 
   body {
@@ -40,6 +49,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     *,
     *::before,
     *::after {

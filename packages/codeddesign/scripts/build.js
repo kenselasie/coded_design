@@ -107,7 +107,6 @@ const published = {
   repository: {
     type: "git",
     url: "git+https://github.com/kenselasie/360_compass.git",
-    directory: "packages/codeddesign",
   },
   publishConfig: {
     registry: "https://registry.npmjs.org",
@@ -121,8 +120,8 @@ const published = {
     },
     "./styles.css": "./styles.css",
     "./theme": {
-      types: "./theme/darkTheme.d.ts",
-      default: "./theme/darkTheme.js",
+      types: "./theme/index.d.ts",
+      default: "./theme/index.js",
     },
   },
   peerDependencies: sourcePackage.peerDependencies,

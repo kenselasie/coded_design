@@ -8,7 +8,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./theme": "./src/theme/darkTheme.ts",
+    "./theme": "./src/theme/index.ts",
     "./tokens/colors.stylex": "./src/tokens/colors.stylex.ts",
     "./tokens/typography.stylex": "./src/tokens/typography.stylex.ts",
     "./tokens/space.stylex": "./src/tokens/space.stylex.ts",

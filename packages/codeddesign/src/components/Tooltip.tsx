@@ -22,7 +22,7 @@ const styles = stylex.create({
     paddingInline: "10px",
     borderRadius: radii.s,
     backgroundColor: colors.black,
-    color: colors.snow,
+    color: colors.onAccent,
     fontFamily: font.family,
     fontSize: font.xs,
     lineHeight: 1.4,

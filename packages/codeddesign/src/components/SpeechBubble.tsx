@@ -45,10 +45,12 @@ const styles = stylex.create({
   },
   pink: {
     backgroundColor: colors.pinkLight,
+    color: colors.onPastel,
     "::before": { backgroundColor: colors.pinkLight },
   },
   blue: {
     backgroundColor: colors.blueLight,
+    color: colors.onPastel,
     "::before": { backgroundColor: colors.blueLight },
   },
 });

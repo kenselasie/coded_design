@@ -17,7 +17,7 @@ const styles = stylex.create({
     borderColor: colors.black,
     borderRadius: radii.m,
     boxShadow: shadows.s1,
-    color: colors.black,
+    color: colors.onPastel,
     fontFamily: font.display,
     fontSize: font.s,
     fontWeight: font.semibold,

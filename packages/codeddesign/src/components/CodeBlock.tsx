@@ -16,9 +16,9 @@ const styles = stylex.create({
     borderWidth: "2px",
     borderStyle: "solid",
     borderColor: colors.black,
-    backgroundColor: colors.whaleDark,
+    backgroundColor: colors.well,
     boxShadow: shadows.s2,
-    color: colors.snow,
+    color: colors.onWell,
   },
   header: {
     display: "flex",
@@ -43,14 +43,15 @@ const styles = stylex.create({
     gap: "6px",
     borderWidth: "2px",
     borderStyle: "solid",
-    borderColor: colors.snow,
+    borderColor: colors.onWell,
     borderRadius: radii.pill,
     padding: "4px 10px",
     backgroundColor: "transparent",
-    color: colors.snow,
+    color: colors.onWell,
     fontFamily: font.display,
     fontSize: font.xs,
     fontWeight: font.semibold,
+    lineHeight: 1,
     cursor: "pointer",
     ":hover": {
       backgroundColor: colors.whale,
@@ -62,6 +63,11 @@ const styles = stylex.create({
       outlineOffset: "2px",
     },
   },
+  copyLabel: {
+    display: "block",
+    lineHeight: 1,
+    transform: "translateY(-1px)",
+  },
   pre: {
     margin: 0,
     padding: "16px",
@@ -69,7 +75,9 @@ const styles = stylex.create({
     fontFamily: font.mono,
     fontSize: font.xs,
     lineHeight: 1.55,
-    whiteSpace: "pre",
+    maxWidth: "100%",
+    whiteSpace: "pre-wrap",
+    overflowWrap: "anywhere",
   },
 });
 
@@ -95,7 +103,7 @@ export function CodeBlock({
           {...stylex.props(styles.copy)}
         >
           <Icon name="copy" size={14} />
-          {copied ? "Copied" : "Copy"}
+          <span {...stylex.props(styles.copyLabel)}>{copied ? "Copied" : "Copy"}</span>
         </button>
       </div>
       <pre {...stylex.props(styles.pre)}>

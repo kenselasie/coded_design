@@ -29,27 +29,27 @@ const styles = stylex.create({
   },
   neutral: {
     backgroundColor: colors.steel,
-    color: colors.snow,
+    color: colors.onAccent,
     borderColor: "transparent",
   },
   success: {
     backgroundColor: colors.success,
-    color: colors.snow,
+    color: colors.onAccent,
     borderColor: "transparent",
   },
   warning: {
     backgroundColor: colors.warning,
-    color: colors.black,
+    color: colors.onPastel,
     borderColor: "transparent",
   },
   danger: {
     backgroundColor: colors.danger,
-    color: colors.snow,
+    color: colors.onAccent,
     borderColor: "transparent",
   },
   active: {
     backgroundColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
     borderColor: "transparent",
   },
   subtle: {

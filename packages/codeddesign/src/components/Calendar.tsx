@@ -92,7 +92,7 @@ const styles = stylex.create({
   },
   selected: {
     backgroundColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
     fontWeight: font.semibold,
     ":hover": {
       backgroundColor: colors.blueDark,

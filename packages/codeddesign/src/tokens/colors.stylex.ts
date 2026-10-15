@@ -32,4 +32,8 @@ export const colors = stylex.defineVars({
   pink: "rgba(255,107,154,1)",
   pinkLight: "rgba(255,184,206,1)",
   pinkDark: "rgba(232,64,112,1)",
+  onAccent: "rgba(255,252,248,1)",
+  onPastel: "rgba(42,36,56,1)",
+  well: "rgba(48,74,98,1)",
+  onWell: "rgba(255,247,239,1)",
 });

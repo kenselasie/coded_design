@@ -31,15 +31,15 @@ const styles = stylex.create({
   },
   pink: {
     backgroundColor: colors.pink,
-    color: colors.snow,
+    color: colors.onAccent,
   },
   blue: {
     backgroundColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
   },
   ink: {
     backgroundColor: colors.black,
-    color: colors.snow,
+    color: colors.onAccent,
   },
 });
 

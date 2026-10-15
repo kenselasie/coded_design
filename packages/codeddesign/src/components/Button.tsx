@@ -97,7 +97,7 @@ const styles = stylex.create({
     outlineColor: colors.black,
     ":hover:not(:disabled)": {
       backgroundColor: colors.black,
-      color: colors.snow,
+      color: colors.onAccent,
     },
     ":disabled": {
       color: colors.smokeDarker,
@@ -107,14 +107,14 @@ const styles = stylex.create({
   },
   defaultSelected: {
     backgroundColor: colors.black,
-    color: colors.snow,
+    color: colors.onAccent,
     ":hover:not(:disabled)": {
       backgroundColor: colors.steel,
       borderColor: colors.steel,
     },
   },
   primary: {
-    color: colors.snow,
+    color: colors.onAccent,
     backgroundColor: colors.blue,
     borderWidth: "2px",
     borderStyle: "solid",
@@ -160,7 +160,7 @@ const styles = stylex.create({
     outlineColor: colors.danger,
     ":hover:not(:disabled)": {
       backgroundColor: colors.danger,
-      color: colors.snow,
+      color: colors.onAccent,
     },
     ":disabled": {
       color: colors.smokeDarker,
@@ -177,7 +177,7 @@ const styles = stylex.create({
     outlineColor: colors.danger,
     ":hover:not(:disabled)": {
       backgroundColor: colors.danger,
-      color: colors.snow,
+      color: colors.onAccent,
     },
     ":disabled": {
       color: colors.smokeDarker,
@@ -185,15 +185,15 @@ const styles = stylex.create({
     },
   },
   ghost: {
-    color: colors.snow,
+    color: colors.black,
     backgroundColor: "transparent",
     borderWidth: "2px",
     borderStyle: "solid",
-    borderColor: colors.snow,
-    outlineColor: colors.snow,
+    borderColor: colors.black,
+    outlineColor: colors.black,
     ":hover:not(:disabled)": {
-      backgroundColor: colors.snow,
-      color: colors.black,
+      backgroundColor: colors.black,
+      color: colors.onAccent,
     },
     ":disabled": {
       color: colors.steel,
@@ -201,11 +201,11 @@ const styles = stylex.create({
     },
   },
   ghostSelected: {
-    backgroundColor: colors.snow,
-    color: colors.black,
+    backgroundColor: colors.black,
+    color: colors.onAccent,
   },
   ghostSubtle: {
-    color: colors.snow,
+    color: colors.black,
     backgroundColor: "transparent",
     borderWidth: "2px",
     borderStyle: "solid",

@@ -7,7 +7,7 @@ const palette = [
   colors.turquoise,
   colors.green,
   colors.pink,
-  colors.whale,
+  colors.pinkDark,
   colors.warningDark,
 ] as const;
 
@@ -18,7 +18,7 @@ const styles = stylex.create({
     justifyContent: "center",
     overflow: "hidden",
     borderRadius: "50%",
-    color: colors.snow,
+    color: colors.onAccent,
     fontFamily: font.family,
     fontWeight: font.semibold,
     flexShrink: 0,

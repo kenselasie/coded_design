@@ -1,0 +1,95 @@
+{
+  "title": "Choose the landing composition",
+  "question": "The cartoon system stays. Pick how the first viewport is built — live examples first, then install.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Split bench",
+      "kicker": "THE ROLL",
+      "lineage": "Engineer’s bench: usage on the left, running studio on the right",
+      "thesis": "Install copy sits beside a live North studio dashboard, so seeing and using happen in one glance.",
+      "palette": ["#fff7ef", "#2a2438", "#ff6b9a", "#2f7dff", "#ffc759"],
+      "materials": ["2px ink borders", "Fredoka display", "Nunito body", "plush offset shadows", "cream paper"],
+      "viewport": "Sticky cartoon sidebar. Left third is How to use with npm install and a CodeBlock. Right two-thirds is a live dashboard built from CodedDesign. Primary button See examples sits on the code side. Below the fold: recipe cards with code, then Components and Docs links.",
+      "risk": "Reads like a docs site before it feels like a product, if the live studio is small.",
+      "raised": [
+        {
+          "from": "shareware installer screens",
+          "raise": "One default-focused next control (See examples) that cannot be missed."
+        },
+        {
+          "from": "coiled earth tower",
+          "raise": "The page rises in named courses — See, Use, Components, Docs — each with its own band."
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.jpg"
+    },
+    {
+      "id": "comic-splash",
+      "label": "Splash panel",
+      "lineage": "A cartoon splash page with one giant live panel",
+      "thesis": "The first screen is a tilted product splash: stickers, speech bubble, and a full dashboard you can poke.",
+      "palette": ["#fff7ef", "#2a2438", "#ff6b9a", "#ffc759", "#3fdc7f"],
+      "materials": ["tilted stickers", "speech bubbles", "2px ink", "plush shadows", "Fredoka titles"],
+      "viewport": "No hero essay. A huge rounded panel fills the viewport: savings dashboard with cards, progress, and buttons. Stickers (Round, Soft, Squish) pin the corners. A speech bubble says Keep poking, then install. npm install is a small sticker, not a column.",
+      "risk": "Playful chrome can hide the install path if the sticker is too cute.",
+      "comp": ".impeccable/mocks/decision/comic-splash.jpg"
+    },
+    {
+      "id": "playground",
+      "label": "Play first",
+      "lineage": "A toy you use before anyone mentions npm",
+      "thesis": "The landing is a working chat and questionnaire; install appears only after you have used a control.",
+      "palette": ["#fff7ef", "#2a2438", "#2f7dff", "#ff6b9a", "#41d3e7"],
+      "materials": ["live Message scroller", "Questionnaire cards", "2px ink", "cream paper"],
+      "viewport": "Full-width cartoon chat taking the first screen. You can send a line. A questionnaire sits under it: What should we prototype next? After the first click, a sticky bar reveals npm install @kenselasie/codeddesign and links to recipes.",
+      "risk": "Engineers who came to copy code may bounce before they find the install bar.",
+      "comp": ".impeccable/mocks/decision/playground.jpg"
+    },
+    {
+      "id": "challenger-character-sheet",
+      "label": "Four views",
+      "verdict": "competitive",
+      "lineage": "Character reference sheet, translated into CodedDesign composition only",
+      "thesis": "One product drawn four ways — dashboard, chat, form, controls — with a token swatch row that lights the parts it governs.",
+      "palette": ["#fff7ef", "#2a2438", "#ff6b9a", "#2f7dff", "#3fdc7f", "#ffc759"],
+      "materials": ["four live panels", "named token swatches", "hard ink outline", "cream paper"],
+      "viewport": "A title strip CodedDesign. Four equal live views across the width. Under them, a row of named swatches (Ink, Pink, Blue, Cream). Clicking Pink highlights every pink control in all four views. Recipes and install sit under the swatch row.",
+      "case": "Wins designer browse and proves the system is a kit; loses slightly for engineers who want install copy in the first three seconds.",
+      "risk": "Four live apps at once can feel like a sticker sheet instead of a site.",
+      "comp": ".impeccable/mocks/decision/challenger-character-sheet.jpg",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-devianart-character-sheet-hero.webp"
+    },
+    {
+      "id": "challenger-shareware",
+      "label": "Install wizard",
+      "verdict": "declined",
+      "lineage": "Shareware installer screens",
+      "palette": ["#fff7ef", "#2a2438", "#2f7dff"],
+      "materials": ["linear next/back", "progress steps"],
+      "case": "A public package must not nag or gate on a serial field.",
+      "kept": "One default-focused next control.",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-shareware-installer-screens-hero.webp"
+    },
+    {
+      "id": "challenger-coil",
+      "label": "Coil courses",
+      "verdict": "declined",
+      "lineage": "Coiled earth tower",
+      "palette": ["#fff7ef", "#2a2438"],
+      "materials": ["horizontal bands"],
+      "case": "Clay-course metaphor does not help an engineer identify a design system.",
+      "kept": "Named vertical courses for See, Use, Components, Docs.",
+      "hero": "https://impeccable.style/worlds/cards/clay-ceramics-fracture-coiled-earth-tower-hero.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "comp",
+    "toggle": true
+  },
+  "canon": false,
+  "steer": true
+}

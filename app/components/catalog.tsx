@@ -1,6 +1,9 @@
 "use client";
 
+import * as stylex from "@stylexjs/stylex";
 import { useState } from "react";
+import { colors } from "codeddesign/tokens/colors.stylex";
+import { font } from "codeddesign/tokens/typography.stylex";
 import {
   Accordion,
   Alert,
@@ -43,32 +46,27 @@ import {
   Resizable,
   ScrollArea,
   Sheet,
-  Spacer,
   Stack,
-  Title,
   Toggle,
   Trace,
   TraceLine,
   useToast,
 } from "codeddesign";
+import { DemoSection as Section } from "./demo-section";
 
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id}>
-      <Title>{title}</Title>
-      <Spacer size="s" />
-      {children}
-    </section>
-  );
-}
+const styles = stylex.create({
+  ratioFill: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.pinkLight,
+    color: colors.onPastel,
+    fontFamily: font.family,
+    fontSize: font.s,
+  },
+});
 
 const cities = [
   { label: "Accra", value: "accra" },
@@ -91,7 +89,7 @@ export function Catalog() {
   const [italic, setItalic] = useState(false);
 
   return (
-    <Stack gap="xl">
+    <>
       <Section id="accordion" title="Accordion">
         <Accordion
           items={[
@@ -143,18 +141,7 @@ export function Catalog() {
 
       <Section id="aspect-ratio" title="Aspect Ratio">
         <AspectRatio ratio={16 / 9}>
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "rgba(255,184,206,1)",
-            }}
-          >
-            <Body>16:9 preview frame</Body>
-          </div>
+          <div {...stylex.props(styles.ratioFill)}>16:9 preview frame</div>
         </AspectRatio>
       </Section>
 
@@ -476,6 +463,6 @@ export function Catalog() {
           <TraceLine icon="spark" title="Run pnpm test" status="pending" />
         </Trace>
       </Section>
-    </Stack>
+    </>
   );
 }

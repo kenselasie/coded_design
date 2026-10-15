@@ -36,7 +36,7 @@ const styles = stylex.create({
   },
   pressed: {
     backgroundColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
     boxShadow: shadows.s1,
   },
 });

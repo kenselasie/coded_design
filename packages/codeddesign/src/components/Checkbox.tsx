@@ -44,7 +44,7 @@ const styles = stylex.create({
     borderStyle: "solid",
     borderColor: colors.steel,
     backgroundColor: colors.white,
-    color: colors.snow,
+    color: colors.onAccent,
     flexShrink: 0,
   },
   checked: {

@@ -31,7 +31,7 @@ function stylex(): Plugin {
               aliases: {
                 "@/*": [path.join(__dirname, "src/*")],
                 "codeddesign/tokens/*": [path.join(__dirname, "packages/codeddesign/src/tokens/*")],
-                "codeddesign/theme": [path.join(__dirname, "packages/codeddesign/src/theme/darkTheme.ts")],
+                "codeddesign/theme": [path.join(__dirname, "packages/codeddesign/src/theme/index.ts")],
                 "codeddesign": [path.join(__dirname, "packages/codeddesign/src/index.ts")],
               },
               unstable_moduleResolution: {
@@ -60,7 +60,7 @@ export default defineConfig({
       },
       {
         find: "codeddesign/theme",
-        replacement: path.resolve(__dirname, "packages/codeddesign/src/theme/darkTheme.ts"),
+        replacement: path.resolve(__dirname, "packages/codeddesign/src/theme/index.ts"),
       },
       {
         find: "codeddesign",

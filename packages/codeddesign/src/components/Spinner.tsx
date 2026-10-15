@@ -7,7 +7,7 @@ const spin = stylex.keyframes({
 
 const styles = stylex.create({
   spinner: {
-    display: "inline-block",
+    display: "block",
     boxSizing: "border-box",
     borderWidth: "2px",
     borderStyle: "solid",

@@ -43,7 +43,7 @@ const styles = stylex.create({
   current: {
     backgroundColor: colors.blue,
     borderColor: colors.blue,
-    color: colors.snow,
+    color: colors.onAccent,
     ":hover:not(:disabled)": {
       backgroundColor: colors.blue,
     },

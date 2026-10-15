@@ -28,6 +28,10 @@ const colorNames = [
   "pink",
   "white",
   "background",
+  "onAccent",
+  "onPastel",
+  "well",
+  "onWell",
 ] as const;
 
 const styles = stylex.create({
@@ -76,6 +80,10 @@ const styles = stylex.create({
   pink: { backgroundColor: colors.pink },
   white: { backgroundColor: colors.white },
   background: { backgroundColor: colors.background },
+  onAccent: { backgroundColor: colors.onAccent },
+  onPastel: { backgroundColor: colors.onPastel },
+  well: { backgroundColor: colors.well },
+  onWell: { backgroundColor: colors.onWell },
   type: {
     display: "flex",
     flexDirection: "column",
@@ -135,6 +143,10 @@ const chips = {
   pink: styles.pink,
   white: styles.white,
   background: styles.background,
+  onAccent: styles.onAccent,
+  onPastel: styles.onPastel,
+  well: styles.well,
+  onWell: styles.onWell,
 } as const;
 
 const typeScale = [
@@ -162,7 +174,10 @@ export default function FoundationsPage() {
         <Heading size="xxl" withoutMargins>
           Foundations
         </Heading>
-        <Body>Color, type, and elevation. Dark theme overrides the same tokens.</Body>
+        <Body>
+          Color, type, and elevation. Switch palettes and light/dark from the top
+          bar — the same tokens remap.
+        </Body>
       </Stack>
       <section>
         <Title>Color</Title>

@@ -49,6 +49,7 @@ const styles = stylex.create({
   },
   us: {
     backgroundColor: colors.blueLight,
+    color: colors.onPastel,
   },
   name: {
     margin: "0 0 4px",

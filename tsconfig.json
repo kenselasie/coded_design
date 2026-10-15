@@ -30,7 +30,7 @@
         "./packages/codeddesign/src/index.ts"
       ],
       "codeddesign/theme": [
-        "./packages/codeddesign/src/theme/darkTheme.ts"
+        "./packages/codeddesign/src/theme/index.ts"
       ],
       "codeddesign/tokens/*": [
         "./packages/codeddesign/src/tokens/*"
