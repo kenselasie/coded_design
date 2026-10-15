@@ -104,9 +104,10 @@ const published = {
   name: "@kenselasie/codeddesign",
   version: sourcePackage.version,
   description: "CodedDesign design system",
+  homepage: "https://www.npmjs.com/package/@kenselasie/codeddesign",
   repository: {
     type: "git",
-    url: "git+https://github.com/kenselasie/360_compass.git",
+    url: "git+https://github.com/kenselasie/coded_design.git",
   },
   publishConfig: {
     registry: "https://registry.npmjs.org",
