@@ -6,6 +6,7 @@ import { Checkbox } from "./Checkbox";
 import { Rating } from "./Rating";
 import { Tab, TabList, TabPanel, Tabs } from "./Tabs";
 import { TextField } from "./TextField";
+import { Accordion } from "./Accordion";
 
 describe("Button", () => {
   it("calls onClick", async () => {
@@ -56,6 +57,22 @@ describe("TextField", () => {
     );
     expect(screen.getByRole("textbox", { name: "Email" })).toHaveAttribute("aria-invalid", "true");
     expect(screen.getByText("Use a full address, like ada@studio.dev.")).toBeInTheDocument();
+  });
+});
+
+describe("Accordion", () => {
+  it("opens a second panel", async () => {
+    render(
+      <Accordion
+        items={[
+          { title: "One", content: "First answer" },
+          { title: "Two", content: "Second answer" },
+        ]}
+      />,
+    );
+    expect(screen.getByText("First answer")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Two" }));
+    expect(screen.getByText("Second answer")).toBeInTheDocument();
   });
 });
 

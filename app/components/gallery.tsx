@@ -53,6 +53,7 @@ import {
   Tooltip,
   useToast,
 } from "codeddesign";
+import { Catalog } from "./catalog";
 
 function Section({
   title,
@@ -90,7 +91,10 @@ export function ComponentGallery() {
         <Heading size="xxl" withoutMargins>
           Components
         </Heading>
-        <Body>Controls, feedback, and typography used across the product.</Body>
+        <Body>
+          Controls, feedback, and typography used across the product. The catalog
+          below covers the same jobs as the shadcn set, drawn in CodedDesign.
+        </Body>
       </Stack>
 
       <Section title="Button">
@@ -345,6 +349,8 @@ export function ComponentGallery() {
           </Inline>
         </Stack>
       </Section>
+
+      <Catalog />
     </Stack>
   );
 }

@@ -26,7 +26,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Layout
 
-- `packages/codeddesign` — private workspace package: components, patterns, tokens, and the dark theme
+- `packages/codeddesign` — workspace package: components, patterns, tokens, and the dark theme
 - `src/theme` — docs shell for this catalog
 - `app` — pages that render the system
 
@@ -34,22 +34,25 @@ This catalog imports the workspace package as `codeddesign`. StyleX is compiled 
 
 ## Use it in another project
 
-`npm run build` inside `packages/codeddesign` writes `dist/` with the compiled components, `styles.css`, and the Nunito and Fredoka fonts. That folder publishes as `@kenselasie/codeddesign` to GitHub Packages.
+`npm run build` inside `packages/codeddesign` writes `dist/` with the compiled components, `styles.css`, and the Nunito and Fredoka fonts. That folder publishes as `@kenselasie/codeddesign` on the public npm registry.
 
-Bump `version` in `packages/codeddesign/package.json`, then publish from `dist` with a GitHub token that has `write:packages`:
+Anyone can install it with no token and no extra registry config:
 
 ```bash
-export NODE_AUTH_TOKEN=your-github-token
-npm run build --workspace codeddesign
-cd packages/codeddesign/dist && npm publish
+npm install @kenselasie/codeddesign
 ```
-
-In the other project, point `@kenselasie` at GitHub Packages and install:
 
 ```tsx
 import "@kenselasie/codeddesign/styles.css";
 import { Button } from "@kenselasie/codeddesign";
 import { darkTheme } from "@kenselasie/codeddesign/theme";
+```
+
+To ship a new version, bump `version` in `packages/codeddesign/package.json`, then:
+
+```bash
+npm run build --workspace codeddesign
+cd packages/codeddesign/dist && npm publish --access public
 ```
 
 Apply `darkTheme` with `stylex.props` from `@stylexjs/stylex`. The other project does not need the StyleX compiler to use these components.

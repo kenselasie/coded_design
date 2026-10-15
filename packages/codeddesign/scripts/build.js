@@ -110,8 +110,8 @@ const published = {
     directory: "packages/codeddesign",
   },
   publishConfig: {
-    registry: "https://npm.pkg.github.com",
-    access: "restricted",
+    registry: "https://registry.npmjs.org",
+    access: "public",
   },
   sideEffects: ["**/*.css"],
   exports: {
@@ -129,10 +129,6 @@ const published = {
   dependencies: sourcePackage.dependencies,
 };
 fs.writeFileSync(path.join(outRoot, "package.json"), `${JSON.stringify(published, null, 2)}\n`);
-fs.writeFileSync(
-  path.join(outRoot, ".npmrc"),
-  "@kenselasie:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n",
-);
 
 if (!componentCss.includes("--codeddesign")) {
   throw new Error("Compiled CSS is missing design tokens");
