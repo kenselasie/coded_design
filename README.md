@@ -1,5 +1,7 @@
 # CodedDesign
 
+Build your apps with a unique-looking design system from CodedGuy.
+
 React design system. Tokens, components, and patterns are styled with [StyleX](https://stylexjs.com) and previewed in a Next.js app.
 
 ## Requirements
@@ -31,6 +33,10 @@ Open [http://localhost:3000](http://localhost:3000).
 - `app` — pages that render the system
 
 This catalog imports the workspace package as `codeddesign`. StyleX is compiled by the app's Babel plugin during `next dev` and `next build`. TypeScript 7 is the typechecker; `typescript-eslint` does not support it yet, so style checking is the StyleX compiler rather than an ESLint plugin.
+
+## For agents
+
+The catalog serves [http://localhost:3000/llms.txt](http://localhost:3000/llms.txt). Other projects should import `@kenselasie/codeddesign/agent`. Copy `packages/codeddesign/SKILL.md` into `codeddesign/SKILL.md` under the agent's skills folder (`.agents/skills/`, `.cursor/skills/`, `.claude/skills/`, or `.codex/skills/`). The skill is the same for Cursor, Claude, Codex, and other agents.
 
 ## Use it in another project
 

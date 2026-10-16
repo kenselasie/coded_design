@@ -29,6 +29,9 @@
       "codeddesign": [
         "./packages/codeddesign/src/index.ts"
       ],
+      "codeddesign/agent": [
+        "./packages/codeddesign/src/agent.ts"
+      ],
       "codeddesign/theme": [
         "./packages/codeddesign/src/theme/index.ts"
       ],

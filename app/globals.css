@@ -30,15 +30,35 @@
     color: #2a2438;
   }
 
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #8a8396 transparent;
+  }
+
   *::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
-    background: #ffc9a8;
-    border: 3px solid #fff7ef;
+    background: #8a8396;
     border-radius: 999px;
+  }
+
+  input[type="search"] {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+    -webkit-appearance: none;
+    display: none;
   }
 
   button,

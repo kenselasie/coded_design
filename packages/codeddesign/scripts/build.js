@@ -104,7 +104,7 @@ const published = {
   name: "@kenselasie/codeddesign",
   version: sourcePackage.version,
   description:
-    "Cartoon React design system with StyleX tokens, Fredoka + Nunito, and light/dark palettes.",
+    "Build your apps with a unique-looking design system from CodedGuy.",
   license: "MIT",
   keywords: [
     "react",
@@ -138,6 +138,11 @@ const published = {
       types: "./theme/index.d.ts",
       default: "./theme/index.js",
     },
+    "./agent": {
+      types: "./agent.d.ts",
+      default: "./agent.js",
+    },
+    "./llms.txt": "./llms.txt",
   },
   peerDependencies: sourcePackage.peerDependencies,
   dependencies: sourcePackage.dependencies,
@@ -145,6 +150,9 @@ const published = {
 fs.writeFileSync(path.join(outRoot, "package.json"), `${JSON.stringify(published, null, 2)}\n`);
 fs.copyFileSync(path.join(packageRoot, "README.md"), path.join(outRoot, "README.md"));
 fs.copyFileSync(path.join(packageRoot, "LICENSE"), path.join(outRoot, "LICENSE"));
+fs.copyFileSync(path.join(packageRoot, "logo.svg"), path.join(outRoot, "logo.svg"));
+fs.copyFileSync(path.join(packageRoot, "llms.txt"), path.join(outRoot, "llms.txt"));
+fs.copyFileSync(path.join(packageRoot, "SKILL.md"), path.join(outRoot, "SKILL.md"));
 
 if (!componentCss.includes("--codeddesign")) {
   throw new Error("Compiled CSS is missing design tokens");

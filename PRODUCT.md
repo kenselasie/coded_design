@@ -12,6 +12,8 @@ Primary: engineers installing `@kenselasie/codeddesign` into other React apps an
 
 Secondary: designers browsing the catalog to see what the system can look like in product UI.
 
+Also: vibe coders and coding agents composing screens from `@kenselasie/codeddesign`. They should read `/llms.txt` or `@kenselasie/codeddesign/agent` instead of guessing APIs.
+
 ## Product Purpose
 
 CodedDesign is a cartoon-styled React design system. Tokens, components, and patterns ship as a public npm package and are previewed in this Next.js catalog. Success is an engineer who can see the system at work, install it, and compose a screen without adopting a compiler they do not already have.
@@ -36,6 +38,7 @@ Engineers install from the public npm registry (`npm install @kenselasie/codedde
 ## Brand Commitments
 
 - Name: CodedDesign.
+- Tagline: Build your apps with a unique-looking design system from CodedGuy.
 - Voice: direct, a little playful, never hype.
 - Visual identity is already in the catalog: cream paper, ink `#2a2438`, Fredoka + Nunito, radii 10/16/22/pill, 2px cartoon borders, offset+blur shadows. Landing and docs extend that world; they do not restyle toward shadcn/ui.
 

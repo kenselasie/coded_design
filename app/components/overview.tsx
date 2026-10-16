@@ -42,7 +42,7 @@ const styles = stylex.create({
   },
   search: {
     width: "100%",
-    maxWidth: "28ch",
+    maxWidth: "22rem",
   },
   toc: {
     display: "flex",
@@ -179,9 +179,6 @@ const styles = stylex.create({
     padding: "12px",
     overflow: "hidden",
     backgroundColor: colors.snow,
-    borderBottomWidth: "2px",
-    borderBottomStyle: "solid",
-    borderBottomColor: colors.black,
     pointerEvents: "none",
     userSelect: "none",
   },
@@ -1968,28 +1965,13 @@ function groups(): Group[] {
 }
 
 function PreviewCard({ item }: { item: Entry }) {
-  const href = item.href ?? `#${item.id}`;
-  const inner = (
-    <>
-      <div {...stylex.props(styles.preview)} inert>
+  return (
+    <NextLink href={`/components/${item.id}`} {...stylex.props(styles.card)}>
+      <div {...stylex.props(styles.preview)} aria-hidden>
         {item.preview}
       </div>
       <span {...stylex.props(styles.name)}>{item.name}</span>
-    </>
-  );
-
-  if (href.startsWith("/")) {
-    return (
-      <NextLink href={href} {...stylex.props(styles.card)}>
-        {inner}
-      </NextLink>
-    );
-  }
-
-  return (
-    <a href={href} {...stylex.props(styles.card)}>
-      {inner}
-    </a>
+    </NextLink>
   );
 }
 
@@ -2019,13 +2001,15 @@ export function ComponentOverview() {
           Components
         </Heading>
         <Body>
-          Cartoon controls grouped the way you reach for them. Open a card to jump
-          into the live demo.
+          Cartoon controls grouped the way you reach for them. Open a card for the
+          live display, recipe, and props.
         </Body>
         <div {...stylex.props(styles.search)}>
           <SearchInput
             label="Find a component"
-            placeholder="Button, tabs, toast…"
+            hideLabel
+            shape="pill"
+            placeholder="Find a component"
             value={query}
             onChange={setQuery}
           />

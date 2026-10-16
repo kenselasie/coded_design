@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "version": "1.0.0",
-  "description": "CodedDesign design system",
+  "description": "Build your apps with a unique-looking design system from CodedGuy.",
   "engines": {
     "node": ">=26"
   },

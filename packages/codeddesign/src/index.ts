@@ -33,6 +33,7 @@ export { InputOTP } from "./components/InputOTP";
 export { Item, ItemGroup } from "./components/Item";
 export { Label } from "./components/Label";
 export { Link } from "./components/Link";
+export { Logo } from "./components/Logo";
 export { Marker } from "./components/Marker";
 export { ContextMenu, DropdownMenu, Menubar } from "./components/Menu";
 export type { MenuAction } from "./components/Menu";

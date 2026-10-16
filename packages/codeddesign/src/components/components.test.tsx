@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { SearchInput } from "./fields";
 import { Button } from "./Button";
 import { Checkbox } from "./Checkbox";
 import { Rating } from "./Rating";
@@ -25,6 +26,24 @@ describe("Button", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Save" }));
     expect(onClick).not.toHaveBeenCalled();
+  });
+});
+
+describe("SearchInput", () => {
+  it("keeps the accessible name when the label is hidden", async () => {
+    const onChange = vi.fn();
+    render(
+      <SearchInput
+        label="Find a component"
+        hideLabel
+        shape="pill"
+        value=""
+        onChange={onChange}
+      />,
+    );
+    const box = screen.getByRole("searchbox", { name: "Find a component" });
+    await userEvent.type(box, "a");
+    expect(onChange).toHaveBeenCalledWith("a");
   });
 });
 

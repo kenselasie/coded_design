@@ -1,13 +1,15 @@
 {
   "name": "codeddesign",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
-  "description": "CodedDesign design system",
+  "description": "Build your apps with a unique-looking design system from CodedGuy.",
   "scripts": {
     "build": "node scripts/build.js && tsc -p tsconfig.build.json"
   },
   "exports": {
     ".": "./src/index.ts",
+    "./agent": "./src/agent.ts",
+    "./llms.txt": "./llms.txt",
     "./theme": "./src/theme/index.ts",
     "./tokens/colors.stylex": "./src/tokens/colors.stylex.ts",
     "./tokens/typography.stylex": "./src/tokens/typography.stylex.ts",

@@ -1,6 +1,12 @@
+<p align="center">
+  <img src="logo.svg" width="88" height="88" alt="CodedDesign" />
+</p>
+
 # CodedDesign
 
-Cartoon React design system. Buttons, forms, navigation, and patterns with StyleX tokens, Fredoka + Nunito, and light/dark palettes.
+Build your apps with a unique-looking design system from CodedGuy.
+
+Cartoon React components, forms, navigation, and patterns with StyleX tokens, Fredoka + Nunito, and light/dark palettes.
 
 ## Install
 
@@ -39,6 +45,29 @@ import { darkTheme, palettes } from "@kenselasie/codeddesign/theme";
 ```
 
 Palettes: Paper, Nord, Solarized, and Catppuccin — each with a light and dark theme.
+
+## For agents
+
+```ts
+import {
+  agentPrompt,
+  recipes,
+  components,
+  reference,
+  toLlmsTxt,
+} from "@kenselasie/codeddesign/agent";
+```
+
+Each export is listed with props and a copy-paste example. `SearchInput` is fluid; pass `hideLabel` and `shape="pill"` for a compact finder.
+
+Plain-text spec: `llms.txt` in this package (also served at `/llms.txt` on the catalog).
+
+The same `SKILL.md` works for Cursor, Claude, Codex, and other agents. Copy it to `codeddesign/SKILL.md` in the agent's skills folder:
+
+- `.agents/skills/codeddesign/`
+- `.cursor/skills/codeddesign/`
+- `.claude/skills/codeddesign/`
+- `.codex/skills/codeddesign/`
 
 ## Source
 

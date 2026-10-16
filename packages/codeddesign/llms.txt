@@ -1,0 +1,1253 @@
+# CodedDesign for agents
+
+Cartoon React design system. Package: @kenselasie/codeddesign 0.1.4
+Catalog: this repo. Public npm. Do not use GitHub Packages.
+
+## Install
+
+npm install @kenselasie/codeddesign
+
+Peers: react@^19, react-dom@^19, @stylexjs/stylex@0.19.1
+
+## Skill
+
+Same SKILL.md for every coding agent (Cursor, Claude, Codex, and others). Copy it into codeddesign/SKILL.md under the agent's skills folder:
+
+- .agents/skills/codeddesign/
+- .cursor/skills/codeddesign/
+- .claude/skills/codeddesign/
+- .codex/skills/codeddesign/
+
+## First render
+
+```tsx
+import "@kenselasie/codeddesign/styles.css";
+import { Button } from "@kenselasie/codeddesign";
+```
+
+The consuming app does not need the StyleX compiler to render components.
+
+## Theme
+
+```tsx
+import * as stylex from "@stylexjs/stylex";
+import { darkTheme, palettes } from "@kenselasie/codeddesign/theme";
+
+<div {...stylex.props(darkTheme)}>
+  {children}
+</div>
+
+<div {...stylex.props(palettes.nord.light)}>
+  {children}
+</div>
+```
+
+Palettes: paper, nord, solarized, catppuccin — each has light and dark.
+Fonts: Fredoka (headings, buttons, labels); Nunito (reading copy).
+Ink #2a2438 on paper #fff7ef. Radii: s 10px, m 16px, l 22px, pill.
+Space: xxs 4, xs 8, s 12, m 16, l 24, xl 32, xxl 48. Shadows: offset + blur (s1–s4), never a zero-offset halo.
+Color roles: background, white, black, steel, concrete, blue, blueLight, blueDark, whale, whaleLight, whaleDark, smoke, smokeDark, smokeDarker, snow, snowDark, snowDarker, success, danger, dangerDark, warning, warningDark, green, greenLight, greenDark, turquoise, turquoiseLight, turquoiseDark, pink, pinkLight, pinkDark, onAccent, onPastel, well, onWell.
+Icon names: check, x, search, info, alert, chevron, chevronLeft, chevronRight, plus, minus, copy, calendar, paperclip, file, image, more, menu, terminal, globe, message, user, settings, home, checkCircle, xCircle, upload, download, arrowUpRight, branch, spark, grip.
+
+## Rules
+
+- Import styles.css once at the app root so Fredoka, Nunito, and tokens land.
+- Import components from @kenselasie/codeddesign. Do not copy source files into the app.
+- Keep the cartoon world: 2px ink borders, Fredoka display, Nunito body, plush offset+blur shadows. Do not restyle toward shadcn/ui or Ant Design.
+- The consuming app does not need the StyleX compiler to render components.
+- Theme with darkTheme or palettes from @kenselasie/codeddesign/theme via stylex.props.
+- Prefer an existing component over custom HTML for buttons, fields, dialogs, tables, and chat.
+- Do not nest interactive controls inside links.
+- Do not nest Card, Form, or MessageScroller inside another card.
+- SearchInput is fluid. In a sidebar or toolbar use hideLabel and shape="pill".
+- Each export has a catalog page at /components/{id} with live display, recipe, and props. Compose from the package, not from scraping that page.
+- Do not invent APIs. If a prop is unknown, omit it or read flattenReference() / package types.
+
+## Machine index
+
+```ts
+import {
+  agentGuide,
+  recipes,
+  components,
+  reference,
+  flattenReference,
+  toLlmsTxt,
+  agentPrompt,
+} from "@kenselasie/codeddesign/agent";
+```
+
+## Recipes (copy these)
+
+### Sign-in
+
+Email sign-in with a primary submit.
+
+```tsx
+import { Form, TextField, Button, FormActions } from "@kenselasie/codeddesign";
+
+<Form title="Sign in" description="Use the workspace email you were invited with.">
+  <TextField label="Work email" type="email" name="email" />
+  <FormActions>
+    <Button variant="primary">Sign in</Button>
+  </FormActions>
+</Form>
+```
+
+### Data table
+
+Sortable rows of string records.
+
+```tsx
+import { DataTable } from "@kenselasie/codeddesign";
+
+<DataTable
+  rows={studios}
+  columns={[
+    { key: "name", header: "Name" },
+    { key: "owner", header: "Owner" },
+  ]}
+/>
+```
+
+### Chat
+
+Assistant and user messages in a scroller.
+
+```tsx
+import { Message, MessageScroller } from "@kenselasie/codeddesign";
+
+<MessageScroller>
+  <Message from="assistant" name="CodedDesign">
+    How can I help you today?
+  </Message>
+  <Message from="user" name="Ada">
+    Show me a savings dashboard.
+  </Message>
+</MessageScroller>
+```
+
+### Empty
+
+A screen with nothing to show yet.
+
+```tsx
+import { EmptyState, Button } from "@kenselasie/codeddesign";
+
+<EmptyState
+  title="Nothing matches"
+  description="Try another filter."
+  action={<Button variant="primary">Clear filters</Button>}
+/>
+```
+
+### Saved
+
+Inline success or warning after an action.
+
+```tsx
+import { Alert } from "@kenselasie/codeddesign";
+
+<Alert variant="success" title="Workspace saved">
+  North studio is up to date.
+</Alert>
+```
+
+### Settings tabs
+
+Switch panels in a settings or account screen.
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel, Body } from "@kenselasie/codeddesign";
+
+<Tabs defaultValue="account">
+  <TabList>
+    <Tab value="account">Account</Tab>
+    <Tab value="billing">Billing</Tab>
+  </TabList>
+  <TabPanel value="account">
+    <Body>Profile, password, and sessions.</Body>
+  </TabPanel>
+  <TabPanel value="billing">
+    <Body>Invoices and payment methods.</Body>
+  </TabPanel>
+</Tabs>
+```
+
+## Components
+
+### General
+
+#### Button
+Import: `Button`
+Use: Actions. Primary for the one next step.
+Live: /components/button
+Props:
+- `variant`: "default" | "primary" | "subtle" | "danger" | "dangerSubtle" | "ghost" | "ghostSubtle" · default "default"
+- `size`: "small" | "medium" | "large" · default "medium"
+- `isPending`: boolean · default false
+- `selected`: boolean · default false
+- `fullWidth`: boolean · default false
+- `isIconButton`: boolean · default false
+- `disabled`: boolean
+- `type`: "button" | "submit" | "reset" · default "button"
+- `children`: ReactNode · required
+Example:
+```tsx
+<Button variant="primary">Save workspace</Button>
+```
+
+#### SpeedDial
+Import: `SpeedDial`
+Use: A plus button that fans out labeled actions.
+Live: /components/speed-dial
+Props:
+- `actions`: { label: string; onClick: () => void }[] · required
+Example:
+```tsx
+<SpeedDial actions={[{ label: "Invite", onClick: invite }]} />
+```
+
+#### Icon
+Import: `Icon`
+Use: Stroke icons. Name must be an IconName.
+Live: /components/icon
+Props:
+- `name`: IconName · required · check, x, search, info, alert, chevron, chevronLeft, chevronRight, plus, minus, copy, calendar, paperclip, file, image, more, menu, terminal, globe, message, user, settings, home, checkCircle, xCircle, upload, download, arrowUpRight, branch, spark, grip
+- `size`: number · default 16
+Example:
+```tsx
+<Icon name="check" size={16} />
+```
+
+#### Logo
+Import: `Logo`
+Use: CodedDesign CD sticker. Use decorative inside a named link.
+Live: /components/logo
+Props:
+- `size`: "sm" | "md" | "lg" · default "md"
+- `decorative`: boolean · default false
+Example:
+```tsx
+<Logo size="md" />
+```
+
+#### Typography
+Import: `Heading, Title, Body, Description, Detail, Code, Bullet`
+Use: Fredoka for Heading/Title. Nunito for Body and the rest.
+Live: /components/typography
+Props:
+- `Heading.size`: "xxxl" | "xxl" | "xl" | "l" | "m" | "s" · default "xl"
+- `Heading.align`: "left" | "center" | "right" · default "left"
+- `Heading.withoutMargins`: boolean · default false
+- `Title.size`: "xl" | "l" | "m" | "s" · default "l"
+- `Body.size`: "l" | "m" | "s" · default "m"
+Example:
+```tsx
+<Heading size="xxl" withoutMargins>Docs</Heading>
+<Body>Reading copy.</Body>
+```
+
+#### Sticker
+Import: `Sticker`
+Use: Tilted cartoon label. Text on pastel uses onPastel.
+Live: /components/sticker
+Props:
+- `tone`: "pink" | "blue" | "yellow" | "mint" · default "pink"
+- `children`: ReactNode · required
+Example:
+```tsx
+<Sticker tone="pink">Sample</Sticker>
+```
+
+#### Link
+Import: `Link`
+Use: Inline text link. Do not nest buttons inside it.
+Live: /components/link
+Props:
+- `children`: ReactNode · required
+- `...anchor`: AnchorHTMLAttributes
+Example:
+```tsx
+<Link href="/components">Components</Link>
+```
+
+### Layout
+
+#### Stack / Inline
+Import: `Stack, Inline`
+Use: Stack is a column. Inline is a wrapping row.
+Live: /components/stack
+Props:
+- `gap`: "xxs" | "xs" | "s" | "m" | "l" | "xl" · default Stack "m", Inline "s"
+- `children`: ReactNode · required
+Example:
+```tsx
+<Stack gap="l"><Heading>Title</Heading><Body>Copy</Body></Stack>
+```
+
+#### Grid / GridItem
+Import: `Grid, GridItem`
+Use: Equal columns. Wrap cells in GridItem.
+Live: /components/grid
+Props:
+- `columns`: number · default 3
+- `gap`: "xs" | "s" | "m" | "l" · default "m"
+Example:
+```tsx
+<Grid columns={2}><GridItem>Left</GridItem><GridItem>Right</GridItem></Grid>
+```
+
+#### Spacer
+Import: `Spacer`
+Use: Empty gap using space tokens.
+Live: /components/spacer
+Props:
+- `size`: "xxs" | "xs" | "s" | "m" | "l" | "xl" · default "m"
+Example:
+```tsx
+<Spacer size="l" />
+```
+
+#### Divider
+Aliases: Separator
+Import: `Divider`
+Use: Horizontal rule.
+Live: /components/divider
+Example:
+```tsx
+<Divider />
+```
+
+#### Resizable
+Import: `Resizable`
+Use: Two panes with a drag handle.
+Live: /components/resizable
+Props:
+- `left`: ReactNode · required
+- `right`: ReactNode · required
+Example:
+```tsx
+<Resizable left={<Notes />} right={<Preview />} />
+```
+
+#### ScrollArea
+Import: `ScrollArea`
+Use: Clipped scrolling well.
+Live: /components/scroll-area
+Props:
+- `children`: ReactNode · required
+Example:
+```tsx
+<ScrollArea>{longList}</ScrollArea>
+```
+
+#### AspectRatio
+Import: `AspectRatio`
+Use: Locks a box to a ratio.
+Live: /components/aspect-ratio
+Props:
+- `ratio`: number · default 16 / 9
+- `children`: ReactNode · required
+Example:
+```tsx
+<AspectRatio ratio={16 / 9}><img alt="" src={src} /></AspectRatio>
+```
+
+#### Overlay
+Import: `Overlay`
+Use: Dimmed layer. Drawers and dialogs already include one.
+Live: /components/overlay
+Props:
+- `onClick`: () => void
+- `children`: ReactNode
+Example:
+```tsx
+<Overlay onClick={close} />
+```
+
+### Navigation
+
+#### Breadcrumb
+Import: `Breadcrumb`
+Use: Path back out.
+Live: /components/breadcrumb
+Props:
+- `items`: { label: string; href?: string }[] · required
+- `label`: string · default "Breadcrumb"
+Example:
+```tsx
+<Breadcrumb items={[{ label: "Workspace", href: "/" }, { label: "Docs" }]} />
+```
+
+#### DropdownMenu
+Import: `DropdownMenu`
+Use: Actions from a labeled trigger.
+Live: /components/dropdown
+Props:
+- `label`: string · required
+- `items`: MenuAction[] · required · { label, onSelect?, shortcut?, destructive?, disabled?, separator? }
+Example:
+```tsx
+<DropdownMenu label="Actions" items={[{ label: "Duplicate" }, { label: "Delete", destructive: true }]} />
+```
+
+#### Menubar
+Import: `Menubar`
+Use: App menu row.
+Live: /components/menubar
+Props:
+- `menus`: { label: string; items: MenuAction[] }[] · required
+Example:
+```tsx
+<Menubar menus={[{ label: "File", items: [{ label: "Save" }] }]} />
+```
+
+#### Pagination
+Import: `Pagination`
+Use: Page through a set.
+Live: /components/pagination
+Props:
+- `page`: number · required
+- `pageCount`: number · required
+- `onChange`: (page: number) => void · required
+- `label`: string · default "Pages"
+Example:
+```tsx
+<Pagination page={1} pageCount={4} onChange={setPage} />
+```
+
+#### Step / SteppedHeader
+Import: `Step, SteppedHeader`
+Use: Progress through a sequence.
+Live: /components/steps
+Props:
+- `Step.number`: number · required
+- `Step.label`: string · required
+- `Step.active`: boolean · default false
+- `Step.complete`: boolean · default false
+- `Step.isBlocked`: boolean · default false
+- `SteppedHeader.steps`: { label: string }[] · required
+- `SteppedHeader.current`: number · required
+Example:
+```tsx
+<SteppedHeader steps={[{ label: "Details" }, { label: "Review" }]} current={0} />
+```
+
+#### Tabs
+Import: `Tabs, TabList, Tab, TabPanel`
+Use: Switch panels. Set defaultValue or value.
+Live: /components/tabs
+Props:
+- `Tabs.defaultValue`: string
+- `Tabs.value`: string
+- `Tabs.onValueChange`: (value: string) => void
+- `Tab.value`: string · required
+- `TabPanel.value`: string · required
+Example:
+```tsx
+<Tabs defaultValue="account">
+  <TabList><Tab value="account">Account</Tab></TabList>
+  <TabPanel value="account">Profile</TabPanel>
+</Tabs>
+```
+
+#### NavigationMenu
+Import: `NavigationMenu`
+Use: Site nav with optional flyout links.
+Live: /components/nav
+Props:
+- `items`: { label: string; href?: string; links?: { title: string; href: string; hint?: string }[] }[] · required
+Example:
+```tsx
+<NavigationMenu items={[{ label: "Overview", href: "/" }]} />
+```
+
+#### AppSidebar
+Aliases: Sidebar
+Import: `AppSidebar`
+Use: Product nav with home, message, settings, or user icons.
+Live: /components/sidebar
+Props:
+- `items`: { label: string; icon: "home" | "message" | "settings" | "user"; href?: string }[] · required
+Example:
+```tsx
+<AppSidebar items={[{ label: "Home", icon: "home" }]} />
+```
+
+#### OverflowPopover
+Import: `OverflowPopover`
+Use: Park extra actions behind More.
+Live: /components/overflow
+Props:
+- `label`: string · default "More"
+- `children`: ReactNode · required
+Example:
+```tsx
+<OverflowPopover><Button>Archive</Button></OverflowPopover>
+```
+
+### Data entry
+
+#### TextField / TextArea
+Import: `TextField, TextArea`
+Use: Labeled inputs. Error string marks invalid.
+Live: /components/text-field
+Props:
+- `label`: string · required
+- `hint`: string
+- `error`: string
+- `value`: string
+- `defaultValue`: string
+- `onChange`: (value: string) => void
+- `TextField.type`: "text" | "email" | "password" | "url" | "tel" · default "text"
+- `TextField.canReveal`: boolean · default false · password eye
+- `TextArea.rows`: number · default 4
+Example:
+```tsx
+<TextField label="Work email" type="email" />
+```
+
+#### Select
+Aliases: NativeSelect
+Import: `Select`
+Use: Native labeled select.
+Live: /components/select
+Props:
+- `label`: string
+- `options`: { label: string; value: string }[] · required
+- `value`: string
+- `onChange`: (value: string) => void
+Example:
+```tsx
+<Select label="Plan" options={[{ label: "Pro", value: "pro" }]} />
+```
+
+#### Checkbox
+Import: `Checkbox`
+Use: Boolean with a label.
+Live: /components/checkbox
+Props:
+- `checked`: boolean
+- `defaultChecked`: boolean
+- `onChange`: (checked: boolean) => void
+- `disabled`: boolean
+- `children`: ReactNode
+Example:
+```tsx
+<Checkbox defaultChecked>Email me product updates</Checkbox>
+```
+
+#### Switch
+Import: `Switch`
+Use: On/off setting.
+Live: /components/switch
+Props:
+- `checked`: boolean · default false
+- `onChange`: (checked: boolean) => void
+- `disabled`: boolean
+- `children`: ReactNode
+Example:
+```tsx
+<Switch checked={on} onChange={setOn}>Notifications</Switch>
+```
+
+#### Radio
+Import: `Radio`
+Use: One choice in a small set.
+Live: /components/radio
+Props:
+- `options`: { label: string; value: string; disabled?: boolean }[] · required
+- `value`: string
+- `onChange`: (value: string) => void
+- `name`: string
+- `legend`: string
+Example:
+```tsx
+<Radio legend="Speed" options={[{ label: "Standard", value: "a" }]} />
+```
+
+#### Slider
+Import: `Slider`
+Use: Numeric range.
+Live: /components/slider
+Props:
+- `label`: string · required
+- `value`: number · required
+- `onChange`: (value: number) => void · required
+- `min`: number · default 0
+- `max`: number · default 100
+- `step`: number · default 1
+Example:
+```tsx
+<Slider label="Volume" value={40} onChange={setVolume} />
+```
+
+#### Combobox
+Import: `Combobox`
+Use: Searchable select.
+Live: /components/combobox
+Props:
+- `label`: string · required
+- `options`: { label: string; value: string }[] · required
+- `value`: string · required
+- `onChange`: (value: string) => void · required
+- `placeholder`: string · default "Search"
+Example:
+```tsx
+<Combobox label="Studio city" options={cities} value={city} onChange={setCity} />
+```
+
+#### DatePicker
+Import: `DatePicker`
+Use: Labeled date with a calendar.
+Live: /components/date-picker
+Props:
+- `label`: string · required
+- `value`: Date
+- `onChange`: (date: Date) => void · required
+Example:
+```tsx
+<DatePicker label="Ship date" value={day} onChange={setDay} />
+```
+
+#### InputOTP
+Import: `InputOTP`
+Use: One-time code boxes.
+Live: /components/otp
+Props:
+- `label`: string · required
+- `value`: string · required
+- `onChange`: (value: string) => void · required
+- `length`: number · default 6
+Example:
+```tsx
+<InputOTP label="Invite code" length={6} value={code} onChange={setCode} />
+```
+
+#### InputGroup
+Import: `InputGroup, InputGroupField`
+Use: Prefix or suffix around a field.
+Live: /components/input-group
+Props:
+- `prefix`: ReactNode
+- `suffix`: ReactNode
+- `children`: ReactNode · required
+Example:
+```tsx
+<InputGroup prefix="https://"><InputGroupField /></InputGroup>
+```
+
+#### Rating
+Import: `Rating`
+Use: Star score.
+Live: /components/rating
+Props:
+- `value`: number · default 0
+- `onChange`: (value: number) => void
+- `max`: number · default 5
+- `label`: string · default "Rating"
+Example:
+```tsx
+<Rating value={3} onChange={setRating} />
+```
+
+#### Toggle / ToggleButton
+Aliases: ToggleGroup
+Import: `Toggle, ToggleButton`
+Use: Toggle is one pressed control. ToggleButton is a labeled group.
+Live: /components/toggle
+Props:
+- `Toggle.pressed`: boolean · required
+- `Toggle.onPressedChange`: (pressed: boolean) => void · required
+- `ToggleButton.options`: { label: string; value: string }[] · required
+- `ToggleButton.value`: string · required
+- `ToggleButton.onChange`: (value: string) => void · required
+Example:
+```tsx
+<ToggleButton options={[{ label: "List", value: "list" }]} value={view} onChange={setView} />
+```
+
+#### Attachment
+Import: `Attachment, AttachmentGroup`
+Use: File chip with upload states.
+Live: /components/attachment
+Props:
+- `name`: string · required
+- `meta`: string · required
+- `state`: "idle" | "uploading" | "processing" | "error" | "done" · default "done"
+- `progress`: number
+- `preview`: string
+- `onRemove`: () => void
+Example:
+```tsx
+<Attachment name="brief.pdf" meta="PDF · 1.4 MB" />
+```
+
+#### Form
+Import: `Form, FormRow, FormActions`
+Use: Card form. title is required. onSubmit is already preventDefaulted.
+Live: /components/form
+Props:
+- `title`: string · required
+- `description`: string
+- `onSubmit`: (event: FormEvent) => void
+- `children`: ReactNode · required
+Example:
+```tsx
+<Form title="Sign in"><TextField label="Work email" /><FormActions><Button variant="primary">Sign in</Button></FormActions></Form>
+```
+
+#### Field / Label / SearchInput / LanguageSelect
+Import: `Field, Label, SearchInput, LanguageSelect`
+Use: Field wraps a control with a label. SearchInput is a fluid controlled search box. LanguageSelect is a preset locale list.
+Live: /components/field
+Props:
+- `Field.label`: string · required
+- `SearchInput.value`: string · required
+- `SearchInput.onChange`: (value: string) => void · required
+- `SearchInput.label`: string · default "Search"
+- `SearchInput.hideLabel`: boolean · default false · Keeps the accessible name. Use in rails and toolbars.
+- `SearchInput.shape`: "default" | "pill" · default "default"
+- `SearchInput.placeholder`: string · default "Search"
+Example:
+```tsx
+<SearchInput label="Find a component" hideLabel shape="pill" value={q} onChange={setQ} />
+```
+
+### Data display
+
+#### Avatar
+Import: `Avatar`
+Use: Initials from name, or src.
+Live: /components/avatar
+Props:
+- `name`: string · required
+- `src`: string
+- `size`: "sm" | "md" | "lg" · default "md"
+Example:
+```tsx
+<Avatar name="Ada Lovelace" />
+```
+
+#### Badge
+Import: `Badge`
+Use: Count on a control.
+Live: /components/badge
+Props:
+- `count`: number · required
+- `tone`: "pink" | "blue" | "ink" · default "pink"
+- `label`: string
+- `children`: ReactNode
+Example:
+```tsx
+<Badge count={3}>Inbox</Badge>
+```
+
+#### Tag
+Import: `Tag`
+Use: Status chip.
+Live: /components/tag
+Props:
+- `status`: "neutral" | "success" | "warning" | "danger" | "active" | "subtle" · default "neutral"
+- `variant`: "filled" | "outlined" · default "filled"
+- `children`: ReactNode · required
+Example:
+```tsx
+<Tag status="success">Live</Tag>
+```
+
+#### Status
+Import: `Status`
+Use: Live / error / pending marker.
+Live: /components/status
+Props:
+- `status`: "success" | "done" | "live" | "pending" | "error" | "rejected" | "neutral" · default "neutral"
+- `children`: ReactNode
+Example:
+```tsx
+<Status status="live">Live</Status>
+```
+
+#### Calendar
+Import: `Calendar`
+Use: Month grid without a field.
+Live: /components/calendar
+Props:
+- `value`: Date
+- `onChange`: (date: Date) => void
+- `month`: Date
+- `onMonthChange`: (month: Date) => void
+Example:
+```tsx
+<Calendar value={day} onChange={setDay} />
+```
+
+#### Card
+Import: `Card, CardHeader, CardTitle, CardContent, CardActions`
+Use: Product card. Do not nest cards.
+Live: /components/card
+Props:
+- `children`: ReactNode · required
+Example:
+```tsx
+<Card><CardHeader><CardTitle>Workspace</CardTitle></CardHeader><CardContent>12 members</CardContent></Card>
+```
+
+#### Carousel
+Import: `Carousel`
+Use: Slides with prev/next.
+Live: /components/carousel
+Props:
+- `slides`: ReactNode[] · required
+Example:
+```tsx
+<Carousel slides={[<Body key="a">One</Body>, <Body key="b">Two</Body>]} />
+```
+
+#### Accordion
+Import: `Accordion`
+Use: Expandable sections.
+Live: /components/accordion
+Props:
+- `items`: { title: string; content: ReactNode }[] · required
+- `type`: "single" | "multiple" · default "single"
+Example:
+```tsx
+<Accordion items={[{ title: "Where do tokens live?", content: "StyleX variables." }]} />
+```
+
+#### Popover
+Import: `Popover`
+Use: Small anchored panel.
+Live: /components/popover
+Props:
+- `trigger`: ReactNode · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<Popover trigger={<Button>Dimensions</Button>}>Width 1440</Popover>
+```
+
+#### Tooltip
+Import: `Tooltip`
+Use: Short hover hint.
+Live: /components/tooltip
+Props:
+- `content`: ReactNode · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<Tooltip content="Shown on hover"><Button>Hover</Button></Tooltip>
+```
+
+#### HoverCard
+Import: `HoverCard`
+Use: Richer hover panel than Tooltip.
+Live: /components/hover-card
+Props:
+- `trigger`: ReactNode · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<HoverCard trigger={<Button>Ada Lovelace</Button>}>Designer · North studio</HoverCard>
+```
+
+#### DataTable
+Import: `DataTable`
+Use: Rows must be Record<string, string>. Optional filter on a column.
+Live: /components/data-table
+Props:
+- `rows`: Row[] · required
+- `columns`: { key: keyof Row & string; header: string; filter?: boolean }[] · required
+Example:
+```tsx
+<DataTable rows={[{ name: "North studio", owner: "Ada" }]} columns={[{ key: "name", header: "Name" }]} />
+```
+
+#### Table
+Import: `Table, TableHead, TableBody, TableRow, TableCell`
+Use: Low-level table when DataTable is too much.
+Live: /components/table
+Props:
+- `TableCell.header`: boolean · default false
+Example:
+```tsx
+<Table><TableHead><TableRow><TableCell header>Name</TableCell></TableRow></TableHead></Table>
+```
+
+#### Item
+Import: `Item, ItemGroup`
+Use: Row in a list: media, title, description, actions.
+Live: /components/item
+Props:
+- `title`: string · required
+- `description`: string
+- `media`: ReactNode
+- `actions`: ReactNode
+- `last`: boolean · default false
+Example:
+```tsx
+<Item title="Ada Lovelace" description="Designer" media={<Avatar name="Ada Lovelace" />} />
+```
+
+#### CodeBlock
+Import: `CodeBlock`
+Use: Copyable snippet. language is a label.
+Live: /components/code-block
+Props:
+- `code`: string · required
+- `language`: string · default "tsx"
+Example:
+```tsx
+<CodeBlock code={install} language="bash" />
+```
+
+#### SpeechBubble
+Aliases: Bubble
+Import: `SpeechBubble`
+Use: Cartoon callout. Not for chat — use Message.
+Live: /components/speech-bubble
+Props:
+- `tone`: "cream" | "pink" | "blue" · default "cream"
+- `children`: ReactNode · required
+Example:
+```tsx
+<SpeechBubble tone="pink">Keep poking.</SpeechBubble>
+```
+
+#### EmptyState
+Aliases: Empty
+Import: `EmptyState`
+Use: Nothing to show yet.
+Live: /components/empty
+Props:
+- `title`: string · required
+- `description`: string
+- `action`: ReactNode
+Example:
+```tsx
+<EmptyState title="Nothing matches" description="Try another filter." />
+```
+
+#### Marker
+Import: `Marker`
+Use: Inline glyph + label.
+Live: /components/marker
+Props:
+- `variant`: "default" | "border" | "separator" · default "default"
+- `icon`: IconName
+- `children`: ReactNode · required
+Example:
+```tsx
+<Marker icon="check">Ready</Marker>
+```
+
+#### Chart labels
+Import: `ChartLegend, ChartTooltip, ChartAxisLabel`
+Use: Legend/tooltip/axis for a chart you draw yourself. Colors: blue, green, pink, turquoise, warning.
+Live: /components/chart
+Props:
+- `ChartLegend.items`: { label: string; color: ChartColor }[] · required
+- `ChartTooltip.label`: string · required
+- `ChartTooltip.value`: string · required
+Example:
+```tsx
+<ChartLegend items={[{ label: "Saved", color: "blue" }]} />
+```
+
+### Feedback
+
+#### Alert
+Import: `Alert`
+Use: Inline status after an action.
+Live: /components/alert
+Props:
+- `variant`: "info" | "success" | "warning" | "danger" · default "info"
+- `title`: string · required
+- `children`: ReactNode
+Example:
+```tsx
+<Alert variant="success" title="Workspace saved">North studio is up to date.</Alert>
+```
+
+#### SectionMessage
+Import: `SectionMessage`
+Use: Banner across a section.
+Live: /components/section-message
+Props:
+- `variant`: "info" | "success" | "warning" | "danger" | "primary" · default "info"
+- `title`: string
+- `icon`: ReactNode
+- `fullWidth`: boolean · default false
+- `children`: ReactNode
+Example:
+```tsx
+<SectionMessage variant="info" title="Published">Review required.</SectionMessage>
+```
+
+#### Drawer / Sheet
+Aliases: Sheet
+Import: `Drawer, Sheet`
+Use: Side overlay. Sheet is Drawer with a side.
+Live: /components/drawer
+Props:
+- `open`: boolean · required
+- `title`: string · required
+- `onClose`: () => void · required
+- `Sheet.side`: "left" | "right" · default "right"
+- `children`: ReactNode · required
+Example:
+```tsx
+<Drawer open={open} title="Filters" onClose={close}>…</Drawer>
+```
+
+#### Dialog
+Import: `Dialog`
+Use: Modal that needs a decision.
+Live: /components/dialog
+Props:
+- `open`: boolean · required
+- `title`: string · required
+- `onClose`: () => void · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<Dialog open={open} title="Rename" onClose={close}>…</Dialog>
+```
+
+#### AlertDialog
+Import: `AlertDialog`
+Use: Confirm a destructive action.
+Live: /components/alert-dialog
+Props:
+- `open`: boolean · required
+- `title`: string · required
+- `onCancel`: () => void · required
+- `onAction`: () => void · required
+- `actionLabel`: string · default "Continue"
+- `cancelLabel`: string · default "Cancel"
+- `destructive`: boolean · default false
+Example:
+```tsx
+<AlertDialog open={open} title="Archive workspace?" destructive onCancel={close} onAction={archive} />
+```
+
+#### LoadingDialog
+Import: `LoadingDialog`
+Use: Blocking wait.
+Live: /components/loading-dialog
+Props:
+- `open`: boolean · required
+- `message`: string · default "Working…"
+- `onClose`: () => void · required
+Example:
+```tsx
+<LoadingDialog open={busy} onClose={close} />
+```
+
+#### Toast
+Aliases: Notification
+Import: `ToastProvider, useToast`
+Use: Wrap the app in ToastProvider. Call useToast() to push.
+Live: /components/toast
+Props:
+- `useToast()`: (toast: { type: "info" | "success" | "warning" | "error"; message: string }) => void
+Example:
+```tsx
+const push = useToast();
+push({ type: "success", message: "Workspace saved" });
+```
+
+#### Progress
+Import: `LinearProgress, CircularProgress`
+Use: Omit value for indeterminate.
+Live: /components/progress
+Props:
+- `value`: number
+- `label`: string · default "Progress"
+- `CircularProgress.size`: number · default 48
+Example:
+```tsx
+<LinearProgress value={64} />
+```
+
+#### Spinner
+Aliases: LoadingSpinner
+Import: `Spinner`
+Use: Inline loading.
+Live: /components/spinner
+Props:
+- `size`: "small" | "medium" | "large" · default "medium"
+- `label`: string · default "Loading"
+Example:
+```tsx
+<Spinner label="Saving" />
+```
+
+#### Skeleton
+Import: `Skeleton`
+Use: Placeholder while data loads.
+Live: /components/skeleton
+Props:
+- `width`: string | number · default "100%"
+- `shape`: "text" | "block" | "circle" · default "text"
+Example:
+```tsx
+<Skeleton shape="block" />
+```
+
+#### Message
+Import: `Message, MessageScroller`
+Use: Chat. assistant is incoming, user is outgoing.
+Live: /components/message
+Props:
+- `from`: "user" | "assistant" · required
+- `name`: string · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<MessageScroller>
+  <Message from="assistant" name="CodedDesign">How can I help?</Message>
+</MessageScroller>
+```
+
+### Other
+
+#### Command
+Import: `Command`
+Use: Command palette overlay.
+Live: /components/command
+Props:
+- `open`: boolean · required
+- `items`: { label: string; value: string; shortcut?: string[] }[] · required
+- `onClose`: () => void · required
+- `onSelect`: (value: string) => void · required
+Example:
+```tsx
+<Command open={open} items={[{ label: "Docs", value: "docs" }]} onClose={close} onSelect={run} />
+```
+
+#### ContextMenu
+Import: `ContextMenu`
+Use: Right-click menu around children.
+Live: /components/context-menu
+Props:
+- `items`: MenuAction[] · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<ContextMenu items={[{ label: "Duplicate" }]}><Body>Right-click me.</Body></ContextMenu>
+```
+
+#### Collapsible
+Import: `Collapsible`
+Use: Show/hide a block behind a label.
+Live: /components/collapsible
+Props:
+- `label`: string · required
+- `defaultOpen`: boolean · default false
+- `children`: ReactNode · required
+Example:
+```tsx
+<Collapsible label="Show install notes">npm install @kenselasie/codeddesign</Collapsible>
+```
+
+#### ButtonGroup
+Import: `ButtonGroup`
+Use: Labeled cluster of buttons.
+Live: /components/button-group
+Props:
+- `label`: string · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<ButtonGroup label="Share"><Button>Edit</Button><Button>Share</Button></ButtonGroup>
+```
+
+#### DirectionProvider
+Import: `DirectionProvider, useDirection`
+Use: RTL subtree. Dir is ltr | rtl.
+Live: /components/direction
+Props:
+- `direction`: "ltr" | "rtl" · required
+- `children`: ReactNode · required
+Example:
+```tsx
+<DirectionProvider direction="rtl">{arabic}</DirectionProvider>
+```
+
+#### FaqSection
+Import: `FaqSection`
+Use: Docs FAQ. Pass items or a single question/answer.
+Live: /components/faq
+Props:
+- `items`: { question: string; answer: string }[]
+- `question`: string
+- `answer`: string
+Example:
+```tsx
+<FaqSection items={[{ question: "How do I theme?", answer: "darkTheme from the theme export." }]} />
+```
+
+#### Questionnaire
+Import: `Questionnaire`
+Use: Stepped choices.
+Live: /components/questionnaire
+Props:
+- `items`: { name: string; prompt: string; description?: string; required?: boolean; choices: { value: string; label: string; hint?: string }[] }[] · required
+- `onComplete`: (answers: Record<string, string>) => void
+Example:
+```tsx
+<Questionnaire items={[{ name: "next", prompt: "What next?", choices: [{ value: "a", label: "Delegation" }] }]} />
+```
+
+#### Trace
+Import: `Trace, TraceLine`
+Use: Agent or build log.
+Live: /components/trace
+Props:
+- `TraceLine.icon`: IconName · default "terminal"
+- `TraceLine.title`: string · required
+- `TraceLine.description`: string
+- `TraceLine.status`: "running" | "error" | "pending"
+- `TraceLine.detail`: string
+Example:
+```tsx
+<Trace><TraceLine title="Searched" description="pnpm build" /></Trace>
+```
+
+#### Shortcut
+Aliases: Kbd
+Import: `Shortcut`
+Use: Key combo chip.
+Live: /components/shortcut
+Props:
+- `keys`: string[] · required
+Example:
+```tsx
+<Shortcut keys={["⌘", "K"]} />
+```
+
+#### GenericFilter
+Import: `GenericFilter`
+Use: Search plus status filter for tables.
+Live: /components/filter
+Props:
+- `query`: string · required
+- `onQueryChange`: (value: string) => void · required
+- `status`: string
+- `onStatusChange`: (value: string) => void
+- `statusOptions`: { label: string; value: string }[]
+Example:
+```tsx
+<GenericFilter query={q} onQueryChange={setQ} />
+```
+
+## Do not
+
+- Gradient text, emoji-as-icons, zero-blur hard offset shadows unless already in a component.
+- Restyle tokens to a generic SaaS look.
+- Add @stylexjs/babel-plugin to the consuming app just to use a Button.
+- Nest Card, Form, or MessageScroller inside another card surface.
+

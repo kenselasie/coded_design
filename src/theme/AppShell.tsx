@@ -4,7 +4,7 @@ import * as stylex from "@stylexjs/stylex";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { ToastProvider } from "codeddesign";
+import { Logo, ToastProvider } from "codeddesign";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { radii } from "codeddesign/tokens/space.stylex";
 import { shadows } from "codeddesign/tokens/shadows.stylex";
@@ -15,10 +15,7 @@ const NARROW = "@media (max-width: 900px)";
 
 const nav = [
   { href: "/", label: "Overview" },
-  { href: "/examples", label: "Examples" },
-  { href: "/use", label: "Use" },
   { href: "/components", label: "Components" },
-  { href: "/docs", label: "Docs" },
 ];
 
 const styles = stylex.create({
@@ -54,6 +51,9 @@ const styles = stylex.create({
     minWidth: 0,
   },
   brand: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "10px",
     margin: 0,
     marginRight: "8px",
     color: colors.black,
@@ -62,12 +62,16 @@ const styles = stylex.create({
     fontWeight: font.bold,
     letterSpacing: "-0.03em",
     textDecoration: "none",
+    lineHeight: 1,
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
       outlineColor: colors.blueDark,
       outlineOffset: "3px",
     },
+  },
+  brandName: {
+    transform: "translateY(-1px)",
   },
   navList: {
     display: "flex",
@@ -218,6 +222,17 @@ const styles = stylex.create({
       padding: "24px 16px 64px",
     },
   },
+  docked: {
+    height: "100vh",
+    overflow: "hidden",
+  },
+  flush: {
+    display: "flex",
+    flexDirection: "column",
+    padding: 0,
+    minHeight: 0,
+    overflow: "hidden",
+  },
 });
 
 function Moon() {
@@ -276,11 +291,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   };
 
   const activePalette = palettes[palette];
+  const flush = pathname.startsWith("/components");
 
   return (
     <div
       {...stylex.props(
         styles.shell,
+        flush && styles.docked,
         mode === "light" ? styles.light : styles.dark,
         mode === "light" && activePalette.light,
         mode === "dark" && activePalette.dark,
@@ -288,7 +305,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     >
       <header {...stylex.props(styles.bar)}>
         <Link href="/" {...stylex.props(styles.brand)}>
-          CodedDesign
+          <Logo size="md" decorative />
+          <span {...stylex.props(styles.brandName)}>CodedDesign</span>
         </Link>
         <nav aria-label="Primary" {...stylex.props(styles.navList)}>
           {nav.map((item) => {
@@ -347,7 +365,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <ToastProvider>
-        <main {...stylex.props(styles.main)}>{children}</main>
+        <main {...stylex.props(styles.main, flush && styles.flush)}>{children}</main>
       </ToastProvider>
     </div>
   );

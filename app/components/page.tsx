@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { ComponentGallery } from "./gallery";
+import { ComponentOverview } from "./overview";
 
 export const metadata: Metadata = {
   title: "Components · CodedDesign",
 };
 
 export default function ComponentsPage() {
-  return <ComponentGallery />;
+  return <ComponentOverview />;
 }

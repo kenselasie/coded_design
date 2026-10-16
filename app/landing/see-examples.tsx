@@ -1,5 +1,4 @@
 import * as stylex from "@stylexjs/stylex";
-import NextLink from "next/link";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { radii } from "codeddesign/tokens/space.stylex";
 import { shadows } from "codeddesign/tokens/shadows.stylex";
@@ -36,8 +35,8 @@ const styles = stylex.create({
 
 export function SeeExamples() {
   return (
-    <NextLink href="/examples" {...stylex.props(styles.link)}>
+    <a href="#examples" {...stylex.props(styles.link)}>
       See examples
-    </NextLink>
+    </a>
   );
 }

@@ -19,7 +19,8 @@ const fredoka = Fredoka({
 
 export const metadata: Metadata = {
   title: "CodedDesign",
-  description: "CodedDesign design system",
+  description:
+    "Build your apps with a unique-looking design system from CodedGuy.",
 };
 
 export default function RootLayout({

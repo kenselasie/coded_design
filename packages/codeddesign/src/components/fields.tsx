@@ -44,6 +44,8 @@ const styles = stylex.create({
     ":hover:not(:disabled)": {
       backgroundColor: colors.snow,
     },
+  },
+  controlFocus: {
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
@@ -53,19 +55,66 @@ const styles = stylex.create({
       boxShadow: shadows.s1,
     },
   },
+  searchField: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px",
+    minWidth: 0,
+    width: "100%",
+  },
   searchWrap: {
     position: "relative",
     display: "flex",
     alignItems: "center",
+    minWidth: 0,
+    width: "100%",
   },
   searchIcon: {
     position: "absolute",
     left: "12px",
-    color: colors.concrete,
+    color: colors.steel,
     pointerEvents: "none",
   },
   search: {
+    minWidth: 0,
     paddingLeft: "36px",
+    appearance: "none",
+    "::-webkit-search-decoration": {
+      display: "none",
+    },
+    "::-webkit-search-cancel-button": {
+      display: "none",
+    },
+    ":focus-visible": {
+      outlineWidth: "2px",
+      outlineStyle: "solid",
+      outlineColor: colors.blue,
+      outlineOffset: "-2px",
+      borderColor: colors.blue,
+      boxShadow: "none",
+    },
+  },
+  searchPill: {
+    height: "40px",
+    minHeight: "40px",
+    paddingTop: "8px",
+    paddingBottom: "8px",
+    fontSize: font.s,
+    borderRadius: radii.pill,
+  },
+  visuallyHidden: {
+    position: "absolute",
+    width: "1px",
+    height: "1px",
+    padding: 0,
+    margin: "-1px",
+    overflow: "hidden",
+    clip: "rect(0, 0, 0, 0)",
+    whiteSpace: "nowrap",
+    borderWidth: 0,
+  },
+  flush: {
+    gap: 0,
   },
 });
 
@@ -92,7 +141,7 @@ export function Select({
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
         {...props}
-        {...stylex.props(styles.control)}
+        {...stylex.props(styles.control, styles.controlFocus)}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -109,16 +158,20 @@ export function SearchInput({
   value,
   onChange,
   placeholder = "Search",
+  hideLabel = false,
+  shape = "default",
 }: {
   label?: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  hideLabel?: boolean;
+  shape?: "default" | "pill";
 }) {
   const id = useId();
   return (
-    <label htmlFor={id} {...stylex.props(styles.field)}>
-      <span {...stylex.props(styles.label)}>{label}</span>
+    <label htmlFor={id} {...stylex.props(styles.searchField, hideLabel && styles.flush)}>
+      <span {...stylex.props(hideLabel ? styles.visuallyHidden : styles.label)}>{label}</span>
       <span {...stylex.props(styles.searchWrap)}>
         <span {...stylex.props(styles.searchIcon)}>
           <Icon name="search" size={16} />
@@ -129,7 +182,7 @@ export function SearchInput({
           value={value}
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
-          {...stylex.props(styles.control, styles.search)}
+          {...stylex.props(styles.control, styles.search, shape === "pill" && styles.searchPill)}
         />
       </span>
     </label>

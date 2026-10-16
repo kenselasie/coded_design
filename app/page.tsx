@@ -3,7 +3,8 @@ import { HomeLanding } from "./landing/home";
 
 export const metadata: Metadata = {
   title: "CodedDesign",
-  description: "A cartoon React design system you can install.",
+  description:
+    "Build your apps with a unique-looking design system from CodedGuy.",
 };
 
 export default function HomePage() {
