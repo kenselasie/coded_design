@@ -3,13 +3,27 @@
 import * as stylex from "@stylexjs/stylex";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Logo, ToastProvider } from "codeddesign";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { radii } from "codeddesign/tokens/space.stylex";
 import { shadows } from "codeddesign/tokens/shadows.stylex";
 import { font } from "codeddesign/tokens/typography.stylex";
-import { palettes, paletteIds, type PaletteId } from "codeddesign/theme";
+import {
+  markerPalettes,
+  markerPaletteIds,
+  markerRadii,
+  markerShadows,
+  markerShadowsDark,
+  markerType,
+  palettes,
+  paletteIds,
+  worldIds,
+  worlds,
+  type MarkerPaletteId,
+  type PaletteId,
+  type WorldId,
+} from "codeddesign/theme";
 
 const NARROW = "@media (max-width: 900px)";
 
@@ -119,27 +133,44 @@ const styles = stylex.create({
       justifyContent: "space-between",
     },
   },
-  palettes: {
-    display: "flex",
-    alignItems: "center",
-    gap: "4px",
-  },
-  swatch: {
+  menuWrap: {
+    position: "relative",
     display: "inline-flex",
-    alignItems: "center",
-    gap: "8px",
-    minHeight: "36px",
-    padding: "4px 10px 4px 6px",
+  },
+  chevronOpen: {
+    transform: "rotate(180deg)",
+  },
+  menu: {
+    position: "absolute",
+    top: "calc(100% + 8px)",
+    right: 0,
+    zIndex: 30,
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+    minWidth: "280px",
+    padding: "6px",
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderColor: colors.black,
+    borderRadius: radii.l,
+    backgroundColor: colors.white,
+    boxShadow: shadows.s2,
+  },
+  menuItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "2px",
+    width: "100%",
+    padding: "8px 12px",
     borderWidth: "2px",
     borderStyle: "solid",
     borderColor: "transparent",
-    borderRadius: radii.pill,
+    borderRadius: radii.m,
     backgroundColor: "transparent",
     color: colors.black,
-    fontFamily: font.display,
-    fontSize: font.xs,
-    fontWeight: font.semibold,
-    lineHeight: 1,
+    textAlign: "left",
     cursor: "pointer",
     ":hover": {
       backgroundColor: colors.snowDark,
@@ -150,13 +181,53 @@ const styles = stylex.create({
       outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
-    [NARROW]: {
-      paddingInline: "6px",
-    },
   },
-  swatchOn: {
+  menuOn: {
     borderColor: colors.black,
-    backgroundColor: colors.snow,
+    backgroundColor: colors.pinkLight,
+    color: colors.onPastel,
+  },
+  menuLabel: {
+    fontFamily: font.display,
+    fontSize: font.s,
+    fontWeight: font.semibold,
+    lineHeight: 1.2,
+  },
+  menuCredit: {
+    fontFamily: font.family,
+    fontSize: font.xs,
+    fontWeight: font.regular,
+    lineHeight: 1.3,
+    color: colors.steel,
+  },
+  menuCreditOn: {
+    color: colors.onPastel,
+  },
+  menuRule: {
+    height: "2px",
+    margin: "4px 8px",
+    borderWidth: 0,
+    backgroundColor: colors.smoke,
+  },
+  menuSection: {
+    padding: "6px 12px 2px",
+    color: colors.steel,
+    fontFamily: font.display,
+    fontSize: font.xs,
+    fontWeight: font.semibold,
+    lineHeight: 1.2,
+  },
+  menuPalette: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "10px",
+  },
+  menuCopy: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "2px",
+    minWidth: 0,
   },
   dots: {
     display: "flex",
@@ -171,11 +242,6 @@ const styles = stylex.create({
   dotHalf: {
     flex: 1,
     height: "100%",
-  },
-  swatchName: {
-    [NARROW]: {
-      display: "none",
-    },
   },
   toggle: {
     display: "inline-flex",
@@ -264,20 +330,162 @@ function Sun() {
   );
 }
 
+function Chevron() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" {...stylex.props(styles.mark)}>
+      <path
+        d="M3.5 6 8 10.5 12.5 6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+type PaletteOption = {
+  id: string;
+  label: string;
+  credit: string;
+  preview: { canvas: string; accent: string };
+};
+
+function ThemeMenu({
+  world,
+  paletteId,
+  options,
+  onChooseWorld,
+  onChoosePalette,
+}: {
+  world: WorldId;
+  paletteId: string;
+  options: PaletteOption[];
+  onChooseWorld: (next: WorldId) => void;
+  onChoosePalette: (next: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const current = worlds[world];
+  const activePalette = options.find((item) => item.id === paletteId) ?? options[0];
+  const trigger = `${current.label} · ${activePalette.label}`;
+
+  return (
+    <div ref={root} {...stylex.props(styles.menuWrap)}>
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`Theme, ${trigger}`}
+        onClick={() => setOpen((value) => !value)}
+        {...stylex.props(styles.toggle)}
+      >
+        <span {...stylex.props(styles.dots, styles.mark)}>
+          <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: activePalette.preview.canvas }} />
+          <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: activePalette.preview.accent }} />
+        </span>
+        <span {...stylex.props(styles.label)}>{trigger}</span>
+        <span {...stylex.props(styles.mark, open && styles.chevronOpen)}>
+          <Chevron />
+        </span>
+      </button>
+      {open ? (
+        <div role="menu" aria-label="Theme" {...stylex.props(styles.menu)}>
+          {worldIds.map((id) => {
+            const item = worlds[id];
+            const on = world === id;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="menuitemradio"
+                aria-checked={on}
+                title={item.credit}
+                onClick={() => onChooseWorld(id)}
+                {...stylex.props(styles.menuItem, on && styles.menuOn)}
+              >
+                <span {...stylex.props(styles.menuLabel)}>{item.label}</span>
+                <span {...stylex.props(styles.menuCredit, on && styles.menuCreditOn)}>{item.credit}</span>
+              </button>
+            );
+          })}
+          <hr {...stylex.props(styles.menuRule)} />
+          <div {...stylex.props(styles.menuSection)}>Palettes</div>
+          {options.map((item) => {
+            const on = paletteId === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="menuitemradio"
+                aria-checked={on}
+                title={item.credit}
+                onClick={() => onChoosePalette(item.id)}
+                {...stylex.props(styles.menuItem, styles.menuPalette, on && styles.menuOn)}
+              >
+                <span {...stylex.props(styles.dots)}>
+                  <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: item.preview.canvas }} />
+                  <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: item.preview.accent }} />
+                </span>
+                <span {...stylex.props(styles.menuCopy)}>
+                  <span {...stylex.props(styles.menuLabel)}>{item.label}</span>
+                  <span {...stylex.props(styles.menuCredit, on && styles.menuCreditOn)}>{item.credit}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function isPalette(value: string | null): value is PaletteId {
   return paletteIds.includes(value as PaletteId);
+}
+
+function isMarkerPalette(value: string | null): value is MarkerPaletteId {
+  return markerPaletteIds.includes(value as MarkerPaletteId);
+}
+
+function isWorld(value: string | null): value is WorldId {
+  return worldIds.includes(value as WorldId);
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [mode, setMode] = useState<"light" | "dark">("light");
   const [palette, setPalette] = useState<PaletteId>("paper");
+  const [markerPalette, setMarkerPalette] = useState<MarkerPaletteId>("highlighter");
+  const [world, setWorld] = useState<WorldId>("codedcartoony");
 
   useEffect(() => {
     const savedMode = window.localStorage.getItem("codeddesign-theme");
     if (savedMode === "dark" || savedMode === "light") setMode(savedMode);
     const savedPalette = window.localStorage.getItem("codeddesign-palette");
     if (isPalette(savedPalette)) setPalette(savedPalette);
+    const savedMarker = window.localStorage.getItem("codeddesign-marker-palette");
+    if (isMarkerPalette(savedMarker)) setMarkerPalette(savedMarker);
+    const savedWorld = window.localStorage.getItem("codeddesign-world");
+    if (isWorld(savedWorld)) setWorld(savedWorld);
   }, []);
 
   const setTheme = (next: "light" | "dark") => {
@@ -285,12 +493,35 @@ export function AppShell({ children }: { children: ReactNode }) {
     window.localStorage.setItem("codeddesign-theme", next);
   };
 
-  const choosePalette = (next: PaletteId) => {
+  const choosePalette = (next: string) => {
+    if (world === "codedmarker") {
+      if (!isMarkerPalette(next)) return;
+      setMarkerPalette(next);
+      window.localStorage.setItem("codeddesign-marker-palette", next);
+      return;
+    }
+    if (!isPalette(next)) return;
     setPalette(next);
     window.localStorage.setItem("codeddesign-palette", next);
   };
 
+  const chooseWorld = (next: WorldId) => {
+    setWorld(next);
+    window.localStorage.setItem("codeddesign-world", next);
+  };
+
   const activePalette = palettes[palette];
+  const activeMarker = markerPalettes[markerPalette];
+  const marker = world === "codedmarker";
+  const paletteOptions = marker
+    ? markerPaletteIds.map((id) => {
+        const item = markerPalettes[id];
+        return { id, label: item.label, credit: item.credit, preview: item.preview };
+      })
+    : paletteIds.map((id) => {
+        const item = palettes[id];
+        return { id, label: item.label, credit: item.credit, preview: item.preview };
+      });
   const flush = pathname.startsWith("/components");
 
   return (
@@ -299,8 +530,12 @@ export function AppShell({ children }: { children: ReactNode }) {
         styles.shell,
         flush && styles.docked,
         mode === "light" ? styles.light : styles.dark,
-        mode === "light" && activePalette.light,
-        mode === "dark" && activePalette.dark,
+        !marker && mode === "light" && activePalette.light,
+        !marker && mode === "dark" && activePalette.dark,
+        marker && markerType,
+        marker && markerRadii,
+        marker && (mode === "light" ? activeMarker.light : activeMarker.dark),
+        marker && (mode === "light" ? markerShadows : markerShadowsDark),
       )}
     >
       <header {...stylex.props(styles.bar)}>
@@ -326,34 +561,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div {...stylex.props(styles.tools)}>
-          <div role="group" aria-label="Color palette" {...stylex.props(styles.palettes)}>
-            {paletteIds.map((id) => {
-              const item = palettes[id];
-              const on = palette === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  aria-pressed={on}
-                  title={`${item.label}. ${item.credit}`}
-                  onClick={() => choosePalette(id)}
-                  {...stylex.props(styles.swatch, on && styles.swatchOn)}
-                >
-                  <span {...stylex.props(styles.dots)}>
-                    <span
-                      {...stylex.props(styles.dotHalf)}
-                      style={{ backgroundColor: item.preview.canvas }}
-                    />
-                    <span
-                      {...stylex.props(styles.dotHalf)}
-                      style={{ backgroundColor: item.preview.accent }}
-                    />
-                  </span>
-                  <span {...stylex.props(styles.swatchName, styles.label)}>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
           <button
             type="button"
             onClick={() => setTheme(mode === "light" ? "dark" : "light")}
@@ -362,6 +569,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             {mode === "light" ? <Moon /> : <Sun />}
             <span {...stylex.props(styles.label)}>{mode === "light" ? "Dark" : "Light"}</span>
           </button>
+          <ThemeMenu
+            world={world}
+            paletteId={marker ? markerPalette : palette}
+            options={paletteOptions}
+            onChooseWorld={chooseWorld}
+            onChoosePalette={choosePalette}
+          />
         </div>
       </header>
       <ToastProvider>

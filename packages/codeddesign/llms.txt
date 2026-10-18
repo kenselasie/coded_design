@@ -40,22 +40,30 @@ import { darkTheme, palettes } from "@kenselasie/codeddesign/theme";
 <div {...stylex.props(palettes.nord.light)}>
   {children}
 </div>
+
+import { markerPalettes, markerType, markerRadii, markerShadows } from "@kenselasie/codeddesign/theme";
+
+<div {...stylex.props(markerPalettes.highlighter.light, markerType, markerRadii, markerShadows)}>
+  {children}
+</div>
 ```
 
-Palettes: paper, nord, solarized, catppuccin — each has light and dark.
-Fonts: Fredoka (headings, buttons, labels); Nunito (reading copy).
+Worlds: codedcartoony, codedmarker.
+CodedCartoony palettes: paper, nord, solarized, catppuccin.
+CodedMarker palettes: highlighter, magenta, cyan, amber. Each palette has light and dark.
+Fonts: Fredoka in codedcartoony; Archivo 900 in codedmarker; Nunito in codedcartoony; Archivo in codedmarker.
 Ink #2a2438 on paper #fff7ef. Radii: s 10px, m 16px, l 22px, pill.
-Space: xxs 4, xs 8, s 12, m 16, l 24, xl 32, xxl 48. Shadows: offset + blur (s1–s4), never a zero-offset halo.
+Space: xxs 4, xs 8, s 12, m 16, l 24, xl 32, xxl 48. Shadows: codedcartoony: offset + blur (s1–s4). codedmarker: hard ink offset, no blur..
 Color roles: background, white, black, steel, concrete, blue, blueLight, blueDark, whale, whaleLight, whaleDark, smoke, smokeDark, smokeDarker, snow, snowDark, snowDarker, success, danger, dangerDark, warning, warningDark, green, greenLight, greenDark, turquoise, turquoiseLight, turquoiseDark, pink, pinkLight, pinkDark, onAccent, onPastel, well, onWell.
 Icon names: check, x, search, info, alert, chevron, chevronLeft, chevronRight, plus, minus, copy, calendar, paperclip, file, image, more, menu, terminal, globe, message, user, settings, home, checkCircle, xCircle, upload, download, arrowUpRight, branch, spark, grip.
 
 ## Rules
 
-- Import styles.css once at the app root so Fredoka, Nunito, and tokens land.
+- Import styles.css once at the app root so Fredoka, Nunito, Archivo, and tokens land.
 - Import components from @kenselasie/codeddesign. Do not copy source files into the app.
-- Keep the cartoon world: 2px ink borders, Fredoka display, Nunito body, plush offset+blur shadows. Do not restyle toward shadcn/ui or Ant Design.
+- Pick one world. codedcartoony is Fredoka, Nunito, and plush offset+blur shadows. codedmarker is Archivo, hard ink shadows, and lime, magenta, cyan, and yellow blocks. Do not mix them or restyle toward shadcn/ui or Ant Design.
 - The consuming app does not need the StyleX compiler to render components.
-- Theme with darkTheme or palettes from @kenselasie/codeddesign/theme via stylex.props.
+- Theme with stylex.props from @kenselasie/codeddesign/theme. codedcartoony palettes are paper, nord, solarized, and catppuccin. codedmarker palettes are highlighter, magenta, cyan, and amber; apply one with markerType, markerRadii, and markerShadows.
 - Prefer an existing component over custom HTML for buttons, fields, dialogs, tables, and chat.
 - Do not nest interactive controls inside links.
 - Do not nest Card, Form, or MessageScroller inside another card.

@@ -31,15 +31,18 @@ const p = (
 
 export const foundations = {
   fonts: {
-    display: "Fredoka (headings, buttons, labels)",
-    body: "Nunito (reading copy)",
+    display: "Fredoka in codedcartoony; Archivo 900 in codedmarker",
+    body: "Nunito in codedcartoony; Archivo in codedmarker",
   },
   ink: "#2a2438",
   paper: "#fff7ef",
   radii: ["s 10px", "m 16px", "l 22px", "pill"],
   space: ["xxs 4", "xs 8", "s 12", "m 16", "l 24", "xl 32", "xxl 48"],
-  shadows: "offset + blur (s1–s4), never a zero-offset halo",
+  shadows:
+    "codedcartoony: offset + blur (s1–s4). codedmarker: hard ink offset, no blur.",
   palettes: ["paper", "nord", "solarized", "catppuccin"],
+  markerPalettes: ["highlighter", "magenta", "cyan", "amber"],
+  worlds: ["codedcartoony", "codedmarker"],
   colorRoles: [
     "background",
     "white",

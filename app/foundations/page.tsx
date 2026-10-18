@@ -175,8 +175,8 @@ export default function FoundationsPage() {
           Foundations
         </Heading>
         <Body>
-          Color, type, and elevation. Switch palettes and light/dark from the top
-          bar — the same tokens remap.
+          Color, type, and elevation. CodedCartoony uses Paper, Nord, Solarized, and Catppuccin.
+          CodedMarker uses Highlighter, Magenta, Cyan, and Amber, with Archivo, square corners, and a hard ink shadow.
         </Body>
       </Stack>
       <section>

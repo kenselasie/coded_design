@@ -49,7 +49,7 @@ const entries: {
   },
   {
     title: agentGuide.theme,
-    description: "darkTheme and Paper, Nord, Solarized, Catppuccin palettes.",
+    description: "CodedCartoony and CodedMarker, each with its own palettes.",
     icon: "spark",
   },
   {

@@ -20,7 +20,7 @@ Peers: React 19, `@stylexjs/stylex` 0.19.1. Do not add a StyleX compiler unless 
 
 ## Rules
 
-- 2px ink borders, Fredoka display, Nunito body, offset+blur shadows.
+- Pick one world. codedcartoony: Fredoka, Nunito, plush shadows, palettes paper / nord / solarized / catppuccin. codedmarker: Archivo, hard ink shadows, palettes highlighter / magenta / cyan / amber.
 - Do not restyle toward shadcn/ui or Ant Design.
 - Do not copy component source into the app.
 - Do not invent props. Use package types or `flattenReference()` from `@kenselasie/codeddesign/agent`.
