@@ -6,3 +6,16 @@ coverage
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+
+# Secrets / local auth — never commit
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.p12
+*.pfx
+credentials.json
+**/service-account*.json
+.vercel
+
