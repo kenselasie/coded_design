@@ -1502,7 +1502,7 @@ function groups(): Group[] {
           preview: (
             <Mini>
               <div {...stylex.props(styles.field)}>
-                <span {...stylex.props(styles.fieldBox)}>ada@studio.dev</span>
+                <span {...stylex.props(styles.fieldBox)}>alex.com</span>
                 <Chip tone="primary">Sign in</Chip>
               </div>
             </Mini>
@@ -1646,7 +1646,7 @@ function groups(): Group[] {
             <Mini>
               <div {...stylex.props(styles.field)}>
                 <Body>Ada Lovelace</Body>
-                <span {...stylex.props(styles.pop)}>Designer · North studio</span>
+                <span {...stylex.props(styles.pop)}>Designer · My project</span>
               </div>
             </Mini>
           ),

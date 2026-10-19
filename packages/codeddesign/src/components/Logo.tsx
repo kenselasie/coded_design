@@ -1,18 +1,9 @@
 import * as stylex from "@stylexjs/stylex";
 import { colors } from "../tokens/colors.stylex";
-import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
-import {
-  logoMarkIds,
-  logoMarkLabels,
-  logoMarks,
-  type LogoMark,
-} from "./logoMarks";
-
-export type { LogoMark };
-export { logoMarkIds, logoMarkLabels };
+import { stroke } from "../tokens/stroke.stylex";
 
 /** Lockup faces: Garet Heavy for "coded", Montserrat Bold for "DESIGN." */
 const garetFace = 'var(--font-garet), "Garet", system-ui, sans-serif';
@@ -35,11 +26,11 @@ const styles = stylex.create({
     overflow: "hidden",
     borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.line,
+    borderColor: brandPinkDark,
     borderRadius: radii.m,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s1,
-    color: colors.black,
+    backgroundColor: brandPink,
+    boxShadow: "none",
+    color: "#FFFFFF",
     fontFamily: font.display,
     fontWeight: font.bold,
     letterSpacing: "-0.01em",
@@ -48,12 +39,6 @@ const styles = stylex.create({
     transitionProperty: "transform, box-shadow",
     transitionDuration: "160ms",
     transitionTimingFunction: "ease-out",
-  },
-  coded: {
-    backgroundColor: brandPink,
-    color: "#FFFFFF",
-    borderColor: brandPinkDark,
-    boxShadow: "none",
   },
   hoverable: {
     ":hover": {
@@ -70,11 +55,6 @@ const styles = stylex.create({
     fontFamily: garetFace,
     fontWeight: "800",
     letterSpacing: "-0.04em",
-  },
-  svg: {
-    display: "block",
-    width: "58%",
-    height: "58%",
   },
   wordmark: {
     display: "inline-flex",
@@ -133,7 +113,6 @@ const styles = stylex.create({
   codedSm: { fontSize: "22px" },
   codedMd: { fontSize: "30px" },
   codedLg: { fontSize: "52px" },
-  /** Bar height ≈ 73% of coded glyph box; radius ≈ 28% of bar height. */
   barSm: {
     height: "14px",
     paddingLeft: "10px",
@@ -157,30 +136,21 @@ const styles = stylex.create({
   },
 });
 
-const sizePx = { sm: 28, md: 36, lg: 56 } as const;
-
 export function Logo({
-  mark = "coded",
   size = "md",
   wordmark = false,
   decorative = false,
 }: {
-  /** CodedDesign mark, or an open-source brand from Simple Icons (CC0). */
-  mark?: LogoMark;
   size?: "sm" | "md" | "lg";
-  /** Full "coded / DESIGN." lockup. Only for the CodedDesign mark. */
+  /** Full "coded / DESIGN." lockup. */
   wordmark?: boolean;
   decorative?: boolean;
 }) {
-  const label = logoMarkLabels[mark] ?? "Logo";
-  const path = logoMarks[mark];
-  const isCoded = mark === "coded" || path == null;
-
-  if (isCoded && wordmark) {
+  if (wordmark) {
     return (
       <span
         role={decorative ? undefined : "img"}
-        aria-label={decorative ? undefined : label}
+        aria-label={decorative ? undefined : "CodedDesign"}
         aria-hidden={decorative ? true : undefined}
         {...stylex.props(
           styles.wordmark,
@@ -217,28 +187,11 @@ export function Logo({
   return (
     <span
       role={decorative ? undefined : "img"}
-      aria-label={decorative ? undefined : label}
+      aria-label={decorative ? undefined : "CodedDesign"}
       aria-hidden={decorative ? true : undefined}
-      {...stylex.props(
-        styles.mark,
-        isCoded && styles.coded,
-        styles.hoverable,
-        styles[size],
-      )}
+      {...stylex.props(styles.mark, styles.hoverable, styles[size])}
     >
-      {isCoded ? (
-        <span {...stylex.props(styles.letters)}>c</span>
-      ) : (
-        <svg
-          viewBox="0 0 24 24"
-          width={Math.round(sizePx[size] * 0.58)}
-          height={Math.round(sizePx[size] * 0.58)}
-          aria-hidden
-          {...stylex.props(styles.svg)}
-        >
-          <path fill="currentColor" d={path} />
-        </svg>
-      )}
+      <span {...stylex.props(styles.letters)}>c</span>
     </span>
   );
 }

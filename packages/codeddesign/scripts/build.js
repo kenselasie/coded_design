@@ -158,7 +158,7 @@ const published = {
     "theme",
     "cartoon",
   ],
-  homepage: "https://github.com/kenselasie/coded_design",
+  homepage: "https://codeddesign.codedguy.com/",
   repository: {
     type: "git",
     url: "git+https://github.com/kenselasie/coded_design.git",

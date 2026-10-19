@@ -44,7 +44,7 @@ Engineers install from the public npm registry (`npm install @kenselasie/codedde
 
 ## Evidence on Hand
 
-- Live catalog at this repo’s Next.js app.
+- Live catalog: https://codeddesign.codedguy.com/
 - Component and pattern source in `packages/codeddesign/src`.
 - Public registry listing: https://www.npmjs.com/package/@kenselasie/codeddesign
 - No customer quotes, case studies, or usage metrics. Do not fabricate them.

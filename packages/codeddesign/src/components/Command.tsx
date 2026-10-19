@@ -7,6 +7,7 @@ import { colors } from "../tokens/colors.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { Icon } from "./Icon";
 import { Shortcut } from "./Shortcut";
 
@@ -19,13 +20,13 @@ const styles = stylex.create({
     alignItems: "flex-start",
     justifyContent: "center",
     paddingTop: "12vh",
-    backgroundColor: "rgba(42, 36, 56, 0.45)",
+    backgroundColor: `color-mix(in srgb, ${colors.black} 45%, transparent)`,
   },
   panel: {
     width: "min(480px, calc(100% - 32px))",
     overflow: "hidden",
     borderRadius: radii.control,
-    borderWidth: "1px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: colors.line,
     backgroundColor: colors.white,

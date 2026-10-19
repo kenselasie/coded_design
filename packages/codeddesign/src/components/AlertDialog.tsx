@@ -19,7 +19,7 @@ const styles = stylex.create({
     alignItems: "center",
     justifyContent: "center",
     padding: "24px",
-    backgroundColor: "rgba(42, 36, 56, 0.45)",
+    backgroundColor: `color-mix(in srgb, ${colors.black} 45%, transparent)`,
   },
   panel: {
     width: "min(420px, 100%)",

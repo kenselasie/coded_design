@@ -171,13 +171,13 @@ Recipe id: `feature-grid`
 
 ### Create account
 
-Centered auth form with account-type toggle, SSO, email fields, and primary submit.
+Centered auth form with account-type toggle, optional SSO, email fields, and primary submit.
 
 Compose:
 
 - Heading + Body with Link
 - ToggleButton for Personal / Team
-- Button default fullWidth for SSO
+- Button default fullWidth for a generic SSO action
 - TextField stack + Checkbox
 - Button variant="primary" fullWidth
 
@@ -283,8 +283,8 @@ Email sign-in with a primary submit.
 ```tsx
 import { Form, TextField, Button, FormActions } from "@kenselasie/codeddesign";
 
-<Form title="Sign in" description="Use the workspace email you were invited with.">
-  <TextField label="Work email" type="email" name="email" />
+<Form title="Sign in" description="Use the email on your account.">
+  <TextField label="Email" type="email" name="email" />
   <FormActions>
     <Button variant="primary">Sign in</Button>
   </FormActions>
@@ -299,7 +299,7 @@ Sortable rows of string records.
 import { DataTable } from "@kenselasie/codeddesign";
 
 <DataTable
-  rows={studios}
+  rows={rows}
   columns={[
     { key: "name", header: "Name" },
     { key: "owner", header: "Owner" },
@@ -315,11 +315,11 @@ Assistant and user messages in a scroller.
 import { Message, MessageScroller } from "@kenselasie/codeddesign";
 
 <MessageScroller>
-  <Message from="assistant" name="CodedDesign">
+  <Message from="assistant" name="Assistant">
     How can I help you today?
   </Message>
-  <Message from="user" name="Ada">
-    Show me a savings dashboard.
+  <Message from="user" name="Alex">
+    Show me the overview.
   </Message>
 </MessageScroller>
 ```
@@ -345,8 +345,8 @@ Inline success or warning after an action.
 ```tsx
 import { Alert } from "@kenselasie/codeddesign";
 
-<Alert variant="success" title="Workspace saved">
-  North studio is up to date.
+<Alert variant="success" title="Saved">
+  Your changes are up to date.
 </Alert>
 ```
 
@@ -405,17 +405,17 @@ const [mode, setMode] = useState("project");
       { label: "Space", value: "space" },
     ]}
   />
-  <TextField label="Name" name="name" defaultValue="North studio" />
-  <Button variant="primary">Create workspace</Button>
+  <TextField label="Name" name="name" defaultValue="My project" />
+  <Button variant="primary">Create project</Button>
   <Link href="/browse">Browse templates</Link>
 </Stack>
 
 <Card>
   <CardHeader>
-    <Sticker tone="blue">preview.app</Sticker>
+    <Sticker tone="blue">preview</Sticker>
   </CardHeader>
-  <CardTitle>North studio</CardTitle>
-  <CardContent>Live preview slot — pass your canvas as children.</CardContent>
+  <CardTitle>My project</CardTitle>
+  <CardContent>Live preview slot — pass your content as children.</CardContent>
 </Card>
 ```
 
@@ -569,7 +569,7 @@ const [accountType, setAccountType] = useState("personal");
       { label: "Team", value: "team" },
     ]}
   />
-  <Button fullWidth>Continue with Google</Button>
+  <Button fullWidth>Continue with SSO</Button>
   <TextField label="Email" type="email" name="email" />
   <TextField label="Password" type="password" name="password" />
   <Checkbox>Email me product updates</Checkbox>
@@ -757,19 +757,17 @@ Example:
 ```
 
 #### Logo
-Import: `Logo, logoMarkIds, logoMarkLabels`
-Use: CodedDesign wordmark or square mark, or pick an open-source brand from Simple Icons (CC0). Use decorative inside a named link.
+Import: `Logo`
+Use: CodedDesign wordmark or square mark. Use decorative inside a named link. Pass your own brand marks in the app — do not bake third-party logos into the system.
 Live: /components/logo
 Props:
-- `mark`: LogoMark · default "coded" · coded | github | npm | react | nextdotjs | typescript | javascript | figma | vercel | git | markdown | css3 | html5
-- `wordmark`: boolean · default false · Full coded / DESIGN. lockup (coded mark only)
+- `wordmark`: boolean · default false · Full coded / DESIGN. lockup
 - `size`: "sm" | "md" | "lg" · default "md"
 - `decorative`: boolean · default false
 Example:
 ```tsx
 <Logo wordmark size="lg" />
-<Logo mark="coded" size="md" />
-<Logo mark="github" size="md" />
+<Logo size="md" />
 ```
 
 #### Typography
@@ -1403,7 +1401,7 @@ Props:
 - `children`: ReactNode · required
 Example:
 ```tsx
-<HoverCard trigger={<Button>Ada Lovelace</Button>}>Designer · North studio</HoverCard>
+<HoverCard trigger={<Button>Alex Rivera</Button>}>Designer · Product</HoverCard>
 ```
 
 #### DataTable
@@ -1415,7 +1413,7 @@ Props:
 - `columns`: { key: keyof Row & string; header: string; filter?: boolean }[] · required
 Example:
 ```tsx
-<DataTable rows={[{ name: "North studio", owner: "Ada" }]} columns={[{ key: "name", header: "Name" }]} />
+<DataTable rows={[{ name: "My project", owner: "Alex" }]} columns={[{ key: "name", header: "Name" }]} />
 ```
 
 #### Table
@@ -1521,7 +1519,7 @@ Props:
 - `children`: ReactNode
 Example:
 ```tsx
-<Alert variant="success" title="Workspace saved">North studio is up to date.</Alert>
+<Alert variant="success" title="Saved">Your changes are up to date.</Alert>
 ```
 
 #### SectionMessage
@@ -1661,7 +1659,7 @@ Props:
 Example:
 ```tsx
 <MessageScroller>
-  <Message from="assistant" name="CodedDesign">How can I help?</Message>
+  <Message from="assistant" name="Assistant">How can I help?</Message>
 </MessageScroller>
 ```
 

@@ -3,6 +3,7 @@
   "version": "0.1.5",
   "private": true,
   "description": "Build your apps with a unique-looking design system from CodedGuy.",
+  "homepage": "https://codeddesign.codedguy.com/",
   "scripts": {
     "dump-llms": "tsx scripts/dump-llms.ts",
     "build": "npm run dump-llms && node scripts/build.js && tsc -p tsconfig.build.json && node scripts/verify-dist.js"

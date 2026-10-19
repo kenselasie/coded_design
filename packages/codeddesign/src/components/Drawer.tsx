@@ -17,7 +17,7 @@ const styles = stylex.create({
     position: "fixed",
     inset: 0,
     zIndex: 40,
-    backgroundColor: "rgba(42, 36, 56, 0.45)",
+    backgroundColor: `color-mix(in srgb, ${colors.black} 45%, transparent)`,
   },
   drawer: {
     position: "fixed",

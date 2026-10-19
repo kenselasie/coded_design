@@ -192,15 +192,10 @@ function PreviewIcon() {
 function PreviewLogo() {
   return (
     <Inline>
-      <Logo mark="coded" wordmark size="md" />
-      <Logo mark="coded" size="md" />
-      <Logo mark="github" size="md" />
-      <Logo mark="react" size="md" />
-      <Logo mark="npm" size="md" />
-      <Logo mark="nextdotjs" size="md" />
-      <Logo mark="typescript" size="md" />
-      <Logo mark="figma" size="md" />
-      <Logo mark="vercel" size="md" />
+      <Logo wordmark size="md" />
+      <Logo size="sm" />
+      <Logo size="md" />
+      <Logo size="lg" />
     </Inline>
   );
 }
@@ -449,10 +444,10 @@ function PreviewTextField() {
     <Stack gap="s">
       <TextField label="Display name" defaultValue="Ada" hint="Shown next to comments." />
       <TextField
-        label="Work email"
+        label="Email"
         type="email"
         defaultValue="ada"
-        error="Use a full address, like ada@studio.dev."
+        error="Use a full address, like alex.com."
       />
       <TextArea label="Bio" defaultValue="I keep the catalog honest." rows={3} />
     </Stack>
@@ -581,7 +576,7 @@ function PreviewAttachment() {
 function PreviewForm() {
   return (
     <Form title="Sign in" description="Use the workspace email you were invited with.">
-      <TextField label="Work email" type="email" name="email" defaultValue="ada@studio.dev" />
+      <TextField label="Email" type="email" name="email" defaultValue="alex.com" />
       <FormActions>
         <Button variant="primary">Sign in</Button>
       </FormActions>
@@ -595,7 +590,7 @@ function PreviewField() {
   return (
     <Stack gap="s">
       <Field label="Studio">
-        <Body>North studio</Body>
+        <Body>My project</Body>
       </Field>
       <SearchInput value={query} onChange={setQuery} />
       <LanguageSelect value={language} onChange={setLanguage} />
@@ -655,7 +650,7 @@ function PreviewCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>North studio</CardTitle>
+        <CardTitle>My project</CardTitle>
       </CardHeader>
       <CardContent>Active milestones for the savings dashboard.</CardContent>
       <CardActions>
@@ -720,7 +715,7 @@ function PreviewTooltip() {
 function PreviewHoverCard() {
   return (
     <HoverCard trigger="Ada Lovelace">
-      Designer on North studio. Last seen today on the invite flow.
+      Designer on My project. Last seen today on the invite flow.
     </HoverCard>
   );
 }
@@ -733,7 +728,7 @@ function PreviewDataTable() {
         { key: "owner", header: "Owner" },
       ]}
       rows={[
-        { name: "North studio", owner: "Ada" },
+        { name: "My project", owner: "Ada" },
         { name: "Harbor", owner: "Noor" },
         { name: "Field notes", owner: "Ken" },
       ]}
@@ -752,7 +747,7 @@ function PreviewTable() {
       </TableHead>
       <TableBody>
         <TableRow>
-          <TableCell>North studio</TableCell>
+          <TableCell>My project</TableCell>
           <TableCell>Ada</TableCell>
         </TableRow>
         <TableRow>
@@ -843,7 +838,7 @@ function PreviewAlert() {
   return (
     <Stack gap="s">
       <Alert variant="success" title="Workspace saved">
-        North studio is up to date.
+        My project is up to date.
       </Alert>
       <Alert variant="warning" title="Invite expires Friday">
         Send the link before the seven days run out.
@@ -890,7 +885,7 @@ function PreviewDialog() {
     <>
       <Button onClick={() => setOpen(true)}>Rename workspace</Button>
       <Dialog open={open} title="Rename" onClose={() => setOpen(false)}>
-        <TextField label="Name" defaultValue="North studio" />
+        <TextField label="Name" defaultValue="My project" />
       </Dialog>
     </>
   );
@@ -906,7 +901,7 @@ function PreviewAlertDialog() {
       </Button>
       <AlertDialog
         open={open}
-        title="Archive North studio?"
+        title="Archive My project?"
         actionLabel="Archive"
         destructive
         onCancel={() => setOpen(false)}
@@ -971,7 +966,7 @@ function PreviewSkeleton() {
 function PreviewMessage() {
   return (
     <MessageScroller>
-      <Message from="assistant" name="CodedDesign">
+      <Message from="assistant" name="Assistant">
         How can I help you today?
       </Message>
       <Message from="user" name="Ada">

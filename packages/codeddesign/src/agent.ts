@@ -35,8 +35,9 @@ export const agentGuide = {
   peers: ["react@^19", "react-dom@^19", "@stylexjs/stylex@0.19.1"],
   css: "@kenselasie/codeddesign/styles.css",
   theme: "@kenselasie/codeddesign/theme",
-  llms: "/llms.txt",
-  catalog: "/components/{id}",
+  site: "https://codeddesign.codedguy.com/",
+  llms: "https://codeddesign.codedguy.com/llms.txt",
+  catalog: "https://codeddesign.codedguy.com/components/{id}",
   skill: "SKILL.md",
   skillFolders: [
     ".agents/skills/codeddesign/",
@@ -67,8 +68,8 @@ export const recipes = [
     use: "Email sign-in with a primary submit.",
     code: `import { Form, TextField, Button, FormActions } from "@kenselasie/codeddesign";
 
-<Form title="Sign in" description="Use the workspace email you were invited with.">
-  <TextField label="Work email" type="email" name="email" />
+<Form title="Sign in" description="Use the email on your account.">
+  <TextField label="Email" type="email" name="email" />
   <FormActions>
     <Button variant="primary">Sign in</Button>
   </FormActions>
@@ -81,7 +82,7 @@ export const recipes = [
     code: `import { DataTable } from "@kenselasie/codeddesign";
 
 <DataTable
-  rows={studios}
+  rows={rows}
   columns={[
     { key: "name", header: "Name" },
     { key: "owner", header: "Owner" },
@@ -95,11 +96,11 @@ export const recipes = [
     code: `import { Message, MessageScroller } from "@kenselasie/codeddesign";
 
 <MessageScroller>
-  <Message from="assistant" name="CodedDesign">
+  <Message from="assistant" name="Assistant">
     How can I help you today?
   </Message>
-  <Message from="user" name="Ada">
-    Show me a savings dashboard.
+  <Message from="user" name="Alex">
+    Show me the overview.
   </Message>
 </MessageScroller>`,
   },
@@ -121,8 +122,8 @@ export const recipes = [
     use: "Inline success or warning after an action.",
     code: `import { Alert } from "@kenselasie/codeddesign";
 
-<Alert variant="success" title="Workspace saved">
-  North studio is up to date.
+<Alert variant="success" title="Saved">
+  Your changes are up to date.
 </Alert>`,
   },
   {
@@ -177,17 +178,17 @@ const [mode, setMode] = useState("project");
       { label: "Space", value: "space" },
     ]}
   />
-  <TextField label="Name" name="name" defaultValue="North studio" />
-  <Button variant="primary">Create workspace</Button>
+  <TextField label="Name" name="name" defaultValue="My project" />
+  <Button variant="primary">Create project</Button>
   <Link href="/browse">Browse templates</Link>
 </Stack>
 
 <Card>
   <CardHeader>
-    <Sticker tone="blue">preview.app</Sticker>
+    <Sticker tone="blue">preview</Sticker>
   </CardHeader>
-  <CardTitle>North studio</CardTitle>
-  <CardContent>Live preview slot — pass your canvas as children.</CardContent>
+  <CardTitle>My project</CardTitle>
+  <CardContent>Live preview slot — pass your content as children.</CardContent>
 </Card>`,
   },
   {
@@ -333,7 +334,7 @@ const [accountType, setAccountType] = useState("personal");
       { label: "Team", value: "team" },
     ]}
   />
-  <Button fullWidth>Continue with Google</Button>
+  <Button fullWidth>Continue with SSO</Button>
   <TextField label="Email" type="email" name="email" />
   <TextField label="Password" type="password" name="password" />
   <Checkbox>Email me product updates</Checkbox>
@@ -648,6 +649,6 @@ If you need the full API, recipes, system design, or this prompt, import {
   toLlmsTxt,
   agentPrompt,
 } from "@kenselasie/codeddesign/agent"
-or fetch /llms.txt from the CodedDesign catalog.
+or open https://codeddesign.codedguy.com/llms.txt
 
 The package ships SKILL.md for any agent. Copy it to codeddesign/SKILL.md in .agents/skills/, .cursor/skills/, .claude/skills/, or .codex/skills/.`;

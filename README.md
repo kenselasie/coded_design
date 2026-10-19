@@ -2,6 +2,8 @@
 
 Build your apps with a unique-looking design system from CodedGuy.
 
+**Live catalog:** [codeddesign.codedguy.com](https://codeddesign.codedguy.com/)
+
 React design system. Tokens, components, and patterns are styled with [StyleX](https://stylexjs.com) and previewed in a Next.js app.
 
 ## Requirements
@@ -36,7 +38,7 @@ This catalog imports the workspace package as `codeddesign`. StyleX is compiled 
 
 ## For agents
 
-The catalog serves [http://localhost:3000/llms.txt](http://localhost:3000/llms.txt). Other projects should import `@kenselasie/codeddesign/agent`. Copy `packages/codeddesign/SKILL.md` into `codeddesign/SKILL.md` under the agent's skills folder (`.agents/skills/`, `.cursor/skills/`, `.claude/skills/`, or `.codex/skills/`). The skill is the same for Cursor, Claude, Codex, and other agents.
+The live catalog serves [llms.txt](https://codeddesign.codedguy.com/llms.txt) (locally: [http://localhost:3000/llms.txt](http://localhost:3000/llms.txt)). Other projects should import `@kenselasie/codeddesign/agent`. Copy `packages/codeddesign/SKILL.md` into `codeddesign/SKILL.md` under the agent's skills folder (`.agents/skills/`, `.cursor/skills/`, `.claude/skills/`, or `.codex/skills/`). The skill is the same for Cursor, Claude, Codex, and other agents.
 
 ## Use it in another project
 

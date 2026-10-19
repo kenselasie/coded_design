@@ -105,13 +105,13 @@ Recipe id: `feature-grid`
 
 ### Create account
 
-Centered auth form with account-type toggle, SSO, email fields, and primary submit.
+Centered auth form with account-type toggle, optional SSO, email fields, and primary submit.
 
 Compose:
 
 - Heading + Body with Link
 - ToggleButton for Personal / Team
-- Button default fullWidth for SSO
+- Button default fullWidth for a generic SSO action
 - TextField stack + Checkbox
 - Button variant="primary" fullWidth
 

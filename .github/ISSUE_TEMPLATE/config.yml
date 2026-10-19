@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
+  - name: Live catalog
+    url: https://codeddesign.codedguy.com/
+    about: Browse components, recipes, and worlds on the public site.
   - name: npm package
     url: https://www.npmjs.com/package/@kenselasie/codeddesign
     about: Install and version history for @kenselasie/codeddesign.

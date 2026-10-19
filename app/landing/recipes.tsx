@@ -224,8 +224,8 @@ const styles = stylex.create({
   },
 });
 
-const studios = [
-  { name: "North studio", owner: "Ada" },
+const projects = [
+  { name: "My project", owner: "Ada" },
   { name: "Harbor", owner: "Noor" },
   { name: "Field notes", owner: "Ken" },
 ];
@@ -259,9 +259,9 @@ function SplitHeroPreview() {
           { label: "Space", value: "space" },
         ]}
       />
-      <TextField label="Name" name="name" defaultValue="North studio" />
+      <TextField label="Name" name="name" defaultValue="My project" />
       <Button variant="primary" size="small">
-        Create workspace
+        Create project
       </Button>
     </Stack>
   );
@@ -355,7 +355,7 @@ function SignupPreview() {
           { label: "Team", value: "team" },
         ]}
       />
-      <TextField label="Email" type="email" name="email" defaultValue="ada@studio.dev" />
+      <TextField label="Email" type="email" name="email" defaultValue="alex.com" />
       <Checkbox defaultChecked={false}>Email me product updates</Checkbox>
       <Button variant="primary" fullWidth size="small">
         Create account
@@ -432,13 +432,13 @@ function AppShellPreview() {
 const previews: Record<string, () => ReactNode> = {
   "sign-in": () => (
     <Stack gap="m">
-      <TextField label="Work email" type="email" name="email" defaultValue="ada@studio.dev" />
+      <TextField label="Email" type="email" name="email" defaultValue="alex@example.com" />
       <Button variant="primary">Sign in</Button>
     </Stack>
   ),
   "data-table": () => (
     <DataTable
-      rows={studios}
+      rows={projects}
       columns={[
         { key: "name", header: "Name" },
         { key: "owner", header: "Owner" },
@@ -447,11 +447,11 @@ const previews: Record<string, () => ReactNode> = {
   ),
   chat: () => (
     <Stack gap="s">
-      <Message from="assistant" name="CodedDesign">
+      <Message from="assistant" name="Assistant">
         How can I help you today?
       </Message>
-      <Message from="user" name="Ada">
-        Show me a savings dashboard.
+      <Message from="user" name="Alex">
+        Show me the overview.
       </Message>
     </Stack>
   ),
@@ -463,8 +463,8 @@ const previews: Record<string, () => ReactNode> = {
     />
   ),
   alert: () => (
-    <Alert variant="success" title="Workspace saved">
-      North studio is up to date.
+    <Alert variant="success" title="Saved">
+      Your changes are up to date.
     </Alert>
   ),
   tabs: () => (

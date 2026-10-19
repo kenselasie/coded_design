@@ -173,24 +173,19 @@ export const reference: GroupDoc[] = [
       {
         id: "logo",
         name: "Logo",
-        import: "Logo, logoMarkIds, logoMarkLabels",
+        import: "Logo",
         href: "/components/logo",
-        use: "CodedDesign wordmark or square mark, or pick an open-source brand from Simple Icons (CC0). Use decorative inside a named link.",
+        use: "CodedDesign wordmark or square mark. Use decorative inside a named link. Pass your own brand marks in the app — do not bake third-party logos into the system.",
         props: [
-          p("mark", "LogoMark", {
-            default: '"coded"',
-            note: "coded | github | npm | react | nextdotjs | typescript | javascript | figma | vercel | git | markdown | css3 | html5",
-          }),
           p("wordmark", "boolean", {
             default: "false",
-            note: "Full coded / DESIGN. lockup (coded mark only)",
+            note: "Full coded / DESIGN. lockup",
           }),
           p("size", '"sm" | "md" | "lg"', { default: '"md"' }),
           p("decorative", "boolean", { default: "false" }),
         ],
         example: `<Logo wordmark size="lg" />
-<Logo mark="coded" size="md" />
-<Logo mark="github" size="md" />`,
+<Logo size="md" />`,
       },
       {
         id: "typography",
@@ -842,7 +837,7 @@ export const reference: GroupDoc[] = [
           p("trigger", "ReactNode", { required: true }),
           p("children", "ReactNode", { required: true }),
         ],
-        example: `<HoverCard trigger={<Button>Ada Lovelace</Button>}>Designer · North studio</HoverCard>`,
+        example: `<HoverCard trigger={<Button>Alex Rivera</Button>}>Designer · Product</HoverCard>`,
       },
       {
         id: "data-table",
@@ -854,7 +849,7 @@ export const reference: GroupDoc[] = [
           p("rows", "Row[]", { required: true }),
           p("columns", "{ key: keyof Row & string; header: string; filter?: boolean }[]", { required: true }),
         ],
-        example: `<DataTable rows={[{ name: "North studio", owner: "Ada" }]} columns={[{ key: "name", header: "Name" }]} />`,
+        example: `<DataTable rows={[{ name: "My project", owner: "Alex" }]} columns={[{ key: "name", header: "Name" }]} />`,
       },
       {
         id: "table",
@@ -964,7 +959,7 @@ export const reference: GroupDoc[] = [
           p("title", "string", { required: true }),
           p("children", "ReactNode"),
         ],
-        example: `<Alert variant="success" title="Workspace saved">North studio is up to date.</Alert>`,
+        example: `<Alert variant="success" title="Saved">Your changes are up to date.</Alert>`,
       },
       {
         id: "section-message",
@@ -1104,7 +1099,7 @@ push({ type: "success", message: "Workspace saved" });`,
           p("children", "ReactNode", { required: true }),
         ],
         example: `<MessageScroller>
-  <Message from="assistant" name="CodedDesign">How can I help?</Message>
+  <Message from="assistant" name="Assistant">How can I help?</Message>
 </MessageScroller>`,
       },
     ],

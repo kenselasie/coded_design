@@ -6,6 +6,8 @@
 
 Build your apps with a unique-looking design system from CodedGuy.
 
+**Catalog:** [codeddesign.codedguy.com](https://codeddesign.codedguy.com/)
+
 Cartoon React components, forms, navigation, and patterns with StyleX tokens, Fredoka + Nunito, and light/dark palettes.
 
 ## Install
@@ -124,10 +126,11 @@ The same `SKILL.md` works for Cursor, Claude, Codex, and other agents. Copy it t
 
 ## Bugs
 
-Report package or catalog bugs from the catalog at `/report`, or open a GitHub issue with the **Bug report** template:
+Report package or catalog bugs from [codeddesign.codedguy.com/report](https://codeddesign.codedguy.com/report), or open a GitHub issue with the **Bug report** template:
 
 [github.com/kenselasie/coded_design/issues](https://github.com/kenselasie/coded_design/issues)
 
 ## Source
 
-[github.com/kenselasie/coded_design](https://github.com/kenselasie/coded_design)
+- Site: [codeddesign.codedguy.com](https://codeddesign.codedguy.com/)
+- Repo: [github.com/kenselasie/coded_design](https://github.com/kenselasie/coded_design)

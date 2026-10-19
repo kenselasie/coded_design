@@ -72,10 +72,10 @@ describe("Checkbox", () => {
 describe("TextField", () => {
   it("marks an invalid field and shows the error", () => {
     render(
-      <TextField label="Email" value="ada" error="Use a full address, like ada@studio.dev." />,
+      <TextField label="Email" value="ada" error="Use a full address, like alex.com." />,
     );
     expect(screen.getByRole("textbox", { name: "Email" })).toHaveAttribute("aria-invalid", "true");
-    expect(screen.getByText("Use a full address, like ada@studio.dev.")).toBeInTheDocument();
+    expect(screen.getByText("Use a full address, like alex.com.")).toBeInTheDocument();
   });
 });
 

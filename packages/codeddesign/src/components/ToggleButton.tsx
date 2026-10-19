@@ -5,6 +5,7 @@ import { colors } from "../tokens/colors.stylex";
 import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
+import { shadows } from "../tokens/shadows.stylex";
 
 const styles = stylex.create({
   group: {
@@ -42,7 +43,7 @@ const styles = stylex.create({
   active: {
     backgroundColor: colors.white,
     color: colors.blueDark,
-    boxShadow: "0 1px 2px rgba(26, 26, 26, 0.06)",
+    boxShadow: shadows.s1,
   },
 });
 

@@ -52,7 +52,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
   const [first, setFirst] = useState("Ada");
   const [last, setLast] = useState("Lovelace");
   const [display, setDisplay] = useState("Ada");
-  const [profileEmail, setProfileEmail] = useState("ada@studio.dev");
+  const [profileEmail, setProfileEmail] = useState("alex.com");
   const [role, setRole] = useState("designer");
   const [bio, setBio] = useState("I keep the component catalog honest.");
   const [listed, setListed] = useState(true);
@@ -85,7 +85,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
             description="Use the workspace email you were invited with."
             onSubmit={() => {
               const next: { email?: string; password?: string } = {};
-              if (!isEmail(email)) next.email = "Use a full address, like ada@studio.dev.";
+              if (!isEmail(email)) next.email = "Use a full address, like alex.com.";
               if (password.length < 8) {
                 next.password = "Use at least 8 characters.";
               }
@@ -98,7 +98,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
               type="email"
               name="email"
               autoComplete="email"
-              placeholder="ada@studio.dev"
+              placeholder="alex.com"
               value={email}
               onChange={(value) => {
                 setEmail(value);
@@ -145,7 +145,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
                 return;
               }
               if (!isEmail(inviteEmail)) {
-                setInviteError("Use a full address, like noor@studio.dev.");
+                setInviteError("Use a full address, like sam.com.");
                 setInvited("");
                 return;
               }
@@ -157,7 +157,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
               label="Email"
               type="email"
               name="invite-email"
-              placeholder="noor@studio.dev"
+              placeholder="sam.com"
               value={inviteEmail}
               onChange={(value) => {
                 setInviteEmail(value);
@@ -241,7 +241,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
           <TextField
             label="Workspace"
             name="workspace"
-            defaultValue="North studio"
+            defaultValue="My project"
             disabled
             hint="Only an owner can change the workspace."
           />
@@ -282,7 +282,7 @@ export function FormGallery({ embedded = false }: { embedded?: boolean }) {
                 setFirst("Ada");
                 setLast("Lovelace");
                 setDisplay("Ada");
-                setProfileEmail("ada@studio.dev");
+                setProfileEmail("alex.com");
                 setRole("designer");
                 setBio("I keep the component catalog honest.");
                 setListed(true);
