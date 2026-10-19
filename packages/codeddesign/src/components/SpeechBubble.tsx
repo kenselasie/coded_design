@@ -1,6 +1,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -14,9 +15,9 @@ const styles = stylex.create({
     marginBottom: "14px",
     paddingBlock: "14px",
     paddingInline: "16px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     borderRadius: radii.l,
     boxShadow: shadows.s2,
     color: colors.black,
@@ -30,12 +31,12 @@ const styles = stylex.create({
       bottom: "-9px",
       width: "16px",
       height: "16px",
-      borderRightWidth: "2px",
-      borderBottomWidth: "2px",
+      borderRightWidth: stroke.width,
+      borderBottomWidth: stroke.width,
       borderRightStyle: "solid",
       borderBottomStyle: "solid",
-      borderRightColor: colors.black,
-      borderBottomColor: colors.black,
+      borderRightColor: colors.line,
+      borderBottomColor: colors.line,
       transform: "rotate(45deg)",
     },
   },

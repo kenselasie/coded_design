@@ -1,6 +1,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -12,13 +13,13 @@ const styles = stylex.create({
     justifyContent: "center",
     paddingBlock: "8px",
     paddingInline: "14px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     borderRadius: radii.m,
     boxShadow: shadows.s1,
     color: colors.onPastel,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
     lineHeight: 1,

@@ -65,7 +65,7 @@ const styles = stylex.create({
     borderTopStyle: "solid",
     borderTopColor: colors.smoke,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
     lineHeight: 1.4,
@@ -108,7 +108,7 @@ const styles = stylex.create({
   },
   step: {
     color: colors.blueDark,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
     textUnderlineOffset: "3px",

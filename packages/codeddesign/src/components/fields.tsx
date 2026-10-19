@@ -3,10 +3,14 @@
 import * as stylex from "@stylexjs/stylex";
 import { useId, type ReactNode, type SelectHTMLAttributes } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
 import { Icon } from "./Icon";
+import { Select as DropdownSelect, type SelectOption } from "./Select";
+
+export type { SelectOption };
 
 const styles = stylex.create({
   field: {
@@ -27,10 +31,10 @@ const styles = stylex.create({
     minHeight: "44px",
     paddingBlock: "10px",
     paddingInline: "14px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     color: colors.black,
     caretColor: colors.blueDark,
@@ -49,9 +53,9 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
-      borderColor: colors.blue,
+      borderColor: colors.blueDark,
       boxShadow: shadows.s1,
     },
   },
@@ -88,9 +92,9 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "-2px",
-      borderColor: colors.blue,
+      borderColor: colors.blueDark,
       boxShadow: "none",
     },
   },
@@ -100,7 +104,7 @@ const styles = stylex.create({
     paddingTop: "8px",
     paddingBottom: "8px",
     fontSize: font.s,
-    borderRadius: radii.pill,
+    borderRadius: radii.control,
   },
   visuallyHidden: {
     position: "absolute",
@@ -118,9 +122,8 @@ const styles = stylex.create({
   },
 });
 
-export type SelectOption = { label: string; value: string };
-
-export function Select({
+/** Native HTML select. Prefer `Select` for the custom dropdown. */
+export function NativeSelect({
   label,
   options,
   value,
@@ -152,6 +155,8 @@ export function Select({
     </label>
   );
 }
+
+export { DropdownSelect as Select };
 
 export function SearchInput({
   label = "Search",
@@ -205,7 +210,7 @@ export function LanguageSelect({
   onChange: (value: string) => void;
 }) {
   return (
-    <Select
+    <DropdownSelect
       label="Language"
       options={languages}
       value={value}

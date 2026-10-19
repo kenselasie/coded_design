@@ -20,7 +20,7 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "3px",
       borderRadius: "6px",
     },
@@ -42,8 +42,8 @@ const styles = stylex.create({
     fontWeight: font.semibold,
   },
   active: {
-    backgroundColor: colors.blue,
-    borderColor: colors.blue,
+    backgroundColor: colors.blueDark,
+    borderColor: colors.blueDark,
     color: colors.onAccent,
   },
   done: {

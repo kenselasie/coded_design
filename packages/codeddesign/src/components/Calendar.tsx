@@ -2,21 +2,15 @@
 
 import * as stylex from "@stylexjs/stylex";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
 import { Icon } from "./Icon";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   calendar: {
-    width: "min(320px, 100%)",
-    padding: "16px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s1,
+    width: "min(288px, 100%)",
   },
   header: {
     display: "flex",
@@ -26,33 +20,10 @@ const styles = stylex.create({
   },
   month: {
     margin: 0,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.m,
     fontWeight: font.semibold,
     color: colors.black,
-  },
-  nav: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "32px",
-    height: "32px",
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    borderRadius: radii.pill,
-    backgroundColor: colors.white,
-    color: colors.black,
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: colors.snowDark,
-    },
-    ":focus-visible": {
-      outlineWidth: "2px",
-      outlineStyle: "solid",
-      outlineColor: colors.blue,
-      outlineOffset: "2px",
-    },
   },
   grid: {
     display: "grid",
@@ -62,36 +33,38 @@ const styles = stylex.create({
   weekday: {
     textAlign: "center",
     color: colors.steel,
-    fontFamily: font.display,
+    fontFamily: font.mono,
     fontSize: font.xxs,
     fontWeight: font.semibold,
+    letterSpacing: "0.04em",
+    textTransform: "uppercase",
     paddingBlock: "4px",
   },
   day: {
     minHeight: "36px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
-    borderRadius: radii.s,
+    borderRadius: radii.control,
     backgroundColor: "transparent",
     color: colors.black,
     fontFamily: font.family,
     fontSize: font.s,
     cursor: "pointer",
     ":hover": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
     },
   },
   muted: {
     color: colors.concrete,
   },
   selected: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.blueDark,
     color: colors.onAccent,
     fontWeight: font.semibold,
     ":hover": {
@@ -99,9 +72,9 @@ const styles = stylex.create({
     },
   },
   today: {
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.pink,
+    borderColor: colors.blueLight,
   },
 });
 
@@ -160,11 +133,21 @@ export function Calendar({
   return (
     <div {...stylex.props(styles.calendar)}>
       <div {...stylex.props(styles.header)}>
-        <button type="button" aria-label="Previous month" onClick={() => shift(-1)} {...stylex.props(styles.nav)}>
+        <button
+          type="button"
+          aria-label="Previous month"
+          onClick={() => shift(-1)}
+          {...stylex.props(dropdown.trigger, dropdown.navChip)}
+        >
           <Icon name="chevronLeft" />
         </button>
         <p {...stylex.props(styles.month)}>{label}</p>
-        <button type="button" aria-label="Next month" onClick={() => shift(1)} {...stylex.props(styles.nav)}>
+        <button
+          type="button"
+          aria-label="Next month"
+          onClick={() => shift(1)}
+          {...stylex.props(dropdown.trigger, dropdown.navChip)}
+        >
           <Icon name="chevronRight" />
         </button>
       </div>

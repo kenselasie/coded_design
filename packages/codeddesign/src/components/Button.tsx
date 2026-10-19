@@ -4,6 +4,7 @@ import { colors } from "../tokens/colors.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { Spinner } from "./Spinner";
 
 export type ButtonVariant =
@@ -36,7 +37,7 @@ const styles = stylex.create({
     position: "relative",
     boxSizing: "border-box",
     margin: 0,
-    borderRadius: radii.l,
+    borderRadius: radii.control,
     backgroundColor: "transparent",
     fontFamily: font.display,
     fontWeight: font.semibold,
@@ -91,9 +92,9 @@ const styles = stylex.create({
   },
   default: {
     color: colors.black,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     outlineColor: colors.black,
     ":hover:not(:disabled)": {
       backgroundColor: colors.black,
@@ -101,7 +102,7 @@ const styles = stylex.create({
     },
     ":disabled": {
       color: colors.smokeDarker,
-      borderColor: colors.smoke,
+      borderColor: colors.line,
       backgroundColor: "transparent",
     },
   },
@@ -116,7 +117,7 @@ const styles = stylex.create({
   primary: {
     color: colors.onAccent,
     backgroundColor: colors.blue,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
     outlineColor: colors.blueDark,
@@ -135,7 +136,7 @@ const styles = stylex.create({
   subtle: {
     color: colors.black,
     backgroundColor: "transparent",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
     outlineColor: colors.smokeDark,
@@ -154,7 +155,7 @@ const styles = stylex.create({
   danger: {
     color: colors.danger,
     backgroundColor: "transparent",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: colors.danger,
     outlineColor: colors.danger,
@@ -171,7 +172,7 @@ const styles = stylex.create({
   dangerSubtle: {
     color: colors.danger,
     backgroundColor: "transparent",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
     outlineColor: colors.danger,
@@ -187,9 +188,9 @@ const styles = stylex.create({
   ghost: {
     color: colors.black,
     backgroundColor: "transparent",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     outlineColor: colors.black,
     ":hover:not(:disabled)": {
       backgroundColor: colors.black,
@@ -207,7 +208,7 @@ const styles = stylex.create({
   ghostSubtle: {
     color: colors.black,
     backgroundColor: "transparent",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
     outlineColor: colors.steel,

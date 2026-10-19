@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useState } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -16,18 +17,18 @@ const styles = stylex.create({
     gap: "16px",
     padding: "24px",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     boxShadow: shadows.s2,
   },
   title: {
     margin: 0,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xl,
     fontWeight: font.bold,
-    letterSpacing: "-0.03em",
+    letterSpacing: "-0.01em",
     color: colors.black,
   },
   description: {
@@ -46,9 +47,9 @@ const styles = stylex.create({
     display: "block",
     width: "100%",
     textAlign: "left",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     borderRadius: radii.m,
     padding: "12px 14px",
     backgroundColor: colors.white,
@@ -66,7 +67,7 @@ const styles = stylex.create({
   },
   label: {
     display: "block",
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontWeight: font.semibold,
   },
   hint: {

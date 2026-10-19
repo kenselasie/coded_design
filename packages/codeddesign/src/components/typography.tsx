@@ -12,13 +12,16 @@ const styles = stylex.create({
     color: colors.black,
     fontFamily: font.display,
     fontWeight: font.bold,
-    lineHeight: 1.25,
+    /** Keep modest tracking — tight negative spacing mushs bold glyphs on dark. */
+    letterSpacing: "-0.01em",
+    lineHeight: 1.22,
   },
   title: {
     margin: 0,
     color: colors.black,
     fontFamily: font.display,
     fontWeight: font.semibold,
+    letterSpacing: "-0.005em",
     lineHeight: 1.3,
   },
   body: {
@@ -38,10 +41,10 @@ const styles = stylex.create({
   detail: {
     margin: 0,
     color: colors.steel,
-    fontFamily: font.family,
+    fontFamily: font.mono,
     fontSize: font.xs,
     fontWeight: font.medium,
-    letterSpacing: "0.04em",
+    letterSpacing: "0.08em",
     lineHeight: 1.4,
     textTransform: "uppercase",
   },

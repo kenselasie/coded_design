@@ -1,0 +1,157 @@
+import * as stylex from "@stylexjs/stylex";
+import { colors } from "../tokens/colors.stylex";
+import { font } from "../tokens/typography.stylex";
+import { radii } from "../tokens/space.stylex";
+import { shadows } from "../tokens/shadows.stylex";
+import { stroke } from "../tokens/stroke.stylex";
+
+/** Shared Select / menu / popover surface — weights and line color come from world tokens. */
+export const dropdown = stylex.create({
+  trigger: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "12px",
+    boxSizing: "border-box",
+    minHeight: "44px",
+    paddingBlock: "10px",
+    paddingInline: "14px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
+    borderStyle: "solid",
+    borderColor: colors.line,
+    backgroundColor: colors.white,
+    color: colors.black,
+    fontFamily: font.family,
+    fontSize: font.m,
+    fontWeight: font.medium,
+    lineHeight: 1.35,
+    textAlign: "left",
+    cursor: "pointer",
+    ":hover": {
+      backgroundColor: colors.snow,
+    },
+    ":focus-visible": {
+      outlineWidth: "2px",
+      outlineStyle: "solid",
+      outlineColor: colors.blueDark,
+      outlineOffset: "2px",
+    },
+  },
+  triggerOpen: {
+    borderColor: colors.blueDark,
+    color: colors.blueDark,
+  },
+  triggerInline: {
+    display: "inline-flex",
+    width: "auto",
+    minWidth: "160px",
+  },
+  control: {
+    width: "100%",
+    boxSizing: "border-box",
+    minHeight: "44px",
+    paddingBlock: "10px",
+    paddingInline: "14px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
+    borderStyle: "solid",
+    borderColor: colors.line,
+    backgroundColor: colors.white,
+    color: colors.black,
+    caretColor: colors.blueDark,
+    fontFamily: font.family,
+    fontSize: font.m,
+    lineHeight: 1.4,
+    "::placeholder": {
+      color: colors.steel,
+      opacity: 1,
+    },
+    ":hover:not(:disabled)": {
+      backgroundColor: colors.snow,
+    },
+    ":focus-visible": {
+      outlineWidth: "2px",
+      outlineStyle: "solid",
+      outlineColor: colors.blueDark,
+      outlineOffset: "2px",
+      borderColor: colors.blueDark,
+      boxShadow: shadows.s1,
+    },
+  },
+  panel: {
+    margin: 0,
+    padding: "6px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
+    borderStyle: "solid",
+    borderColor: colors.line,
+    backgroundColor: colors.white,
+    boxShadow: shadows.s2,
+    maxHeight: "240px",
+    overflowX: "hidden",
+    overflowY: "auto",
+    scrollbarWidth: "thin",
+    scrollbarColor: `${colors.smoke} transparent`,
+  },
+  panelPad: {
+    padding: "12px",
+  },
+  option: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "12px",
+    borderWidth: 0,
+    borderRadius: radii.s,
+    padding: "10px 12px",
+    backgroundColor: "transparent",
+    color: colors.black,
+    fontFamily: font.family,
+    fontSize: font.m,
+    fontWeight: font.regular,
+    lineHeight: 1.35,
+    textAlign: "left",
+    cursor: "pointer",
+    ":hover": {
+      backgroundColor: colors.snow,
+    },
+    ":disabled": {
+      color: colors.concrete,
+      cursor: "not-allowed",
+    },
+  },
+  optionSelected: {
+    backgroundColor: colors.blueLight,
+    color: colors.blueDark,
+    fontWeight: font.medium,
+    ":hover": {
+      backgroundColor: colors.blueLight,
+    },
+  },
+  check: {
+    display: "inline-flex",
+    flexShrink: 0,
+    color: colors.blueDark,
+  },
+  chevron: {
+    display: "inline-flex",
+    flexShrink: 0,
+    color: "inherit",
+    transitionProperty: "transform",
+    transitionDuration: "160ms",
+    transitionTimingFunction: "ease-out",
+  },
+  chevronOpen: {
+    transform: "rotate(180deg)",
+  },
+  navChip: {
+    width: "32px",
+    height: "32px",
+    minHeight: "32px",
+    padding: 0,
+    justifyContent: "center",
+    borderRadius: radii.control,
+  },
+});

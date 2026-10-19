@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useId, useState, type ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -32,10 +33,10 @@ const styles = stylex.create({
     minHeight: "44px",
     paddingBlock: "10px",
     paddingInline: "14px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     color: colors.black,
     caretColor: colors.blueDark,
@@ -52,9 +53,9 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
-      borderColor: colors.blue,
+      borderColor: colors.blueDark,
       boxShadow: shadows.s1,
     },
     ":disabled": {
@@ -82,11 +83,11 @@ const styles = stylex.create({
     position: "absolute",
     right: "8px",
     borderWidth: 0,
-    borderRadius: radii.pill,
+    borderRadius: radii.control,
     padding: "6px 10px",
     backgroundColor: "transparent",
     color: colors.blueDark,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xs,
     fontWeight: font.semibold,
     cursor: "pointer",
@@ -96,7 +97,7 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
   },

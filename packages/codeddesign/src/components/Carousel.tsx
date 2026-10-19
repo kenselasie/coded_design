@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useState, type ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
 import { Icon } from "./Icon";
@@ -15,9 +16,9 @@ const styles = stylex.create({
   stage: {
     overflow: "hidden",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     boxShadow: shadows.s2,
   },
@@ -37,9 +38,9 @@ const styles = stylex.create({
     justifyContent: "center",
     width: "36px",
     height: "36px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     borderRadius: radii.pill,
     backgroundColor: colors.white,
     color: colors.black,
@@ -66,9 +67,9 @@ const styles = stylex.create({
     width: "10px",
     height: "10px",
     padding: 0,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     borderRadius: "50%",
     backgroundColor: colors.white,
     cursor: "pointer",

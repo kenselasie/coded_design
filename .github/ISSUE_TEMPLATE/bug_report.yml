@@ -1,0 +1,72 @@
+name: Bug report
+description: Something looks wrong or breaks in CodedDesign or the catalog.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The catalog form at `/report` can prefill this issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see? Include screenshots if you can.
+      placeholder: The Select dropdown overlays the sticky header…
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      placeholder: The panel should sit under the header…
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /components/select
+        2. Switch to CodedEdwadzi · Coastal dark
+        3. Open the select
+      render: markdown
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where?
+      options:
+        - Component / package
+        - Catalog site
+        - Theme / palette
+        - Agent / recipes / llms.txt
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component or page
+      description: Optional. e.g. Select, Button, /components/tabs
+      placeholder: Select
+  - type: dropdown
+    id: world
+    attributes:
+      label: World
+      options:
+        - CodedCartoony
+        - CodedMarker
+        - CodedEdwadzi
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, package version if known
+      placeholder: Chrome 131 · macOS · @kenselasie/codeddesign 0.1.5
+    validations:
+      required: true

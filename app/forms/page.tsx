@@ -1,10 +1,5 @@
-import type { Metadata } from "next";
-import { FormGallery } from "./gallery";
-
-export const metadata: Metadata = {
-  title: "Forms · CodedDesign",
-};
+import { redirect } from "next/navigation";
 
 export default function FormsPage() {
-  return <FormGallery />;
+  redirect("/#examples");
 }

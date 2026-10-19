@@ -45,6 +45,7 @@ export const markerMagentaLight = stylex.createTheme(colors, {
   background: "rgba(247,241,244,1)",
   white: card,
   black: ink,
+  line: ink,
   steel: "rgba(46,46,46,1)",
   concrete: "rgba(74,74,74,1)",
   blue: magenta,
@@ -77,12 +78,16 @@ export const markerMagentaLight = stylex.createTheme(colors, {
   onPastel: ink,
   well: ink,
   onWell: cream,
+  codeBg: ink,
+  codeFg: cream,
+  codeRule: ink,
 });
 
 export const markerMagentaDark = stylex.createTheme(colors, {
   background: night,
   white: nightCard,
   black: cream,
+  line: cream,
   steel: nightSteel,
   concrete: nightConcrete,
   blue: magenta,
@@ -115,6 +120,9 @@ export const markerMagentaDark = stylex.createTheme(colors, {
   onPastel: ink,
   well: nightWhaleDark,
   onWell: cream,
+  codeBg: nightWhaleDark,
+  codeFg: cream,
+  codeRule: nightWhale,
 });
 
 /** Cyan lead. Lime, magenta, and yellow stay in the block set. */
@@ -122,6 +130,7 @@ export const markerCyanLight = stylex.createTheme(colors, {
   background: "rgba(240,246,246,1)",
   white: card,
   black: ink,
+  line: ink,
   steel: "rgba(46,46,46,1)",
   concrete: "rgba(74,74,74,1)",
   blue: cyan,
@@ -154,12 +163,16 @@ export const markerCyanLight = stylex.createTheme(colors, {
   onPastel: ink,
   well: ink,
   onWell: cream,
+  codeBg: ink,
+  codeFg: cream,
+  codeRule: ink,
 });
 
 export const markerCyanDark = stylex.createTheme(colors, {
   background: night,
   white: nightCard,
   black: cream,
+  line: cream,
   steel: nightSteel,
   concrete: nightConcrete,
   blue: cyan,
@@ -192,6 +205,9 @@ export const markerCyanDark = stylex.createTheme(colors, {
   onPastel: ink,
   well: nightWhaleDark,
   onWell: cream,
+  codeBg: nightWhaleDark,
+  codeFg: cream,
+  codeRule: nightWhale,
 });
 
 /** Yellow lead. Lime, magenta, and cyan stay in the block set. */
@@ -199,6 +215,7 @@ export const markerAmberLight = stylex.createTheme(colors, {
   background: "rgba(246,243,230,1)",
   white: "rgba(255,254,246,1)",
   black: ink,
+  line: ink,
   steel: "rgba(46,46,46,1)",
   concrete: "rgba(74,74,74,1)",
   blue: yellow,
@@ -231,12 +248,16 @@ export const markerAmberLight = stylex.createTheme(colors, {
   onPastel: ink,
   well: ink,
   onWell: cream,
+  codeBg: ink,
+  codeFg: cream,
+  codeRule: ink,
 });
 
 export const markerAmberDark = stylex.createTheme(colors, {
   background: night,
   white: nightCard,
   black: cream,
+  line: cream,
   steel: nightSteel,
   concrete: nightConcrete,
   blue: yellow,
@@ -269,6 +290,9 @@ export const markerAmberDark = stylex.createTheme(colors, {
   onPastel: ink,
   well: nightWhaleDark,
   onWell: cream,
+  codeBg: nightWhaleDark,
+  codeFg: cream,
+  codeRule: nightWhale,
 });
 
 export const markerPalettes: Record<

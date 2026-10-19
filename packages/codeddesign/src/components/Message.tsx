@@ -1,6 +1,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -15,9 +16,9 @@ const styles = stylex.create({
     overflowY: "auto",
     padding: "16px",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.snow,
   },
   row: {
@@ -35,9 +36,9 @@ const styles = stylex.create({
   bubble: {
     padding: "12px 14px",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     boxShadow: shadows.s1,
     fontFamily: font.family,
     fontSize: font.s,
@@ -53,7 +54,7 @@ const styles = stylex.create({
   },
   name: {
     margin: "0 0 4px",
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xs,
     fontWeight: font.semibold,
   },

@@ -43,7 +43,7 @@ const styles = stylex.create({
     boxShadow: shadows.s3,
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: colors.smoke,
+    borderColor: colors.line,
     fontFamily: font.family,
     fontSize: font.s,
     lineHeight: 1.4,

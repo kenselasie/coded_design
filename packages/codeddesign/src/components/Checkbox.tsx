@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useId, useState, type ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { Icon } from "./Icon";
@@ -39,24 +40,24 @@ const styles = stylex.create({
     justifyContent: "center",
     width: "18px",
     height: "18px",
-    borderRadius: radii.s,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.steel,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     color: colors.onAccent,
     flexShrink: 0,
   },
   checked: {
-    backgroundColor: colors.blue,
-    borderColor: colors.blue,
+    backgroundColor: colors.blueDark,
+    borderColor: colors.blueDark,
     animationName: pop,
     animationDuration: "220ms",
     animationTimingFunction: "ease-out",
   },
   boxDisabled: {
     backgroundColor: colors.snowDark,
-    borderColor: colors.smoke,
+    borderColor: colors.line,
     color: colors.concrete,
   },
 });

@@ -12,21 +12,16 @@ const styles = stylex.create({
   list: {
     display: "flex",
     flexDirection: "column",
-    overflow: "hidden",
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    borderRadius: radii.l,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s1,
+    gap: "12px",
   },
   item: {
-    borderBottomWidth: "2px",
-    borderBottomStyle: "solid",
-    borderBottomColor: colors.black,
-  },
-  last: {
-    borderBottomWidth: 0,
+    overflow: "hidden",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: colors.line,
+    borderRadius: radii.control,
+    backgroundColor: colors.white,
+    boxShadow: shadows.s1,
   },
   trigger: {
     display: "flex",
@@ -34,13 +29,14 @@ const styles = stylex.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: "12px",
-    padding: "14px 16px",
+    padding: "18px 20px",
     borderWidth: 0,
     backgroundColor: "transparent",
     color: colors.black,
-    fontFamily: font.display,
-    fontSize: font.s,
+    fontFamily: font.family,
+    fontSize: font.m,
     fontWeight: font.semibold,
+    lineHeight: 1.35,
     textAlign: "left",
     cursor: "pointer",
     ":hover": {
@@ -49,12 +45,14 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "-4px",
     },
   },
   chevron: {
     display: "inline-flex",
+    flexShrink: 0,
+    color: colors.steel,
     transitionProperty: "transform",
     transitionDuration: "160ms",
     transitionTimingFunction: "ease-out",
@@ -64,12 +62,12 @@ const styles = stylex.create({
   },
   panel: {
     margin: 0,
-    paddingBlock: "0 16px",
-    paddingInline: "16px",
+    paddingBlock: "0 18px",
+    paddingInline: "20px",
     color: colors.steel,
     fontFamily: font.family,
     fontSize: font.s,
-    lineHeight: 1.5,
+    lineHeight: 1.55,
   },
 });
 
@@ -78,12 +76,17 @@ export type AccordionItemData = { title: string; content: ReactNode };
 export function Accordion({
   items,
   type = "single",
+  defaultExpanded = true,
 }: {
   items: AccordionItemData[];
   type?: "single" | "multiple";
+  /** When type is single, open the first item on mount. */
+  defaultExpanded?: boolean;
 }) {
   const baseId = useId();
-  const [open, setOpen] = useState<string[]>(type === "multiple" ? [] : items[0] ? ["0"] : []);
+  const [open, setOpen] = useState<string[]>(
+    type === "multiple" || !defaultExpanded || !items[0] ? [] : ["0"],
+  );
 
   const toggle = (key: string) => {
     setOpen((current) => {
@@ -102,10 +105,7 @@ export function Accordion({
         const expanded = open.includes(key);
         const panelId = `${baseId}-panel-${key}`;
         return (
-          <div
-            key={item.title}
-            {...stylex.props(styles.item, index === items.length - 1 && styles.last)}
-          >
+          <div key={item.title} {...stylex.props(styles.item)}>
             <h3 style={{ margin: 0 }}>
               <button
                 type="button"

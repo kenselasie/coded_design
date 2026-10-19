@@ -54,11 +54,13 @@ import { Button } from "@kenselasie/codeddesign";
 import { darkTheme } from "@kenselasie/codeddesign/theme";
 ```
 
-To ship a new version, bump `version` in `packages/codeddesign/package.json`, then:
+To ship a new version, bump `version` in `packages/codeddesign/package.json` (and `agentGuide.version` in `src/agent.ts`), then:
 
 ```bash
 npm run build --workspace codeddesign
 cd packages/codeddesign/dist && npm publish --access public
 ```
+
+The build regenerates `llms.txt` / `SYSTEM.md`, compiles StyleX into `dist/`, emits types, and checks required publish files.
 
 Apply `darkTheme` with `stylex.props` from `@stylexjs/stylex`. The other project does not need the StyleX compiler to use these components.

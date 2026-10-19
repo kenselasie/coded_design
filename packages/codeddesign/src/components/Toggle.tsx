@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -14,29 +15,30 @@ const styles = stylex.create({
     justifyContent: "center",
     minHeight: "36px",
     paddingInline: "12px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
-    fontWeight: font.semibold,
+    fontWeight: font.medium,
     cursor: "pointer",
     ":hover": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
   },
   pressed: {
-    backgroundColor: colors.blue,
-    color: colors.onAccent,
+    backgroundColor: colors.blueLight,
+    color: colors.blueDark,
+    borderColor: colors.blueDark,
     boxShadow: shadows.s1,
   },
 });

@@ -4,6 +4,7 @@ import { Icon } from "codeddesign";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { radii } from "codeddesign/tokens/space.stylex";
 import { shadows } from "codeddesign/tokens/shadows.stylex";
+import { stroke } from "codeddesign/tokens/stroke.stylex";
 import { font } from "codeddesign/tokens/typography.stylex";
 
 const styles = stylex.create({
@@ -14,10 +15,10 @@ const styles = stylex.create({
     gap: "8px",
     minHeight: "40px",
     paddingInline: "16px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: "transparent",
     boxShadow: shadows.s1,
     color: colors.black,
@@ -35,7 +36,7 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.black,
+      outlineColor: colors.blueDark,
       outlineOffset: "3px",
     },
   },

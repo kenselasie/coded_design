@@ -1,6 +1,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { radii } from "../tokens/space.stylex";
 
 const styles = stylex.create({
@@ -9,9 +10,9 @@ const styles = stylex.create({
     width: "100%",
     overflow: "hidden",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.snowDark,
   },
   fill: {

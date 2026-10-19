@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 
 type TabsContextValue = {
@@ -38,7 +39,7 @@ const styles = stylex.create({
     paddingBlock: "10px",
     paddingInline: "14px",
     borderWidth: 0,
-    borderBottomWidth: "2px",
+    borderBottomWidth: stroke.width,
     borderBottomStyle: "solid",
     borderBottomColor: "transparent",
     backgroundColor: "transparent",
@@ -53,13 +54,13 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
   },
   active: {
-    color: colors.black,
-    borderBottomColor: colors.blue,
+    color: colors.blueDark,
+    borderBottomColor: colors.blueDark,
   },
   panel: {
     paddingTop: "16px",

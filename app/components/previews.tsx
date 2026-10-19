@@ -192,9 +192,15 @@ function PreviewIcon() {
 function PreviewLogo() {
   return (
     <Inline>
-      <Logo size="sm" />
-      <Logo size="md" />
-      <Logo size="lg" />
+      <Logo mark="coded" wordmark size="md" />
+      <Logo mark="coded" size="md" />
+      <Logo mark="github" size="md" />
+      <Logo mark="react" size="md" />
+      <Logo mark="npm" size="md" />
+      <Logo mark="nextdotjs" size="md" />
+      <Logo mark="typescript" size="md" />
+      <Logo mark="figma" size="md" />
+      <Logo mark="vercel" size="md" />
     </Inline>
   );
 }
@@ -292,7 +298,7 @@ function PreviewResizable() {
 function PreviewScrollArea() {
   return (
     <ScrollArea>
-      {["Nunito", "Fredoka", "paper cream", "ink purple", "peach snow", "plush shadow"].map(
+      {["Inter", "Fraunces", "soft paper", "teal ink", "coral accent", "soft shadow"].map(
         (item) => (
           <Body key={item}>{item}</Body>
         ),
@@ -384,7 +390,7 @@ function PreviewNav() {
           label: "Library",
           links: [
             { title: "Components", href: "/components", hint: "Every control" },
-            { title: "Forms", href: "/forms", hint: "Sign-in and profile" },
+            { title: "Forms", href: "/#examples", hint: "Sign-in and profile" },
           ],
         },
       ]}
@@ -395,12 +401,34 @@ function PreviewNav() {
 function PreviewSidebar() {
   return (
     <AppSidebar
-      items={[
-        { label: "Home", icon: "home" },
-        { label: "Inbox", icon: "message" },
-        { label: "People", icon: "user" },
-        { label: "Settings", icon: "settings" },
+      brand="Studio"
+      brandHint="Workspace"
+      groups={[
+        { items: [{ label: "Dashboard", icon: "grid" }] },
+        {
+          label: "Browse",
+          items: [
+            { label: "Discover", icon: "compass" },
+            { label: "Search", icon: "search" },
+            { label: "Library", icon: "book" },
+          ],
+        },
+        {
+          label: "Work",
+          items: [
+            { label: "Projects", icon: "calendar" },
+            { label: "Messages", icon: "message" },
+            { label: "Files", icon: "file" },
+            { label: "Billing", icon: "wallet" },
+          ],
+        },
       ]}
+      action={{ label: "Create project" }}
+      footer={[
+        { label: "Settings", icon: "settings" },
+        { label: "Help", icon: "help" },
+      ]}
+      onSignOut={() => undefined}
     />
   );
 }
@@ -432,16 +460,18 @@ function PreviewTextField() {
 }
 
 function PreviewSelect() {
-  const [plan, setPlan] = useState("pro");
+  const [status, setStatus] = useState("all");
   return (
     <Select
-      label="Plan"
-      value={plan}
-      onChange={setPlan}
+      label="Status"
+      hideLabel
+      value={status}
+      onChange={setStatus}
       options={[
-        { label: "Starter", value: "starter" },
-        { label: "Pro", value: "pro" },
-        { label: "Enterprise", value: "enterprise" },
+        { label: "All statuses", value: "all" },
+        { label: "Active", value: "active" },
+        { label: "Draft", value: "draft" },
+        { label: "Archived", value: "archived" },
       ]}
     />
   );
@@ -652,12 +682,19 @@ function PreviewAccordion() {
     <Accordion
       items={[
         {
-          title: "Where do tokens live?",
-          content: "Color, type, space, and shadow tokens are StyleX variables.",
+          title: "What is CodedDesign?",
+          content:
+            "A cartoon React design system with worlds, palettes, and copy-paste recipes.",
         },
         {
-          title: "How do I theme a subtree?",
-          content: "Apply the dark theme with stylex.createTheme on a parent.",
+          title: "Who can use it?",
+          content:
+            "Anyone building a React 19 app. Install the package, import styles.css, and render components.",
+        },
+        {
+          title: "Do I need the StyleX compiler?",
+          content:
+            "Not in consumer apps. The catalog compiles the workspace source; other apps import the built package.",
         },
       ]}
     />
@@ -1012,14 +1049,40 @@ function PreviewDirection() {
 function PreviewFaq() {
   return (
     <FaqSection
-      items={[
+      groups={[
         {
-          question: "Where do tokens live?",
-          answer: "Color, type, space, and shadow tokens are StyleX variables.",
+          title: "Getting started",
+          items: [
+            {
+              question: "What is CodedDesign?",
+              answer:
+                "A cartoon React design system with worlds, palettes, and copy-paste recipes.",
+            },
+            {
+              question: "Who can use it?",
+              answer:
+                "Anyone building a React 19 app. Install the package, import styles.css, and render components.",
+            },
+            {
+              question: "Do I need the StyleX compiler?",
+              answer:
+                "Not in consumer apps. Apply darkTheme or palettes only if you add StyleX yourself.",
+            },
+          ],
         },
         {
-          question: "How do I theme a subtree?",
-          answer: "Apply the dark theme with stylex.createTheme on a parent.",
+          title: "For agents",
+          items: [
+            {
+              question: "Where are the recipes?",
+              answer: "Import recipes from @kenselasie/codeddesign/agent, or open /llms.txt.",
+            },
+            {
+              question: "How do I switch worlds?",
+              answer:
+                "Apply codedcartoony, codedmarker, or codededwadzi themes from @kenselasie/codeddesign/theme.",
+            },
+          ],
         },
       ]}
     />

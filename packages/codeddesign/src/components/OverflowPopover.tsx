@@ -1,46 +1,21 @@
 "use client";
 
 import * as stylex from "@stylexjs/stylex";
-import { useState, type ReactNode } from "react";
-import { colors } from "../tokens/colors.stylex";
-import { font } from "../tokens/typography.stylex";
-import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Icon } from "./Icon";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   root: {
     position: "relative",
     display: "inline-flex",
   },
-  trigger: {
-    borderWidth: "1px",
-    borderStyle: "solid",
-    borderColor: colors.smokeDarker,
-    borderRadius: radii.m,
-    paddingBlock: "8px",
-    paddingInline: "12px",
-    backgroundColor: colors.white,
-    color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.s,
-    cursor: "pointer",
-  },
   panel: {
     position: "absolute",
-    top: "calc(100% + 6px)",
+    top: "calc(100% + 4px)",
     right: 0,
     zIndex: 5,
     minWidth: "180px",
-    padding: "8px",
-    borderRadius: radii.l,
-    borderWidth: "1px",
-    borderStyle: "solid",
-    borderColor: colors.smoke,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s2,
-    color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.s,
   },
 });
 
@@ -51,18 +26,34 @@ export function OverflowPopover({
   label?: string;
   children: ReactNode;
 }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    return () => document.removeEventListener("mousedown", onPointer);
+  }, [open]);
+
   return (
-    <div {...stylex.props(styles.root)}>
+    <div ref={rootRef} {...stylex.props(styles.root)}>
       <button
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        {...stylex.props(styles.trigger)}
+        {...stylex.props(dropdown.trigger, dropdown.triggerInline, open && dropdown.triggerOpen)}
       >
         {label}
+        <span {...stylex.props(dropdown.chevron, open && dropdown.chevronOpen)}>
+          <Icon name="chevron" />
+        </span>
       </button>
-      {open ? <div {...stylex.props(styles.panel)}>{children}</div> : null}
+      {open ? (
+        <div {...stylex.props(dropdown.panel, dropdown.panelPad, styles.panel)}>{children}</div>
+      ) : null}
     </div>
   );
 }

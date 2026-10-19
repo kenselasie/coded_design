@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useId } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 
 const pop = stylex.keyframes({
@@ -42,21 +43,21 @@ const styles = stylex.create({
     height: "20px",
     margin: 0,
     borderRadius: "50%",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.steel,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     display: "grid",
     placeItems: "center",
     ":checked": {
-      borderColor: colors.blue,
+      borderColor: colors.blueDark,
     },
     ":checked::before": {
       content: '""',
       width: "8px",
       height: "8px",
       borderRadius: "50%",
-      backgroundColor: colors.blue,
+      backgroundColor: colors.blueDark,
       animationName: pop,
       animationDuration: "220ms",
       animationTimingFunction: "ease-out",
@@ -64,12 +65,12 @@ const styles = stylex.create({
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
     ":disabled": {
       cursor: "not-allowed",
-      borderColor: colors.smoke,
+      borderColor: colors.line,
     },
   },
 });

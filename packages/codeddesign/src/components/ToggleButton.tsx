@@ -2,6 +2,7 @@
 
 import * as stylex from "@stylexjs/stylex";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 
@@ -10,12 +11,15 @@ const styles = stylex.create({
     display: "inline-flex",
     padding: "4px",
     gap: "4px",
-    borderRadius: radii.l,
-    backgroundColor: colors.snowDark,
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
+    borderStyle: "solid",
+    borderColor: colors.line,
+    backgroundColor: colors.snow,
   },
   button: {
     borderWidth: 0,
-    borderRadius: radii.m,
+    borderRadius: radii.control,
     paddingBlock: "8px",
     paddingInline: "14px",
     backgroundColor: "transparent",
@@ -26,18 +30,19 @@ const styles = stylex.create({
     cursor: "pointer",
     ":hover": {
       color: colors.black,
+      backgroundColor: colors.white,
     },
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
   },
   active: {
     backgroundColor: colors.white,
-    color: colors.black,
-    boxShadow: "3px 5px 12px rgba(42, 36, 56, 0.1)",
+    color: colors.blueDark,
+    boxShadow: "0 1px 2px rgba(26, 26, 26, 0.06)",
   },
 });
 

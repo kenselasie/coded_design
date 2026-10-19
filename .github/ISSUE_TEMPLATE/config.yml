@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: npm package
+    url: https://www.npmjs.com/package/@kenselasie/codeddesign
+    about: Install and version history for @kenselasie/codeddesign.

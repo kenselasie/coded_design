@@ -42,7 +42,7 @@ function isEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-export function FormGallery() {
+export function FormGallery({ embedded = false }: { embedded?: boolean }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
@@ -65,16 +65,18 @@ export function FormGallery() {
   const [invited, setInvited] = useState("");
 
   return (
-    <Stack gap="xl">
-      <Stack gap="xs">
-        <Heading size="xxl" withoutMargins>
-          Forms
-        </Heading>
-        <Body>
-          Sign-in, profile, and invite forms built from the same fields. Submit
-          them to see validation and confirmation.
-        </Body>
-      </Stack>
+    <Stack gap={embedded ? "m" : "xl"}>
+      {embedded ? null : (
+        <Stack gap="xs">
+          <Heading size="xxl" withoutMargins>
+            Forms
+          </Heading>
+          <Body>
+            Sign-in, profile, and invite forms built from the same fields. Submit
+            them to see validation and confirmation.
+          </Body>
+        </Stack>
+      )}
 
       <div {...stylex.props(styles.board)}>
         <div {...stylex.props(styles.stack)}>

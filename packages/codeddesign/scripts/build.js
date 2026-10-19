@@ -95,16 +95,52 @@ const fonts = [
   "@import \"@fontsource/archivo/latin-700.css\";",
   "@import \"@fontsource/archivo/latin-800.css\";",
   "@import \"@fontsource/archivo/latin-900.css\";",
+  "@import \"@fontsource/fraunces/latin-400.css\";",
+  "@import \"@fontsource/fraunces/latin-500.css\";",
+  "@import \"@fontsource/fraunces/latin-600.css\";",
+  "@import \"@fontsource/fraunces/latin-700.css\";",
+  "@import \"@fontsource/fraunces/latin-400-italic.css\";",
+  "@import \"@fontsource/fraunces/latin-600-italic.css\";",
+  "@import \"@fontsource/fraunces/latin-700-italic.css\";",
+  "@import \"@fontsource/inter/latin-400.css\";",
+  "@import \"@fontsource/inter/latin-500.css\";",
+  "@import \"@fontsource/inter/latin-600.css\";",
+  "@import \"@fontsource/inter/latin-700.css\";",
+  "@import \"@fontsource/montserrat/latin-700.css\";",
+  "@import \"@fontsource/jetbrains-mono/latin-400.css\";",
+  "@import \"@fontsource/jetbrains-mono/latin-500.css\";",
+  "",
+  "@font-face {",
+  "  font-family: \"Garet\";",
+  "  font-style: normal;",
+  "  font-weight: 800;",
+  "  font-display: swap;",
+  "  src: url(\"./fonts/Garet-Heavy.woff2\") format(\"woff2\"), url(\"./fonts/Garet-Heavy.woff\") format(\"woff\");",
+  "}",
   "",
   ":root {",
   "  --font-nunito: \"Nunito\", sans-serif;",
   "  --font-fredoka: \"Fredoka\", sans-serif;",
   "  --font-archivo: \"Archivo\", sans-serif;",
+  "  --font-fraunces: \"Fraunces\", \"Times New Roman\", serif;",
+  "  --font-inter: \"Inter\", system-ui, sans-serif;",
+  "  --font-montserrat: \"Montserrat\", Helvetica Neue, Arial, sans-serif;",
+  "  --font-garet: \"Garet\", system-ui, sans-serif;",
+  "  --font-jetbrains-mono: \"JetBrains Mono\", ui-monospace, monospace;",
   "}",
   "",
 ].join("\n");
 
 fs.writeFileSync(path.join(outRoot, "styles.css"), `${fonts}${componentCss}\n`);
+fs.mkdirSync(path.join(outRoot, "fonts"), { recursive: true });
+fs.copyFileSync(
+  path.join(packageRoot, "fonts", "Garet-Heavy.woff2"),
+  path.join(outRoot, "fonts", "Garet-Heavy.woff2"),
+);
+fs.copyFileSync(
+  path.join(packageRoot, "fonts", "Garet-Heavy.woff"),
+  path.join(outRoot, "fonts", "Garet-Heavy.woff"),
+);
 
 const sourcePackage = JSON.parse(fs.readFileSync(path.join(packageRoot, "package.json"), "utf8"));
 const published = {
@@ -150,9 +186,23 @@ const published = {
       default: "./agent.js",
     },
     "./llms.txt": "./llms.txt",
+    "./SYSTEM.md": "./SYSTEM.md",
+    "./SKILL.md": "./SKILL.md",
   },
   peerDependencies: sourcePackage.peerDependencies,
   dependencies: sourcePackage.dependencies,
+  files: [
+    "**/*.js",
+    "**/*.d.ts",
+    "styles.css",
+    "fonts/**",
+    "llms.txt",
+    "SYSTEM.md",
+    "SKILL.md",
+    "logo.svg",
+    "README.md",
+    "LICENSE",
+  ],
 };
 fs.writeFileSync(path.join(outRoot, "package.json"), `${JSON.stringify(published, null, 2)}\n`);
 fs.copyFileSync(path.join(packageRoot, "README.md"), path.join(outRoot, "README.md"));
@@ -160,9 +210,29 @@ fs.copyFileSync(path.join(packageRoot, "LICENSE"), path.join(outRoot, "LICENSE")
 fs.copyFileSync(path.join(packageRoot, "logo.svg"), path.join(outRoot, "logo.svg"));
 fs.copyFileSync(path.join(packageRoot, "llms.txt"), path.join(outRoot, "llms.txt"));
 fs.copyFileSync(path.join(packageRoot, "SKILL.md"), path.join(outRoot, "SKILL.md"));
+fs.copyFileSync(path.join(packageRoot, "SYSTEM.md"), path.join(outRoot, "SYSTEM.md"));
 
 if (!componentCss.includes("--codeddesign")) {
   throw new Error("Compiled CSS is missing design tokens");
 }
 
-console.log(`Built @kenselasie/codeddesign (${rules.length} style rules)`);
+const required = [
+  "index.js",
+  "agent.js",
+  "theme/index.js",
+  "styles.css",
+  "fonts/Garet-Heavy.woff2",
+  "llms.txt",
+  "SYSTEM.md",
+  "SKILL.md",
+  "package.json",
+  "README.md",
+  "LICENSE",
+];
+for (const file of required) {
+  if (!fs.existsSync(path.join(outRoot, file))) {
+    throw new Error(`Publish build missing ${file}`);
+  }
+}
+
+console.log(`Built @kenselasie/codeddesign@${sourcePackage.version} (${rules.length} style rules)`);

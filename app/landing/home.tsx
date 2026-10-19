@@ -1,13 +1,28 @@
 import * as stylex from "@stylexjs/stylex";
+import dynamic from "next/dynamic";
 import { Body, Code, CodeBlock, Heading, Logo } from "codeddesign";
-import { recipes as agentRecipes, agentPrompt } from "codeddesign/agent";
+import { agentPrompt, recipeIndex } from "codeddesign/agent";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { font } from "codeddesign/tokens/typography.stylex";
-import { UseGuide } from "./guide";
-import { RecipeDeck } from "./recipes";
 import { CatalogLink } from "./catalog-link";
-import { PackageItems } from "./package-items";
 import { SeeExamples } from "./see-examples";
+import { WorldExploreHeading, WorldExplorer } from "./world-explorer";
+
+const RecipeDeck = dynamic(
+  () => import("./recipes").then((mod) => ({ default: mod.RecipeDeck })),
+  {
+    loading: () => (
+      <Body>Loading recipes…</Body>
+    ),
+  },
+);
+
+const UseGuide = dynamic(
+  () => import("./guide").then((mod) => ({ default: mod.UseGuide })),
+  {
+    loading: () => null,
+  },
+);
 
 const NARROW = "@media (max-width: 980px)";
 
@@ -19,38 +34,51 @@ const styles = stylex.create({
   },
   bench: {
     display: "grid",
-    gridTemplateColumns: "minmax(280px, 0.9fr) minmax(0, 1.6fr)",
-    gap: "32px",
+    gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+    columnGap: "clamp(16px, 2.5vw, 28px)",
     alignItems: "start",
+    width: "100%",
     [NARROW]: {
       gridTemplateColumns: "1fr",
+      rowGap: "28px",
     },
   },
-  use: {
+  left: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
     gap: "16px",
-    maxWidth: "42ch",
-    [NARROW]: {
-      maxWidth: "none",
-    },
+    minWidth: 0,
+    width: "100%",
   },
-  lockup: {
+  logoSlot: {
     display: "flex",
     alignItems: "center",
-    gap: "14px",
+    minHeight: "83px",
   },
-  code: {
+  right: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    gap: "16px",
+    minWidth: 0,
     width: "100%",
   },
   lead: {
     margin: 0,
     color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.m,
-    lineHeight: 1.5,
-    maxWidth: "36ch",
+    fontFamily: font.display,
+    fontSize: font.xxxl,
+    fontWeight: font.semibold,
+    letterSpacing: "-0.025em",
+    lineHeight: 1.15,
+    maxWidth: "18ch",
+  },
+  codedGuy: {
+    color: colors.blue,
+  },
+  code: {
+    width: "100%",
   },
   agents: {
     display: "flex",
@@ -70,15 +98,13 @@ export function HomeLanding() {
   return (
     <div {...stylex.props(styles.page)}>
       <div {...stylex.props(styles.bench)}>
-        <div {...stylex.props(styles.use)}>
-          <div {...stylex.props(styles.lockup)}>
-            <Logo size="lg" decorative />
-            <Heading size="xxxl" withoutMargins>
-              CodedDesign
-            </Heading>
+        <div {...stylex.props(styles.left)}>
+          <div {...stylex.props(styles.logoSlot)}>
+            <Logo wordmark size="lg" decorative />
           </div>
           <p {...stylex.props(styles.lead)}>
-            Build your apps with a unique-looking design system from CodedGuy.
+            Build your apps with a unique-looking design system from{" "}
+            <span {...stylex.props(styles.codedGuy)}>CodedGuy</span>.
           </p>
           <SeeExamples />
           <div {...stylex.props(styles.code)}>
@@ -88,7 +114,11 @@ export function HomeLanding() {
             <CodeBlock code={usage} language="tsx" />
           </div>
         </div>
-        <PackageItems />
+
+        <div {...stylex.props(styles.right)}>
+          <WorldExploreHeading />
+          <WorldExplorer />
+        </div>
       </div>
 
       <RecipeDeck />
@@ -100,17 +130,17 @@ export function HomeLanding() {
         </Heading>
         <Body>
           Vibe-code against the package, not a screenshot. Paste this into
-          Cursor, Claude, Codex, or any other agent — or open{" "}
+          Cursor, Claude, Codex, or any other agent. Or open{" "}
           <CatalogLink href="/llms">llms.txt</CatalogLink> and import{" "}
           <Code>@kenselasie/codeddesign/agent</Code>. The same{" "}
-          <Code>SKILL.md</Code> works in each agent's skills folder.
+          <Code>SKILL.md</Code> works in each agent&apos;s skills folder.
         </Body>
         <div {...stylex.props(styles.code)}>
           <CodeBlock code={agentPrompt} language="text" />
         </div>
         <Body>
-          {agentRecipes.length} recipes ship with the index:{" "}
-          {agentRecipes.map((recipe) => recipe.title).join(", ")}.
+          {recipeIndex.length} recipes ship with the index:{" "}
+          {recipeIndex.map((recipe) => recipe.title).join(", ")}.
         </Body>
       </section>
     </div>

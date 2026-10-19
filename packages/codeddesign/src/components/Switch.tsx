@@ -36,7 +36,7 @@ const styles = stylex.create({
     transitionDuration: "150ms",
   },
   on: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.blueDark,
   },
   thumb: {
     position: "absolute",

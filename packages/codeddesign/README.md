@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" width="88" height="88" alt="CodedDesign" />
+  <img src="logo.svg" width="220" alt="CodedDesign" />
 </p>
 
 # CodedDesign
@@ -31,20 +31,72 @@ Import `styles.css` once at the root of the app so fonts and tokens land. The co
 
 ## Theme
 
+Pick one world, then a palette. Worlds remap tokens only — do not mix them.
+
 ```tsx
 import * as stylex from "@stylexjs/stylex";
-import { darkTheme, palettes } from "@kenselasie/codeddesign/theme";
+import {
+  darkTheme,
+  palettes,
+  markerPalettes,
+  markerType,
+  markerRadii,
+  markerStroke,
+  markerShadows,
+  edwaPalettes,
+  edwaType,
+  edwaRadii,
+  edwaStroke,
+  edwaShadows,
+} from "@kenselasie/codeddesign/theme";
 
 <div {...stylex.props(darkTheme)}>
   <SaveBar />
 </div>
 
+{/* codedcartoony */}
 <div {...stylex.props(palettes.nord.light)}>
+  <SaveBar />
+</div>
+
+{/* codedmarker */}
+<div
+  {...stylex.props(
+    markerPalettes.highlighter.light,
+    markerType,
+    markerRadii,
+    markerStroke,
+    markerShadows,
+  )}
+>
+  <SaveBar />
+</div>
+
+{/* codededwadzi */}
+<div
+  {...stylex.props(
+    edwaPalettes.coastal.light,
+    edwaType,
+    edwaRadii,
+    edwaStroke,
+    edwaShadows,
+  )}
+>
   <SaveBar />
 </div>
 ```
 
-Palettes: Paper, Nord, Solarized, and Catppuccin — each with a light and dark theme.
+- **codedcartoony** — Paper, Nord, Solarized, Catppuccin
+- **codedmarker** — Highlighter, Magenta, Cyan, Amber
+- **codededwadzi** — Coastal, Coral, Forest, Sand
+
+## System design
+
+Product shells for any app type (split hero, process steps, activity dashboard, feature grid, signup, detail cards, app shell) live in `SYSTEM.md` and `systemDesign` from the agent entry. Customize with props and slots — do not fork component source.
+
+```ts
+import { systemDesign, recipes } from "@kenselasie/codeddesign/agent";
+```
 
 ## For agents
 
@@ -54,6 +106,7 @@ import {
   recipes,
   components,
   reference,
+  systemDesign,
   toLlmsTxt,
 } from "@kenselasie/codeddesign/agent";
 ```
@@ -68,6 +121,12 @@ The same `SKILL.md` works for Cursor, Claude, Codex, and other agents. Copy it t
 - `.cursor/skills/codeddesign/`
 - `.claude/skills/codeddesign/`
 - `.codex/skills/codeddesign/`
+
+## Bugs
+
+Report package or catalog bugs from the catalog at `/report`, or open a GitHub issue with the **Bug report** template:
+
+[github.com/kenselasie/coded_design/issues](https://github.com/kenselasie/coded_design/issues)
 
 ## Source
 

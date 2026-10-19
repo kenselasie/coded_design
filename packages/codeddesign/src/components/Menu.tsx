@@ -3,78 +3,24 @@
 import * as stylex from "@stylexjs/stylex";
 import { useEffect, useState, type ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
 import { Shortcut } from "./Shortcut";
+import { Icon } from "./Icon";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   wrap: {
     position: "relative",
     display: "inline-flex",
   },
-  trigger: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "8px",
-    minHeight: "40px",
-    paddingInline: "14px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    color: colors.black,
-    fontFamily: font.display,
-    fontSize: font.s,
-    fontWeight: font.semibold,
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: colors.snowDark,
-    },
-    ":focus-visible": {
-      outlineWidth: "2px",
-      outlineStyle: "solid",
-      outlineColor: colors.blue,
-      outlineOffset: "2px",
-    },
-  },
   panel: {
     position: "absolute",
-    top: "calc(100% + 6px)",
+    top: "calc(100% + 4px)",
     left: 0,
     zIndex: 12,
     minWidth: "200px",
-    padding: "8px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s2,
-  },
-  item: {
-    display: "flex",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "16px",
-    borderWidth: 0,
-    borderRadius: radii.s,
-    padding: "8px 10px",
-    backgroundColor: "transparent",
-    color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.s,
-    textAlign: "left",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: colors.snowDark,
-    },
-    ":disabled": {
-      color: colors.concrete,
-      cursor: "not-allowed",
-    },
   },
   danger: {
     color: colors.dangerDark,
@@ -87,42 +33,36 @@ const styles = stylex.create({
   },
   bar: {
     display: "inline-flex",
-    gap: "4px",
+    gap: "2px",
     padding: "4px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
   },
   barTrigger: {
     borderWidth: 0,
-    borderRadius: radii.m,
+    borderRadius: radii.control,
     padding: "8px 12px",
     backgroundColor: "transparent",
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
-    fontWeight: font.semibold,
+    fontWeight: font.medium,
     cursor: "pointer",
     ":hover": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
   },
-  open: {
-    backgroundColor: colors.snowDark,
+  barOpen: {
+    backgroundColor: colors.blueLight,
+    color: colors.blueDark,
   },
   context: {
     position: "fixed",
     zIndex: 20,
     minWidth: "200px",
-    padding: "8px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s3,
   },
 });
 
@@ -156,7 +96,7 @@ function Items({
               item.onSelect?.();
               onDone?.();
             }}
-            {...stylex.props(styles.item, item.destructive && styles.danger)}
+            {...stylex.props(dropdown.option, item.destructive && styles.danger)}
           >
             {item.label}
             {item.shortcut ? <Shortcut keys={item.shortcut} /> : null}
@@ -182,12 +122,15 @@ export function DropdownMenu({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        {...stylex.props(styles.trigger)}
+        {...stylex.props(dropdown.trigger, dropdown.triggerInline, open && dropdown.triggerOpen)}
       >
         {label}
+        <span {...stylex.props(dropdown.chevron, open && dropdown.chevronOpen)}>
+          <Icon name="chevron" />
+        </span>
       </button>
       {open ? (
-        <div role="menu" {...stylex.props(styles.panel)}>
+        <div role="menu" {...stylex.props(dropdown.panel, styles.panel)}>
           <Items items={items} onDone={() => setOpen(false)} />
         </div>
       ) : null}
@@ -210,12 +153,12 @@ export function Menubar({
             aria-haspopup="menu"
             aria-expanded={open === menu.label}
             onClick={() => setOpen(open === menu.label ? null : menu.label)}
-            {...stylex.props(styles.barTrigger, open === menu.label && styles.open)}
+            {...stylex.props(styles.barTrigger, open === menu.label && styles.barOpen)}
           >
             {menu.label}
           </button>
           {open === menu.label ? (
-            <div role="menu" {...stylex.props(styles.panel)}>
+            <div role="menu" {...stylex.props(dropdown.panel, styles.panel)}>
               <Items items={menu.items} onDone={() => setOpen(null)} />
             </div>
           ) : null}
@@ -251,7 +194,7 @@ export function ContextMenu({
       {point ? (
         <div
           role="menu"
-          {...stylex.props(styles.context)}
+          {...stylex.props(dropdown.panel, styles.context)}
           style={{ top: point.y, left: point.x }}
         >
           <Items items={items} onDone={() => setPoint(null)} />

@@ -6,8 +6,16 @@ export {
   markerDark,
   markerType,
   markerRadii,
+  markerStroke,
   markerShadows,
   markerShadowsDark,
+  edwaLight,
+  edwaDark,
+  edwaType,
+  edwaRadii,
+  edwaStroke,
+  edwaShadows,
+  edwaShadowsDark,
   type WorldId,
 } from "./worlds";
 export {
@@ -15,6 +23,11 @@ export {
   markerPaletteIds,
   type MarkerPaletteId,
 } from "./markerPalettes";
+export {
+  edwaPalettes,
+  edwaPaletteIds,
+  type EdwaPaletteId,
+} from "./edwaPalettes";
 export {
   palettes,
   paletteIds,

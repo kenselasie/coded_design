@@ -1,6 +1,7 @@
 import * as stylex from "@stylexjs/stylex";
 import type { ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -11,9 +12,9 @@ const styles = stylex.create({
     flexDirection: "column",
     overflow: "hidden",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     boxShadow: shadows.s1,
   },
@@ -50,7 +51,7 @@ const styles = stylex.create({
   title: {
     margin: 0,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
   },

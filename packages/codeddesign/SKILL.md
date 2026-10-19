@@ -20,7 +20,7 @@ Peers: React 19, `@stylexjs/stylex` 0.19.1. Do not add a StyleX compiler unless 
 
 ## Rules
 
-- Pick one world. codedcartoony: Fredoka, Nunito, plush shadows, palettes paper / nord / solarized / catppuccin. codedmarker: Archivo, hard ink shadows, palettes highlighter / magenta / cyan / amber.
+- Pick one world. codedcartoony: Fredoka, Nunito, plush shadows, palettes paper / nord / solarized / catppuccin. codedmarker: Archivo, hard ink shadows, palettes highlighter / magenta / cyan / amber. codededwadzi: Fraunces, Inter, JetBrains Mono, soft editorial shadows, palettes coastal / coral / forest / sand.
 - Do not restyle toward shadcn/ui or Ant Design.
 - Do not copy component source into the app.
 - Do not invent props. Use package types or `flattenReference()` from `@kenselasie/codeddesign/agent`.
@@ -38,16 +38,28 @@ import {
   components,
   reference,
   flattenReference,
+  systemDesign,
+  toSystemDesignMarkdown,
   toLlmsTxt,
   agentPrompt,
 } from "@kenselasie/codeddesign/agent";
 ```
 
-`reference` is the full API: every export grouped with props, examples, and `/components/{id}` hrefs. `toLlmsTxt()` dumps that catalog as markdown. The live catalog serves the same text at `/llms.txt`.
+`reference` is the full API: every export grouped with props, examples, and `/components/{id}` hrefs. `systemDesign` is the product-shell contract. `toLlmsTxt()` dumps that catalog as markdown. The live catalog serves the same text at `/llms.txt`.
+
+## System design
+
+Product shells for any app type live in `systemDesign` and `SYSTEM.md`. Customize with props and slots — do not fork components.
+
+Surfaces: split hero, process steps, activity dashboard, feature grid, signup, detail cards, app shell.
+
+```ts
+import { systemDesign, toSystemDesignMarkdown } from "@kenselasie/codeddesign/agent";
+```
 
 ## Recipes
 
-Reach for `recipes` before writing a custom layout.
+Reach for `recipes` before writing a custom layout. Shell recipes: `split-hero`, `process-steps`, `activity-dashboard`, `feature-grid`, `signup`, `detail-cards`, `app-shell`.
 
 - Sign-in: `Form` (title required) + `TextField` + `FormActions` + `Button variant="primary"`
 - Table: `DataTable` with `rows: Record<string, string>[]`

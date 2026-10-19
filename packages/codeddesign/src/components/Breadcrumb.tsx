@@ -37,7 +37,7 @@ const styles = stylex.create({
     },
   },
   current: {
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontWeight: font.semibold,
   },
   mark: {

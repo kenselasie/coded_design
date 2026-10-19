@@ -4,6 +4,7 @@ import * as stylex from "@stylexjs/stylex";
 import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -24,19 +25,19 @@ const styles = stylex.create({
     width: "min(420px, 100%)",
     padding: "24px",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     boxShadow: shadows.s4,
   },
   title: {
     margin: 0,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xl,
     fontWeight: font.bold,
-    letterSpacing: "-0.03em",
+    letterSpacing: "-0.01em",
   },
   body: {
     margin: "8px 0 0",

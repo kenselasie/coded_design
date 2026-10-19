@@ -1,52 +1,36 @@
 "use client";
 
 import * as stylex from "@stylexjs/stylex";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { colors } from "../tokens/colors.stylex";
 import { font } from "../tokens/typography.stylex";
-import { radii } from "../tokens/space.stylex";
 import { Icon } from "./Icon";
 import { Calendar } from "./Calendar";
-import { Popover } from "./Popover";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   field: {
     display: "flex",
     flexDirection: "column",
     gap: "6px",
+    position: "relative",
+    minWidth: "220px",
   },
   label: {
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
   },
   trigger: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "12px",
-    minHeight: "44px",
-    minWidth: "220px",
-    paddingInline: "14px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.m,
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: colors.snow,
-    },
-    ":focus-visible": {
-      outlineWidth: "2px",
-      outlineStyle: "solid",
-      outlineColor: colors.blue,
-      outlineOffset: "2px",
-    },
+    width: "100%",
+  },
+  panel: {
+    position: "absolute",
+    top: "calc(100% + 4px)",
+    left: 0,
+    zIndex: 12,
+    minWidth: "280px",
   },
 });
 
@@ -59,26 +43,60 @@ export function DatePicker({
   value?: Date;
   onChange: (date: Date) => void;
 }) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   const [month, setMonth] = useState(value ?? new Date());
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <div {...stylex.props(styles.field)}>
+    <div ref={rootRef} {...stylex.props(styles.field)}>
       <span {...stylex.props(styles.label)}>{label}</span>
-      <Popover
-        trigger={
-          <button type="button" {...stylex.props(styles.trigger)}>
-            {value
-              ? value.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })
-              : "Pick a date"}
-            <Icon name="calendar" />
-          </button>
-        }
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+        {...stylex.props(dropdown.trigger, styles.trigger, open && dropdown.triggerOpen)}
       >
-        <Calendar value={value} month={month} onMonthChange={setMonth} onChange={onChange} />
-      </Popover>
+        <span>
+          {value
+            ? value.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })
+            : "Pick a date"}
+        </span>
+        <Icon name="calendar" />
+      </button>
+      {open ? (
+        <div {...stylex.props(dropdown.panel, dropdown.panelPad, styles.panel)}>
+          <Calendar
+            value={value}
+            month={month}
+            onMonthChange={setMonth}
+            onChange={(date) => {
+              onChange(date);
+              setOpen(false);
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

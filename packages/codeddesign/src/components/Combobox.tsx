@@ -1,12 +1,11 @@
 "use client";
 
 import * as stylex from "@stylexjs/stylex";
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { colors } from "../tokens/colors.stylex";
 import { font } from "../tokens/typography.stylex";
-import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
 import { Icon } from "./Icon";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   field: {
@@ -18,7 +17,7 @@ const styles = stylex.create({
   },
   label: {
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
   },
@@ -26,64 +25,28 @@ const styles = stylex.create({
     display: "flex",
     alignItems: "center",
     gap: "8px",
-    minHeight: "44px",
-    paddingInline: "14px",
-    borderRadius: radii.m,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    color: colors.black,
+    width: "100%",
   },
   input: {
     flexGrow: 1,
     minWidth: 0,
     borderWidth: 0,
     backgroundColor: "transparent",
-    color: colors.black,
+    color: "inherit",
     fontFamily: font.family,
     fontSize: font.m,
     outline: "none",
   },
   list: {
     position: "absolute",
-    top: "calc(100% + 6px)",
+    top: "calc(100% + 4px)",
     left: 0,
     right: 0,
-    zIndex: 8,
-    margin: 0,
-    padding: "8px",
+    zIndex: 12,
     listStyle: "none",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s2,
-    maxHeight: "220px",
-    overflow: "auto",
-  },
-  option: {
-    display: "block",
-    width: "100%",
-    textAlign: "left",
-    borderWidth: 0,
-    borderRadius: radii.s,
-    padding: "8px 10px",
-    backgroundColor: "transparent",
-    color: colors.black,
-    fontFamily: font.family,
-    fontSize: font.s,
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: colors.snowDark,
-    },
-  },
-  active: {
-    backgroundColor: colors.snowDark,
   },
   empty: {
-    padding: "8px 10px",
+    padding: "10px 12px",
     color: colors.steel,
     fontFamily: font.family,
     fontSize: font.s,
@@ -104,6 +67,8 @@ export function Combobox({
   placeholder?: string;
 }) {
   const id = useId();
+  const listId = `${id}-list`;
+  const rootRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const selected = options.find((option) => option.value === value);
@@ -115,17 +80,27 @@ export function Combobox({
     [options, query],
   );
 
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    return () => document.removeEventListener("mousedown", onPointer);
+  }, [open]);
+
   return (
-    <div {...stylex.props(styles.field)}>
+    <div ref={rootRef} {...stylex.props(styles.field)}>
       <label htmlFor={id} {...stylex.props(styles.label)}>
         {label}
       </label>
-      <div {...stylex.props(styles.control)}>
+      <div {...stylex.props(dropdown.trigger, styles.control, open && dropdown.triggerOpen)}>
         <Icon name="search" />
         <input
           id={id}
           role="combobox"
           aria-expanded={open}
+          aria-controls={listId}
           aria-autocomplete="list"
           value={open ? query : selected?.label ?? ""}
           placeholder={placeholder}
@@ -137,33 +112,43 @@ export function Combobox({
             setQuery(event.target.value);
             setOpen(true);
           }}
-          onBlur={() => window.setTimeout(() => setOpen(false), 120)}
           {...stylex.props(styles.input)}
         />
+        <span {...stylex.props(dropdown.chevron, open && dropdown.chevronOpen)}>
+          <Icon name="chevron" />
+        </span>
       </div>
       {open ? (
-        <ul role="listbox" {...stylex.props(styles.list)}>
+        <ul id={listId} role="listbox" {...stylex.props(dropdown.panel, styles.list)}>
           {visible.length === 0 ? (
             <li {...stylex.props(styles.empty)}>No matches for that search.</li>
           ) : (
-            visible.map((option) => (
-              <li key={option.value}>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={option.value === value}
-                  onMouseDown={(event) => event.preventDefault()}
-                  onClick={() => {
-                    onChange(option.value);
-                    setQuery(option.label);
-                    setOpen(false);
-                  }}
-                  {...stylex.props(styles.option, option.value === value && styles.active)}
-                >
-                  {option.label}
-                </button>
-              </li>
-            ))
+            visible.map((option) => {
+              const isSelected = option.value === value;
+              return (
+                <li key={option.value}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={isSelected}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => {
+                      onChange(option.value);
+                      setQuery(option.label);
+                      setOpen(false);
+                    }}
+                    {...stylex.props(dropdown.option, isSelected && dropdown.optionSelected)}
+                  >
+                    <span>{option.label}</span>
+                    {isSelected ? (
+                      <span {...stylex.props(dropdown.check)}>
+                        <Icon name="check" size={16} />
+                      </span>
+                    ) : null}
+                  </button>
+                </li>
+              );
+            })
           )}
         </ul>
       ) : null}

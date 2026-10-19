@@ -1,10 +1,8 @@
 "use client";
 
 import * as stylex from "@stylexjs/stylex";
-import { useState, type ReactNode } from "react";
-import { colors } from "../tokens/colors.stylex";
-import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   root: {
@@ -13,17 +11,10 @@ const styles = stylex.create({
   },
   panel: {
     position: "absolute",
-    top: "calc(100% + 8px)",
+    top: "calc(100% + 4px)",
     left: 0,
     zIndex: 9,
     minWidth: "220px",
-    padding: "14px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s2,
   },
 });
 
@@ -34,9 +25,27 @@ export function Popover({
   trigger: ReactNode;
   children: ReactNode;
 }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <div {...stylex.props(styles.root)}>
+    <div ref={rootRef} {...stylex.props(styles.root)}>
       <span
         onClick={() => setOpen((value) => !value)}
         onKeyDown={(event) => {
@@ -48,7 +57,9 @@ export function Popover({
       >
         {trigger}
       </span>
-      {open ? <div {...stylex.props(styles.panel)}>{children}</div> : null}
+      {open ? (
+        <div {...stylex.props(dropdown.panel, dropdown.panelPad, styles.panel)}>{children}</div>
+      ) : null}
     </div>
   );
 }

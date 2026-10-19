@@ -9,7 +9,7 @@ const styles = stylex.create({
     alignItems: "center",
     gap: "8px",
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
   },

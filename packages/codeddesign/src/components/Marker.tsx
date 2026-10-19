@@ -25,7 +25,7 @@ const styles = stylex.create({
     gap: "12px",
     width: "100%",
     color: colors.steel,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xs,
     fontWeight: font.semibold,
     letterSpacing: "0.04em",

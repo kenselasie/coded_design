@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useRef } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 
@@ -14,7 +15,7 @@ const styles = stylex.create({
   },
   label: {
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
   },
@@ -26,21 +27,22 @@ const styles = stylex.create({
     width: "44px",
     height: "48px",
     textAlign: "center",
-    borderRadius: radii.m,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xl,
     fontWeight: font.semibold,
     caretColor: colors.blueDark,
     ":focus-visible": {
       outlineWidth: "2px",
       outlineStyle: "solid",
-      outlineColor: colors.blue,
+      outlineColor: colors.blueDark,
       outlineOffset: "2px",
+      borderColor: colors.blueDark,
     },
   },
 });

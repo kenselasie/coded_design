@@ -4,6 +4,8 @@ export const colors = stylex.defineVars({
   background: "rgba(255,247,239,1)",
   white: "rgba(255,252,248,1)",
   black: "rgba(42,36,56,1)",
+  /** Control / field / menu chrome. Matches ink by default; soft worlds remap to smoke. */
+  line: "rgba(42,36,56,1)",
   steel: "rgba(87,87,87,1)",
   concrete: "rgba(153,153,153,1)",
   blue: "rgba(47,125,255,1)",
@@ -36,4 +38,8 @@ export const colors = stylex.defineVars({
   onPastel: "rgba(42,36,56,1)",
   well: "rgba(48,74,98,1)",
   onWell: "rgba(255,247,239,1)",
+  /** CodeBlock surface — cartoony/marker stay terminal-dark; Edwadzi remaps to soft paper. */
+  codeBg: "rgba(48,74,98,1)",
+  codeFg: "rgba(255,247,239,1)",
+  codeRule: "rgba(61,93,116,1)",
 });

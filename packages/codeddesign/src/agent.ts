@@ -3,6 +3,10 @@ import {
   foundations,
   reference,
 } from "./reference";
+import {
+  systemDesign,
+  toSystemDesignMarkdown,
+} from "./systemDesign";
 
 export {
   flattenReference,
@@ -13,9 +17,20 @@ export {
   type PropDoc,
 } from "./reference";
 
+export {
+  systemDesign,
+  systemLayers,
+  systemSurfaces,
+  systemCustomizeRules,
+  toSystemDesignMarkdown,
+  type SystemLayer,
+  type SystemSurface,
+  type SystemRule,
+} from "./systemDesign";
+
 export const agentGuide = {
   package: "@kenselasie/codeddesign",
-  version: "0.1.4",
+  version: "0.1.5",
   install: "npm install @kenselasie/codeddesign",
   peers: ["react@^19", "react-dom@^19", "@stylexjs/stylex@0.19.1"],
   css: "@kenselasie/codeddesign/styles.css",
@@ -30,17 +45,18 @@ export const agentGuide = {
     ".codex/skills/codeddesign/",
   ],
   rules: [
-    "Import styles.css once at the app root so Fredoka, Nunito, Archivo, and tokens land.",
+    "Import styles.css once at the app root so Fredoka, Nunito, Archivo, Fraunces, Inter, JetBrains Mono, and tokens land.",
     "Import components from @kenselasie/codeddesign. Do not copy source files into the app.",
-    "Pick one world. codedcartoony is Fredoka, Nunito, and plush offset+blur shadows. codedmarker is Archivo, hard ink shadows, and lime, magenta, cyan, and yellow blocks. Do not mix them or restyle toward shadcn/ui or Ant Design.",
+    "Pick one world. codedcartoony: Fredoka, Nunito, plush shadows. codedmarker: Archivo, hard ink shadows, neon blocks. codededwadzi: Fraunces, Inter, JetBrains Mono, soft teal/coral paper. Do not mix them or restyle toward shadcn/ui or Ant Design.",
     "The consuming app does not need the StyleX compiler to render components.",
-    "Theme with stylex.props from @kenselasie/codeddesign/theme. codedcartoony palettes are paper, nord, solarized, and catppuccin. codedmarker palettes are highlighter, magenta, cyan, and amber; apply one with markerType, markerRadii, and markerShadows.",
+    "Theme with stylex.props from @kenselasie/codeddesign/theme. codedcartoony palettes: paper, nord, solarized, catppuccin. codedmarker: highlighter, magenta, cyan, amber (+ markerType/radii/stroke/shadows). codededwadzi: coastal, coral, forest, sand (+ edwaType/radii/stroke/shadows). Worlds remap tokens only — do not hardcode one world’s chrome into shared components.",
     "Prefer an existing component over custom HTML for buttons, fields, dialogs, tables, and chat.",
     "Do not nest interactive controls inside links.",
     "Do not nest Card, Form, or MessageScroller inside another card.",
     "SearchInput is fluid. In a sidebar or toolbar use hideLabel and shape=\"pill\".",
     "Each export has a catalog page at /components/{id} with live display, recipe, and props. Compose from the package, not from scraping that page.",
     "Do not invent APIs. If a prop is unknown, omit it or read flattenReference() / package types.",
+    "For product layouts, follow systemDesign surfaces (split hero, process steps, activity dashboard, feature grid, signup, detail cards, app shell). Customize with props and slots.",
   ],
 } as const;
 
@@ -128,7 +144,333 @@ export const recipes = [
   </TabPanel>
 </Tabs>`,
   },
+  {
+    id: "split-hero",
+    title: "Split hero",
+    use: "Configure on one side, live preview on the other. Mode chips, fields, and a primary CTA.",
+    code: `import {
+  Body,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Heading,
+  Link,
+  Stack,
+  Sticker,
+  TextField,
+  ToggleButton,
+} from "@kenselasie/codeddesign";
+
+const [mode, setMode] = useState("project");
+
+<Stack gap="xl">
+  <Heading withoutMargins>Start something new.</Heading>
+  <Body>Name it, pick a mode, and see a live preview as you type.</Body>
+  <ToggleButton
+    value={mode}
+    onChange={setMode}
+    options={[
+      { label: "Project", value: "project" },
+      { label: "Team", value: "team" },
+      { label: "Space", value: "space" },
+    ]}
+  />
+  <TextField label="Name" name="name" defaultValue="North studio" />
+  <Button variant="primary">Create workspace</Button>
+  <Link href="/browse">Browse templates</Link>
+</Stack>
+
+<Card>
+  <CardHeader>
+    <Sticker tone="blue">preview.app</Sticker>
+  </CardHeader>
+  <CardTitle>North studio</CardTitle>
+  <CardContent>Live preview slot — pass your canvas as children.</CardContent>
+</Card>`,
+  },
+  {
+    id: "process-steps",
+    title: "Process steps",
+    use: "Numbered process cards with title, description, and a short footer label.",
+    code: `import { Body, Card, CardContent, CardTitle, Grid, Heading, Stack, Title } from "@kenselasie/codeddesign";
+
+const steps = [
+  { number: "01", title: "Capture", description: "Collect the inputs you need.", footer: "INPUT" },
+  { number: "02", title: "Review", description: "Check, edit, and approve.", footer: "CHECK" },
+  { number: "03", title: "Share", description: "Invite the people who matter.", footer: "TEAM" },
+  { number: "04", title: "Ship", description: "Publish or hand off the result.", footer: "DONE" },
+];
+
+<Stack gap="l">
+  <Heading withoutMargins>From first draft to done.</Heading>
+  <Grid columns={4} gap="m">
+    {steps.map((step) => (
+      <Card key={step.number}>
+        <Title size="l">{step.number}</Title>
+        <CardTitle>{step.title}</CardTitle>
+        <CardContent>{step.description}</CardContent>
+        <Body size="s">{step.footer}</Body>
+      </Card>
+    ))}
+  </Grid>
+</Stack>`,
+  },
+  {
+    id: "activity-dashboard",
+    title: "Activity dashboard",
+    use: "Stat cards plus a recent-activity list with avatars and status tags.",
+    code: `import {
+  Avatar,
+  Body,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Grid,
+  Heading,
+  Item,
+  ItemGroup,
+  Stack,
+  Tag,
+} from "@kenselasie/codeddesign";
+
+<Stack gap="l">
+  <Heading withoutMargins>This week at a glance.</Heading>
+  <Grid columns={2} gap="m">
+    <Card>
+      <CardTitle>Active users</CardTitle>
+      <CardContent>People who opened the app in the last 7 days.</CardContent>
+    </Card>
+    <Card>
+      <CardTitle>Open tasks</CardTitle>
+      <CardContent>Work still waiting on a decision.</CardContent>
+    </Card>
+  </Grid>
+  <Button variant="primary">View reports</Button>
+  <Card>
+    <CardHeader>
+      <CardTitle>Recent activity</CardTitle>
+    </CardHeader>
+    <Stack gap="s">
+      <Heading size="xl" withoutMargins>128 sessions</Heading>
+      <Body>↑ 12% vs last week</Body>
+      <Heading size="xl" withoutMargins>36 tasks done</Heading>
+      <Body>↑ 8%</Body>
+    </Stack>
+    <ItemGroup>
+      <Item
+        title="Ada closed Design review"
+        description="2h ago · Product"
+        media={<Avatar name="Ada Okonkwo" />}
+        actions={<Tag status="success">Done</Tag>}
+      />
+      <Item
+        title="Noor shared Weekly digest"
+        description="Yesterday · Team"
+        media={<Avatar name="Noor Ali" />}
+        actions={<Tag status="active">New</Tag>}
+        last
+      />
+    </ItemGroup>
+  </Card>
+</Stack>`,
+  },
+  {
+    id: "feature-grid",
+    title: "Feature grid",
+    use: "Value cards with icon, title, and short description.",
+    code: `import { Card, CardContent, CardTitle, Grid, Heading, Icon, Stack } from "@kenselasie/codeddesign";
+
+const features = [
+  { title: "Fast to ship", icon: "spark" as const, body: "Compose screens from recipes, not blank canvases." },
+  { title: "Clear by default", icon: "checkCircle" as const, body: "Readable type, honest empty states, obvious CTAs." },
+  { title: "One system", icon: "grip" as const, body: "Same controls for social, dashboards, and settings." },
+];
+
+<Stack gap="l">
+  <Heading withoutMargins>Why teams reach for it</Heading>
+  <Grid columns={3} gap="m">
+    {features.map((item) => (
+      <Card key={item.title}>
+        <Icon name={item.icon} />
+        <CardTitle>{item.title}</CardTitle>
+        <CardContent>{item.body}</CardContent>
+      </Card>
+    ))}
+  </Grid>
+</Stack>`,
+  },
+  {
+    id: "signup",
+    title: "Create account",
+    use: "Account-type toggle, optional SSO, email fields, primary submit.",
+    code: `import {
+  Body,
+  Button,
+  Checkbox,
+  Heading,
+  Link,
+  Stack,
+  TextField,
+  ToggleButton,
+} from "@kenselasie/codeddesign";
+
+const [accountType, setAccountType] = useState("personal");
+
+<Stack gap="m">
+  <Heading withoutMargins>Create your account</Heading>
+  <Body>
+    Already have one? <Link href="/signin">Sign in</Link>
+  </Body>
+  <ToggleButton
+    value={accountType}
+    onChange={setAccountType}
+    options={[
+      { label: "Personal", value: "personal" },
+      { label: "Team", value: "team" },
+    ]}
+  />
+  <Button fullWidth>Continue with Google</Button>
+  <TextField label="Email" type="email" name="email" />
+  <TextField label="Password" type="password" name="password" />
+  <Checkbox>Email me product updates</Checkbox>
+  <Button variant="primary" fullWidth>
+    Create account
+  </Button>
+</Stack>`,
+  },
+  {
+    id: "detail-cards",
+    title: "Detail cards",
+    use: "About, key-value basics, checklist status, and a media or map slot.",
+    code: `import {
+  Body,
+  Card,
+  CardContent,
+  CardTitle,
+  Grid,
+  Heading,
+  Icon,
+  Inline,
+  Stack,
+  Status,
+} from "@kenselasie/codeddesign";
+
+<Stack gap="l">
+  <Heading withoutMargins>Details</Heading>
+  <Grid columns={2} gap="m">
+    <Card>
+      <CardTitle>About</CardTitle>
+      <CardContent>Product design for teams that ship weekly.</CardContent>
+    </Card>
+    <Card>
+      <CardTitle>Checklist</CardTitle>
+      <Stack gap="s">
+        <Inline>
+          <Icon name="checkCircle" />
+          <Body>Email verified</Body>
+          <Status status="success">Done</Status>
+        </Inline>
+        <Inline>
+          <Icon name="xCircle" />
+          <Body>Two-factor auth</Body>
+          <Status status="neutral">Not yet</Status>
+        </Inline>
+      </Stack>
+    </Card>
+    <Card>
+      <CardTitle>The basics</CardTitle>
+      <Inline>
+        <Body>Timezone</Body>
+        <Body>UTC</Body>
+      </Inline>
+    </Card>
+    <Card>
+      <CardTitle>Media</CardTitle>
+      <CardContent>Slot — pass an image, map, or embed as children.</CardContent>
+    </Card>
+  </Grid>
+</Stack>`,
+  },
+  {
+    id: "app-shell",
+    title: "App shell",
+    use: "Grouped sidebar, primary create action, footer utilities, and a content pane.",
+    code: `import { AppSidebar } from "@kenselasie/codeddesign";
+
+<AppSidebar
+  brand="Studio"
+  brandHint="Workspace"
+  groups={[
+    { items: [{ label: "Dashboard", icon: "grid" }] },
+    {
+      label: "Browse",
+      items: [
+        { label: "Discover", icon: "compass" },
+        { label: "Search", icon: "search" },
+      ],
+    },
+    {
+      label: "Work",
+      items: [
+        { label: "Messages", icon: "message" },
+        { label: "Billing", icon: "wallet" },
+      ],
+    },
+  ]}
+  action={{ label: "Create project" }}
+  footer={[
+    { label: "Settings", icon: "settings" },
+    { label: "Help", icon: "help" },
+  ]}
+  onSignOut={() => {}}
+/>`,
+  },
+  {
+    id: "forms",
+    title: "Forms",
+    use: "Sign-in, profile, and invite forms composed from Form, fields, and actions.",
+    code: `import {
+  Form,
+  FormActions,
+  FormRow,
+  TextField,
+  TextArea,
+  Select,
+  Switch,
+  Checkbox,
+  Button,
+} from "@kenselasie/codeddesign";
+
+<Form title="Your profile" description="What teammates see on comments.">
+  <FormRow>
+    <TextField label="First name" name="first" />
+    <TextField label="Last name" name="last" />
+  </FormRow>
+  <TextField label="Display name" name="display" />
+  <Select
+    label="Role"
+    name="role"
+    options={[
+      { label: "Designer", value: "designer" },
+      { label: "Engineer", value: "engineer" },
+    ]}
+  />
+  <TextArea label="Bio" name="bio" />
+  <Switch>Show my profile in the directory</Switch>
+  <FormActions>
+    <Button variant="subtle">Reset</Button>
+    <Button type="submit" variant="primary">Save profile</Button>
+  </FormActions>
+</Form>`,
+  },
 ] as const;
+
+/** Lightweight index for catalogs that should not pull every recipe code string. */
+export const recipeIndex = recipes.map(({ id, title, use }) => ({ id, title, use }));
 
 export const components = flattenReference().map((item) => ({
   name: item.name,
@@ -192,21 +534,32 @@ export function toLlmsTxt() {
     "  {children}",
     "</div>",
     "",
-    "import { markerPalettes, markerType, markerRadii, markerShadows } from \"@kenselasie/codeddesign/theme\";",
+    "import { markerPalettes, markerType, markerRadii, markerStroke, markerShadows } from \"@kenselasie/codeddesign/theme\";",
     "",
-    "<div {...stylex.props(markerPalettes.highlighter.light, markerType, markerRadii, markerShadows)}>",
+    "<div {...stylex.props(markerPalettes.highlighter.light, markerType, markerRadii, markerStroke, markerShadows)}>",
+    "  {children}",
+    "</div>",
+    "",
+    "import { edwaPalettes, edwaType, edwaRadii, edwaStroke, edwaShadows } from \"@kenselasie/codeddesign/theme\";",
+    "",
+    "<div {...stylex.props(edwaPalettes.coastal.light, edwaType, edwaRadii, edwaStroke, edwaShadows)}>",
     "  {children}",
     "</div>",
     "```",
     "",
     `Worlds: ${foundations.worlds.join(", ")}.`,
     `CodedCartoony palettes: ${foundations.palettes.join(", ")}.`,
-    `CodedMarker palettes: ${foundations.markerPalettes.join(", ")}. Each palette has light and dark.`,
+    `CodedMarker palettes: ${foundations.markerPalettes.join(", ")}.`,
+    `CodedEdwadzi palettes: ${foundations.edwaPalettes.join(", ")}. Each palette has light and dark.`,
     `Fonts: ${foundations.fonts.display}; ${foundations.fonts.body}.`,
     `Ink ${foundations.ink} on paper ${foundations.paper}. Radii: ${foundations.radii.join(", ")}.`,
     `Space: ${foundations.space.join(", ")}. Shadows: ${foundations.shadows}.`,
     `Color roles: ${foundations.colorRoles.join(", ")}.`,
     `Icon names: ${foundations.iconNames.join(", ")}.`,
+    "",
+    "## System design",
+    "",
+    toSystemDesignMarkdown({ heading: false }),
     "",
     "## Rules",
     "",
@@ -221,6 +574,8 @@ export function toLlmsTxt() {
     "  components,",
     "  reference,",
     "  flattenReference,",
+    "  systemDesign,",
+    "  toSystemDesignMarkdown,",
     "  toLlmsTxt,",
     "  agentPrompt,",
     '} from "@kenselasie/codeddesign/agent";',
@@ -273,20 +628,23 @@ Peers: react 19, react-dom 19, @stylexjs/stylex 0.19.1
 Always:
 - import "@kenselasie/codeddesign/styles.css" once at the app root
 - import components from "@kenselasie/codeddesign"
-- keep 2px ink borders, Fredoka display, Nunito body, offset+blur shadows
+- pick one world (codedcartoony, codedmarker, or codededwadzi) and keep its borders, type, and shadows
 - do not restyle toward shadcn/ui or Ant Design
 - do not copy component source into the app
 - do not add a StyleX compiler unless you are applying darkTheme or palettes with stylex.props
 - do not invent props. Read flattenReference() or package types
 - SearchInput fills its parent; use hideLabel and shape="pill" in rails
 - do not nest Card, Form, or MessageScroller inside another card
+- for product layouts, follow systemDesign surfaces and customize with props/slots
 
-If you need the full API, recipes, or this prompt, import {
+If you need the full API, recipes, system design, or this prompt, import {
   agentGuide,
   components,
   recipes,
   reference,
   flattenReference,
+  systemDesign,
+  toSystemDesignMarkdown,
   toLlmsTxt,
   agentPrompt,
 } from "@kenselasie/codeddesign/agent"

@@ -2,6 +2,7 @@
 
 import * as stylex from "@stylexjs/stylex";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 
@@ -15,18 +16,18 @@ const styles = stylex.create({
     minWidth: "36px",
     height: "36px",
     paddingInline: "10px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
-    borderRadius: radii.pill,
+    borderColor: colors.line,
+    borderRadius: radii.control,
     backgroundColor: colors.white,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
-    fontWeight: font.semibold,
+    fontWeight: font.medium,
     cursor: "pointer",
     ":hover:not(:disabled)": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
     ":focus-visible": {
       outlineWidth: "2px",
@@ -41,11 +42,11 @@ const styles = stylex.create({
     },
   },
   current: {
-    backgroundColor: colors.blue,
-    borderColor: colors.blue,
-    color: colors.onAccent,
+    backgroundColor: colors.blueLight,
+    borderColor: colors.blueDark,
+    color: colors.blueDark,
     ":hover:not(:disabled)": {
-      backgroundColor: colors.blue,
+      backgroundColor: colors.blueLight,
     },
   },
 });

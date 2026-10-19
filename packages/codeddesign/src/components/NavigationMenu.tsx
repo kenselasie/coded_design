@@ -5,7 +5,7 @@ import { useState } from "react";
 import { colors } from "../tokens/colors.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
-import { shadows } from "../tokens/shadows.stylex";
+import { dropdown } from "./dropdownStyles";
 
 const styles = stylex.create({
   nav: {
@@ -17,52 +17,46 @@ const styles = stylex.create({
   },
   trigger: {
     borderWidth: 0,
-    borderRadius: radii.pill,
+    borderRadius: radii.control,
     padding: "10px 14px",
     backgroundColor: "transparent",
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
-    fontWeight: font.semibold,
+    fontWeight: font.medium,
     cursor: "pointer",
     ":hover": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
   },
   open: {
-    backgroundColor: colors.snowDark,
+    backgroundColor: colors.blueLight,
+    color: colors.blueDark,
   },
   panel: {
     position: "absolute",
-    top: "calc(100% + 8px)",
+    top: "calc(100% + 4px)",
     left: 0,
     zIndex: 10,
     display: "grid",
     minWidth: "280px",
-    gap: "4px",
-    padding: "12px",
-    borderRadius: radii.l,
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: colors.black,
-    backgroundColor: colors.white,
-    boxShadow: shadows.s2,
+    gap: "2px",
   },
   link: {
     display: "block",
-    borderRadius: radii.m,
+    borderRadius: radii.s,
     padding: "10px 12px",
     color: colors.black,
     fontFamily: font.family,
     fontSize: font.s,
     textDecoration: "none",
     ":hover": {
-      backgroundColor: colors.snowDark,
+      backgroundColor: colors.snow,
     },
   },
   title: {
     display: "block",
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontWeight: font.semibold,
   },
   hint: {
@@ -103,7 +97,7 @@ export function NavigationMenu({
                 {item.label}
               </button>
               {open === item.label ? (
-                <div {...stylex.props(styles.panel)}>
+                <div {...stylex.props(dropdown.panel, dropdown.panelPad, styles.panel)}>
                   {item.links.map((link) => (
                     <a key={link.href} href={link.href} {...stylex.props(styles.link)}>
                       <span {...stylex.props(styles.title)}>{link.title}</span>

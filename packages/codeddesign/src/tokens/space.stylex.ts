@@ -15,4 +15,6 @@ export const radii = stylex.defineVars({
   m: "16px",
   l: "22px",
   pill: "999px",
+  /** Buttons and form controls — soft editorial remaps to 8px; Marker to 4px. */
+  control: "22px",
 });

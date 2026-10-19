@@ -1,7 +1,8 @@
 "use client";
 
 import * as stylex from "@stylexjs/stylex";
-import { SearchInput, Select, type SelectOption } from "../components/fields";
+import { SearchInput } from "../components/fields";
+import { Select, type SelectOption } from "../components/Select";
 
 const styles = stylex.create({
   bar: {

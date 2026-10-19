@@ -175,8 +175,9 @@ export default function FoundationsPage() {
           Foundations
         </Heading>
         <Body>
-          Color, type, and elevation. CodedCartoony uses Paper, Nord, Solarized, and Catppuccin.
-          CodedMarker uses Highlighter, Magenta, Cyan, and Amber, with Archivo, square corners, and a hard ink shadow.
+          Color, type, and elevation. CodedCartoony: Paper, Nord, Solarized, Catppuccin.
+          CodedMarker: Highlighter, Magenta, Cyan, Amber. CodedEdwadzi: Coastal, Coral, Forest, Sand
+          (Fraunces + Inter + JetBrains Mono, soft teal and coral paper).
         </Body>
       </Stack>
       <section>

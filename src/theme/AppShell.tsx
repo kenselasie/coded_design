@@ -8,11 +8,20 @@ import { Logo, ToastProvider } from "codeddesign";
 import { colors } from "codeddesign/tokens/colors.stylex";
 import { radii } from "codeddesign/tokens/space.stylex";
 import { shadows } from "codeddesign/tokens/shadows.stylex";
+import { stroke } from "codeddesign/tokens/stroke.stylex";
 import { font } from "codeddesign/tokens/typography.stylex";
 import {
+  edwaPalettes,
+  edwaPaletteIds,
+  edwaRadii,
+  edwaStroke,
+  edwaShadows,
+  edwaShadowsDark,
+  edwaType,
   markerPalettes,
   markerPaletteIds,
   markerRadii,
+  markerStroke,
   markerShadows,
   markerShadowsDark,
   markerType,
@@ -20,16 +29,19 @@ import {
   paletteIds,
   worldIds,
   worlds,
+  type EdwaPaletteId,
   type MarkerPaletteId,
   type PaletteId,
   type WorldId,
 } from "codeddesign/theme";
+import { WorldContext } from "./world-context";
 
 const NARROW = "@media (max-width: 900px)";
 
 const nav = [
   { href: "/", label: "Overview" },
   { href: "/components", label: "Components" },
+  { href: "/report", label: "Report a bug" },
 ];
 
 const styles = stylex.create({
@@ -47,7 +59,20 @@ const styles = stylex.create({
     },
   },
   light: { colorScheme: "light" },
-  dark: { colorScheme: "dark" },
+  dark: {
+    colorScheme: "dark",
+    backgroundColor: colors.background,
+    backgroundImage: [
+      `radial-gradient(ellipse 160% 110% at 50% 38%, color-mix(in srgb, ${colors.turquoise} 11%, transparent), transparent 72%)`,
+      `radial-gradient(ellipse 120% 90% at 50% 52%, color-mix(in srgb, ${colors.blue} 8%, transparent), transparent 78%)`,
+      `radial-gradient(ellipse 90% 60% at 50% 18%, color-mix(in srgb, ${colors.pink} 5%, transparent), transparent 64%)`,
+      `linear-gradient(180deg, ${colors.snow} 0%, ${colors.background} 42%, color-mix(in srgb, ${colors.well} 48%, ${colors.background}) 100%)`,
+    ].join(", "),
+    backgroundAttachment: "fixed",
+    /** Grayscale AA keeps light-on-dark bold type sharp instead of subpixel bloom. */
+    WebkitFontSmoothing: "antialiased",
+    MozOsxFontSmoothing: "grayscale",
+  },
   bar: {
     display: "flex",
     flexWrap: "wrap",
@@ -57,9 +82,9 @@ const styles = stylex.create({
     top: 0,
     zIndex: 20,
     padding: "12px 20px",
-    borderBottomWidth: "2px",
+    borderBottomWidth: stroke.width,
     borderBottomStyle: "solid",
-    borderBottomColor: colors.black,
+    borderBottomColor: colors.line,
     backgroundColor: colors.white,
     boxShadow: shadows.s1,
     minWidth: 0,
@@ -67,14 +92,9 @@ const styles = stylex.create({
   brand: {
     display: "inline-flex",
     alignItems: "center",
-    gap: "10px",
     margin: 0,
-    marginRight: "8px",
+    marginRight: "12px",
     color: colors.black,
-    fontFamily: font.display,
-    fontSize: font.xl,
-    fontWeight: font.bold,
-    letterSpacing: "-0.03em",
     textDecoration: "none",
     lineHeight: 1,
     ":focus-visible": {
@@ -82,10 +102,8 @@ const styles = stylex.create({
       outlineStyle: "solid",
       outlineColor: colors.blueDark,
       outlineOffset: "3px",
+      borderRadius: radii.s,
     },
-  },
-  brandName: {
-    transform: "translateY(-1px)",
   },
   navList: {
     display: "flex",
@@ -100,9 +118,9 @@ const styles = stylex.create({
     display: "block",
     flexShrink: 0,
     padding: "8px 14px",
-    borderRadius: radii.pill,
+    borderRadius: radii.control,
     color: colors.steel,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.medium,
     textDecoration: "none",
@@ -150,10 +168,10 @@ const styles = stylex.create({
     gap: "4px",
     minWidth: "280px",
     padding: "6px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
-    borderRadius: radii.l,
+    borderColor: colors.line,
+    borderRadius: radii.m,
     backgroundColor: colors.white,
     boxShadow: shadows.s2,
   },
@@ -164,10 +182,10 @@ const styles = stylex.create({
     gap: "2px",
     width: "100%",
     padding: "8px 12px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
     borderColor: "transparent",
-    borderRadius: radii.m,
+    borderRadius: radii.control,
     backgroundColor: "transparent",
     color: colors.black,
     textAlign: "left",
@@ -183,12 +201,12 @@ const styles = stylex.create({
     },
   },
   menuOn: {
-    borderColor: colors.black,
-    backgroundColor: colors.pinkLight,
+    borderColor: colors.line,
+    backgroundColor: colors.blueLight,
     color: colors.onPastel,
   },
   menuLabel: {
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
     lineHeight: 1.2,
@@ -204,17 +222,19 @@ const styles = stylex.create({
     color: colors.onPastel,
   },
   menuRule: {
-    height: "2px",
+    height: stroke.hairline,
     margin: "4px 8px",
     borderWidth: 0,
-    backgroundColor: colors.smoke,
+    backgroundColor: colors.line,
   },
   menuSection: {
     padding: "6px 12px 2px",
     color: colors.steel,
-    fontFamily: font.display,
+    fontFamily: font.mono,
     fontSize: font.xs,
     fontWeight: font.semibold,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
     lineHeight: 1.2,
   },
   menuPalette: {
@@ -234,10 +254,10 @@ const styles = stylex.create({
     width: "22px",
     height: "22px",
     overflow: "hidden",
-    borderRadius: radii.pill,
-    borderWidth: "2px",
+    borderRadius: radii.control,
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
   },
   dotHalf: {
     flex: 1,
@@ -250,13 +270,13 @@ const styles = stylex.create({
     gap: "8px",
     minHeight: "36px",
     padding: "6px 12px",
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
-    borderRadius: radii.pill,
+    borderColor: colors.line,
+    borderRadius: radii.control,
     backgroundColor: colors.white,
     color: colors.black,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.s,
     fontWeight: font.semibold,
     lineHeight: 1,
@@ -466,6 +486,10 @@ function isMarkerPalette(value: string | null): value is MarkerPaletteId {
   return markerPaletteIds.includes(value as MarkerPaletteId);
 }
 
+function isEdwaPalette(value: string | null): value is EdwaPaletteId {
+  return edwaPaletteIds.includes(value as EdwaPaletteId);
+}
+
 function isWorld(value: string | null): value is WorldId {
   return worldIds.includes(value as WorldId);
 }
@@ -475,6 +499,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const [palette, setPalette] = useState<PaletteId>("paper");
   const [markerPalette, setMarkerPalette] = useState<MarkerPaletteId>("highlighter");
+  const [edwaPalette, setEdwaPalette] = useState<EdwaPaletteId>("coastal");
   const [world, setWorld] = useState<WorldId>("codedcartoony");
 
   useEffect(() => {
@@ -484,8 +509,15 @@ export function AppShell({ children }: { children: ReactNode }) {
     if (isPalette(savedPalette)) setPalette(savedPalette);
     const savedMarker = window.localStorage.getItem("codeddesign-marker-palette");
     if (isMarkerPalette(savedMarker)) setMarkerPalette(savedMarker);
+    const savedEdwa = window.localStorage.getItem("codeddesign-edwa-palette");
+    if (isEdwaPalette(savedEdwa)) setEdwaPalette(savedEdwa);
     const savedWorld = window.localStorage.getItem("codeddesign-world");
-    if (isWorld(savedWorld)) setWorld(savedWorld);
+    if (savedWorld === "codededwa") {
+      setWorld("codededwadzi");
+      window.localStorage.setItem("codeddesign-world", "codededwadzi");
+    } else if (isWorld(savedWorld)) {
+      setWorld(savedWorld);
+    }
   }, []);
 
   const setTheme = (next: "light" | "dark") => {
@@ -500,6 +532,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       window.localStorage.setItem("codeddesign-marker-palette", next);
       return;
     }
+    if (world === "codededwadzi") {
+      if (!isEdwaPalette(next)) return;
+      setEdwaPalette(next);
+      window.localStorage.setItem("codeddesign-edwa-palette", next);
+      return;
+    }
     if (!isPalette(next)) return;
     setPalette(next);
     window.localStorage.setItem("codeddesign-palette", next);
@@ -512,75 +550,95 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const activePalette = palettes[palette];
   const activeMarker = markerPalettes[markerPalette];
+  const activeEdwa = edwaPalettes[edwaPalette];
   const marker = world === "codedmarker";
+  const edwa = world === "codededwadzi";
+  const cartoony = world === "codedcartoony";
   const paletteOptions = marker
     ? markerPaletteIds.map((id) => {
         const item = markerPalettes[id];
         return { id, label: item.label, credit: item.credit, preview: item.preview };
       })
-    : paletteIds.map((id) => {
-        const item = palettes[id];
-        return { id, label: item.label, credit: item.credit, preview: item.preview };
-      });
+    : edwa
+      ? edwaPaletteIds.map((id) => {
+          const item = edwaPalettes[id];
+          return { id, label: item.label, credit: item.credit, preview: item.preview };
+        })
+      : paletteIds.map((id) => {
+          const item = palettes[id];
+          return { id, label: item.label, credit: item.credit, preview: item.preview };
+        });
+  const activePaletteId = marker ? markerPalette : edwa ? edwaPalette : palette;
   const flush = pathname.startsWith("/components");
 
   return (
-    <div
-      {...stylex.props(
-        styles.shell,
-        flush && styles.docked,
-        mode === "light" ? styles.light : styles.dark,
-        !marker && mode === "light" && activePalette.light,
-        !marker && mode === "dark" && activePalette.dark,
-        marker && markerType,
-        marker && markerRadii,
-        marker && (mode === "light" ? activeMarker.light : activeMarker.dark),
-        marker && (mode === "light" ? markerShadows : markerShadowsDark),
-      )}
-    >
-      <header {...stylex.props(styles.bar)}>
-        <Link href="/" {...stylex.props(styles.brand)}>
-          <Logo size="md" decorative />
-          <span {...stylex.props(styles.brandName)}>CodedDesign</span>
-        </Link>
-        <nav aria-label="Primary" {...stylex.props(styles.navList)}>
-          {nav.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                {...stylex.props(styles.link, active && styles.active)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-        <div {...stylex.props(styles.tools)}>
-          <button
-            type="button"
-            onClick={() => setTheme(mode === "light" ? "dark" : "light")}
-            {...stylex.props(styles.toggle)}
-          >
-            {mode === "light" ? <Moon /> : <Sun />}
-            <span {...stylex.props(styles.label)}>{mode === "light" ? "Dark" : "Light"}</span>
-          </button>
-          <ThemeMenu
-            world={world}
-            paletteId={marker ? markerPalette : palette}
-            options={paletteOptions}
-            onChooseWorld={chooseWorld}
-            onChoosePalette={choosePalette}
-          />
-        </div>
-      </header>
-      <ToastProvider>
-        <main {...stylex.props(styles.main, flush && styles.flush)}>{children}</main>
-      </ToastProvider>
-    </div>
+    <WorldContext.Provider value={{ world, chooseWorld }}>
+      <div
+        {...stylex.props(
+          styles.shell,
+          flush && styles.docked,
+          mode === "light" ? styles.light : styles.dark,
+          cartoony && mode === "light" && activePalette.light,
+          cartoony && mode === "dark" && activePalette.dark,
+          marker && markerType,
+          marker && markerRadii,
+          marker && markerStroke,
+          marker && (mode === "light" ? activeMarker.light : activeMarker.dark),
+          marker && (mode === "light" ? markerShadows : markerShadowsDark),
+          edwa && edwaType,
+          edwa && edwaRadii,
+          edwa && edwaStroke,
+          edwa && (mode === "light" ? activeEdwa.light : activeEdwa.dark),
+          edwa && (mode === "light" ? edwaShadows : edwaShadowsDark),
+        )}
+      >
+        <header {...stylex.props(styles.bar)}>
+            <Link href="/" {...stylex.props(styles.brand)}>
+              <Logo wordmark size="sm" decorative />
+            </Link>
+          <nav aria-label="Primary" {...stylex.props(styles.navList)}>
+            {nav.map((item) => {
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  {...stylex.props(styles.link, active && styles.active)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div {...stylex.props(styles.tools)}>
+            <button
+              type="button"
+              onClick={() => setTheme(mode === "light" ? "dark" : "light")}
+              {...stylex.props(styles.toggle)}
+            >
+              {mode === "light" ? <Moon /> : <Sun />}
+              <span {...stylex.props(styles.label)}>
+                {mode === "light" ? "Dark" : "Light"}
+              </span>
+            </button>
+            <ThemeMenu
+              world={world}
+              paletteId={activePaletteId}
+              options={paletteOptions}
+              onChooseWorld={chooseWorld}
+              onChoosePalette={choosePalette}
+            />
+          </div>
+        </header>
+        <ToastProvider>
+          <main {...stylex.props(styles.main, flush && styles.flush)}>
+            {children}
+          </main>
+        </ToastProvider>
+      </div>
+    </WorldContext.Provider>
   );
 }

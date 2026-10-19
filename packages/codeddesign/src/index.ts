@@ -2,6 +2,11 @@ export { Accordion } from "./components/Accordion";
 export { Alert } from "./components/Alert";
 export { AlertDialog } from "./components/AlertDialog";
 export { AppSidebar, AppSidebar as Sidebar } from "./components/AppSidebar";
+export type {
+  AppSidebarGroup,
+  AppSidebarItem,
+  AppSidebarLinkProps,
+} from "./components/AppSidebar";
 export { AspectRatio } from "./components/AspectRatio";
 export { Attachment, AttachmentGroup } from "./components/Attachment";
 export { Avatar } from "./components/Avatar";
@@ -25,7 +30,14 @@ export { DirectionProvider, useDirection } from "./components/Direction";
 export { Divider, Divider as Separator } from "./components/Divider";
 export { Drawer, Sheet } from "./components/Drawer";
 export { FaqSection } from "./components/FaqSection";
-export { Field, LanguageSelect, SearchInput, Select, Select as NativeSelect } from "./components/fields";
+export {
+  Field,
+  LanguageSelect,
+  NativeSelect,
+  SearchInput,
+  Select,
+} from "./components/fields";
+export type { SelectOption } from "./components/Select";
 export { HoverCard } from "./components/HoverCard";
 export { Icon } from "./components/Icon";
 export { InputGroup, InputGroupField } from "./components/InputGroup";
@@ -33,7 +45,8 @@ export { InputOTP } from "./components/InputOTP";
 export { Item, ItemGroup } from "./components/Item";
 export { Label } from "./components/Label";
 export { Link } from "./components/Link";
-export { Logo } from "./components/Logo";
+export { Logo, logoMarkIds, logoMarkLabels } from "./components/Logo";
+export type { LogoMark } from "./components/Logo";
 export { Marker } from "./components/Marker";
 export { ContextMenu, DropdownMenu, Menubar } from "./components/Menu";
 export type { MenuAction } from "./components/Menu";

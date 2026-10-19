@@ -31,7 +31,7 @@ Engineers install from the public npm registry (`npm install @kenselasie/codedde
 - Public package: `@kenselasie/codeddesign` on npmjs. GitHub Packages is not part of the install path.
 - Peers: React 19, `@stylexjs/stylex` 0.19.1. Consumers do not need the StyleX compiler to use prebuilt components.
 - Catalog stack: Next.js 16 App Router, Node 26, TypeScript 7.
-- Existing routes: `/` (home), `/foundations`, `/components`, `/patterns`, `/forms`.
+- Existing routes: `/` (home, recipes include Forms), `/foundations`, `/components`. `/forms` redirects to `/#examples`.
 - Landing must show live examples first, then invite install. Examples include composed product screens and copy-paste recipes with code.
 - Do not invent customers, download counts, or testimonials.
 

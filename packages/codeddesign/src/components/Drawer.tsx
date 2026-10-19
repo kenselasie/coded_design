@@ -4,6 +4,7 @@ import * as stylex from "@stylexjs/stylex";
 import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { font } from "../tokens/typography.stylex";
 import { radii } from "../tokens/space.stylex";
 import { shadows } from "../tokens/shadows.stylex";
@@ -27,14 +28,17 @@ const styles = stylex.create({
     color: colors.black,
     boxShadow: shadows.s4,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
   },
   bottom: {
     left: 0,
     right: 0,
     bottom: 0,
     maxHeight: "80vh",
-    borderWidth: "2px 0 0",
+    borderTopWidth: stroke.width,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
     borderTopLeftRadius: radii.l,
     borderTopRightRadius: radii.l,
     padding: "20px",
@@ -44,7 +48,10 @@ const styles = stylex.create({
     right: 0,
     bottom: 0,
     width: "min(380px, 100%)",
-    borderWidth: "0 0 0 2px",
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: stroke.width,
     padding: "20px",
     [MOBILE]: {
       width: "100%",
@@ -70,10 +77,10 @@ const styles = stylex.create({
   },
   title: {
     margin: 0,
-    fontFamily: font.display,
+    fontFamily: font.family,
     fontSize: font.xl,
     fontWeight: font.bold,
-    letterSpacing: "-0.03em",
+    letterSpacing: "-0.01em",
   },
   close: {
     display: "inline-flex",

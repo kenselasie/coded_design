@@ -3,6 +3,7 @@
 import * as stylex from "@stylexjs/stylex";
 import { useRef, useState, type ReactNode } from "react";
 import { colors } from "../tokens/colors.stylex";
+import { stroke } from "../tokens/stroke.stylex";
 import { radii } from "../tokens/space.stylex";
 import { Icon } from "./Icon";
 
@@ -13,9 +14,9 @@ const styles = stylex.create({
     minHeight: "180px",
     overflow: "hidden",
     borderRadius: radii.l,
-    borderWidth: "2px",
+    borderWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.white,
   },
   pane: {
@@ -30,10 +31,10 @@ const styles = stylex.create({
     width: "16px",
     flexShrink: 0,
     borderWidth: 0,
-    borderLeftWidth: "2px",
-    borderRightWidth: "2px",
+    borderLeftWidth: stroke.width,
+    borderRightWidth: stroke.width,
     borderStyle: "solid",
-    borderColor: colors.black,
+    borderColor: colors.line,
     backgroundColor: colors.snowDark,
     color: colors.black,
     cursor: "col-resize",

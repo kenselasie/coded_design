@@ -26,7 +26,7 @@ const styles = stylex.create({
   },
   input: {
     width: "100%",
-    accentColor: colors.blue,
+    accentColor: colors.blueDark,
     cursor: "pointer",
   },
 });

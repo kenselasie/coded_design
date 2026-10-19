@@ -122,6 +122,54 @@ const paths = {
       <path d="M6 10v10h12V10" />
     </>
   ),
+  grid: (
+    <>
+      <rect x="4" y="4" width="7" height="7" rx="1" />
+      <rect x="13" y="4" width="7" height="7" rx="1" />
+      <rect x="4" y="13" width="7" height="7" rx="1" />
+      <rect x="13" y="13" width="7" height="7" rx="1" />
+    </>
+  ),
+  compass: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m15.5 8.5-2 6-6 2 2-6 6-2z" />
+    </>
+  ),
+  wallet: (
+    <>
+      <path d="M4 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z" />
+      <path d="M4 7V6a2 2 0 0 1 2-2h10" />
+      <circle cx="16" cy="13" r="1.2" />
+    </>
+  ),
+  help: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5" />
+      <path d="M12 17h.01" />
+    </>
+  ),
+  logout: (
+    <>
+      <path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" />
+      <path d="M16 8l4 4-4 4" />
+      <path d="M10 12h10" />
+    </>
+  ),
+  book: (
+    <>
+      <path d="M5 4h11a2 2 0 0 1 2 2v14l-4-2-4 2-4-2-4 2V6a2 2 0 0 1 2-2z" />
+      <path d="M9 4v12" />
+    </>
+  ),
+  document: (
+    <>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5" />
+      <path d="M9 13h6M9 17h4" />
+    </>
+  ),
   checkCircle: (
     <>
       <circle cx="12" cy="12" r="9" />
