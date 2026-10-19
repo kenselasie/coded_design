@@ -45,7 +45,7 @@ import {
 } from "@kenselasie/codeddesign/agent";
 ```
 
-`reference` is the full API: every export grouped with props, examples, and `/components/{id}` hrefs. `systemDesign` is the product-shell contract. `toLlmsTxt()` dumps that catalog as markdown. The live catalog serves the same text at `/llms.txt`.
+`reference` is the full API: every export grouped with props, examples, and catalog hrefs. `systemDesign` is the product-shell contract. `toLlmsTxt()` dumps that catalog as markdown. Live site: [codeddesign.codedguy.com](https://codeddesign.codedguy.com/) (`llms.txt` at `/llms.txt`).
 
 ## System design
 

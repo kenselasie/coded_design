@@ -17,7 +17,7 @@ Cream paper, ink `#2a2438`, Fredoka display, Nunito body, radii 10/16/22/pill, 2
 When an agent is building a *different* app with this system, point it at:
 
 - `@kenselasie/codeddesign/agent` (`agentGuide`, `recipes`, `components`, `reference`, `flattenReference`, `toLlmsTxt`, `agentPrompt`)
-- Catalog `/llms.txt` (generated from `toLlmsTxt()`; also `packages/codeddesign/llms.txt`)
+- Live catalog: https://codeddesign.codedguy.com/ (`/llms.txt` from `toLlmsTxt()`; also `packages/codeddesign/llms.txt`)
 - `packages/codeddesign/SKILL.md` (same skill for Cursor, Claude, Codex, and others — drop into `.agents/skills/codeddesign/`, `.cursor/skills/codeddesign/`, `.claude/skills/codeddesign/`, or `.codex/skills/codeddesign/` in the other project)
 
 ## Do not
