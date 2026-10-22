@@ -48,6 +48,7 @@ import { font } from "codeddesign/tokens/typography.stylex";
 import { FormGallery } from "../forms/gallery";
 
 const NARROW = "@media (max-width: 720px)";
+const TABLET = "@media (max-width: 1100px)";
 const REDUCE = "@media (prefers-reduced-motion: reduce)";
 
 const renderIn = stylex.keyframes({
@@ -74,8 +75,13 @@ const styles = stylex.create({
     gridTemplateColumns: "repeat(6, 1fr)",
     gap: "20px",
     alignItems: "stretch",
+    [TABLET]: {
+      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+      gap: "16px",
+    },
     [NARROW]: {
       gridTemplateColumns: "1fr",
+      gap: "14px",
     },
   },
   spanFull: {
@@ -83,28 +89,43 @@ const styles = stylex.create({
   },
   spanWide: {
     gridColumn: "span 4 / span 4",
+    [TABLET]: { gridColumn: "1 / -1" },
     [NARROW]: { gridColumn: "1 / -1" },
   },
   spanHalf: {
     gridColumn: "span 3 / span 3",
+    [TABLET]: { gridColumn: "span 1" },
     [NARROW]: { gridColumn: "1 / -1" },
   },
   spanNarrow: {
     gridColumn: "span 2 / span 2",
+    [TABLET]: { gridColumn: "span 1" },
     [NARROW]: { gridColumn: "1 / -1" },
   },
   scene: {
     perspective: "1200px",
     minHeight: 280,
+    [NARROW]: {
+      minHeight: 240,
+    },
   },
   sceneTall: {
     minHeight: 380,
+    [NARROW]: {
+      minHeight: 300,
+    },
   },
   sceneXlarge: {
     minHeight: 720,
+    [NARROW]: {
+      minHeight: 420,
+    },
   },
   sceneShort: {
     minHeight: 220,
+    [NARROW]: {
+      minHeight: 200,
+    },
   },
   rig: {
     position: "relative",
@@ -114,6 +135,10 @@ const styles = stylex.create({
     transitionProperty: "transform",
     transitionDuration: "640ms",
     transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+    [NARROW]: {
+      minHeight: 240,
+      height: 240,
+    },
     [REDUCE]: {
       transform: "none",
       height: "auto",
@@ -123,6 +148,10 @@ const styles = stylex.create({
   rigTall: {
     minHeight: 380,
     height: 380,
+    [NARROW]: {
+      minHeight: 300,
+      height: 300,
+    },
     [REDUCE]: {
       height: "auto",
       minHeight: 0,
@@ -131,6 +160,10 @@ const styles = stylex.create({
   rigXlarge: {
     minHeight: 720,
     height: 720,
+    [NARROW]: {
+      minHeight: 420,
+      height: 420,
+    },
     [REDUCE]: {
       height: "auto",
       minHeight: 0,
@@ -139,6 +172,10 @@ const styles = stylex.create({
   rigShort: {
     minHeight: 220,
     height: 220,
+    [NARROW]: {
+      minHeight: 200,
+      height: 200,
+    },
     [REDUCE]: {
       height: "auto",
       minHeight: 0,

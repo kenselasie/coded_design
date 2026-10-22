@@ -41,7 +41,7 @@ const NARROW = "@media (max-width: 900px)";
 const nav = [
   { href: "/", label: "Overview" },
   { href: "/components", label: "Components" },
-  { href: "/report", label: "Report a bug" },
+  { href: "/report", label: "Report" },
 ];
 
 const styles = stylex.create({
@@ -88,10 +88,15 @@ const styles = stylex.create({
     backgroundColor: colors.white,
     boxShadow: shadows.s1,
     minWidth: 0,
+    [NARROW]: {
+      gap: "10px 8px",
+      padding: "10px 12px",
+    },
   },
   brand: {
     display: "inline-flex",
     alignItems: "center",
+    flexShrink: 0,
     margin: 0,
     marginRight: "12px",
     color: colors.black,
@@ -104,6 +109,9 @@ const styles = stylex.create({
       outlineOffset: "3px",
       borderRadius: radii.s,
     },
+    [NARROW]: {
+      marginRight: "auto",
+    },
   },
   navList: {
     display: "flex",
@@ -113,6 +121,12 @@ const styles = stylex.create({
     minWidth: 0,
     flex: "1 1 160px",
     overflowX: "auto",
+    [NARROW]: {
+      order: 3,
+      flex: "1 1 100%",
+      width: "100%",
+      gap: "2px",
+    },
   },
   link: {
     display: "block",
@@ -134,6 +148,10 @@ const styles = stylex.create({
       outlineColor: colors.blueDark,
       outlineOffset: "2px",
     },
+    [NARROW]: {
+      padding: "8px 10px",
+      fontSize: font.xs,
+    },
   },
   active: {
     backgroundColor: colors.snowDark,
@@ -141,19 +159,26 @@ const styles = stylex.create({
   },
   tools: {
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     alignItems: "center",
     gap: "8px",
     marginLeft: "auto",
+    minWidth: 0,
     [NARROW]: {
-      width: "100%",
+      flex: "1 1 auto",
       marginLeft: 0,
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
+      maxWidth: "calc(100% - 96px)",
     },
   },
   menuWrap: {
     position: "relative",
     display: "inline-flex",
+    minWidth: 0,
+    maxWidth: "100%",
+    [NARROW]: {
+      flex: "1 1 auto",
+    },
   },
   chevronOpen: {
     transform: "rotate(180deg)",
@@ -167,6 +192,7 @@ const styles = stylex.create({
     flexDirection: "column",
     gap: "4px",
     minWidth: "280px",
+    maxWidth: "min(320px, calc(100vw - 24px))",
     padding: "6px",
     borderWidth: stroke.width,
     borderStyle: "solid",
@@ -174,6 +200,10 @@ const styles = stylex.create({
     borderRadius: radii.m,
     backgroundColor: colors.white,
     boxShadow: shadows.s2,
+    [NARROW]: {
+      minWidth: 0,
+      width: "min(280px, calc(100vw - 24px))",
+    },
   },
   menuItem: {
     display: "flex",
@@ -269,6 +299,8 @@ const styles = stylex.create({
     justifyContent: "center",
     gap: "8px",
     minHeight: "36px",
+    minWidth: 0,
+    maxWidth: "100%",
     padding: "6px 12px",
     borderWidth: stroke.width,
     borderStyle: "solid",
@@ -290,6 +322,10 @@ const styles = stylex.create({
       outlineColor: colors.blueDark,
       outlineOffset: "3px",
     },
+    [NARROW]: {
+      padding: "6px 10px",
+      gap: "6px",
+    },
   },
   mark: {
     display: "block",
@@ -299,13 +335,23 @@ const styles = stylex.create({
     display: "block",
     lineHeight: 1,
     transform: "translateY(-1px)",
+    flexShrink: 0,
+  },
+  themeLabel: {
+    display: "block",
+    lineHeight: 1,
+    transform: "translateY(-1px)",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    minWidth: 0,
   },
   main: {
     flexGrow: 1,
     minWidth: 0,
     padding: "32px 40px 80px",
     [NARROW]: {
-      padding: "24px 16px 64px",
+      padding: "20px 14px 56px",
     },
   },
   docked: {
@@ -422,7 +468,7 @@ function ThemeMenu({
           <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: activePalette.preview.canvas }} />
           <span {...stylex.props(styles.dotHalf)} style={{ backgroundColor: activePalette.preview.accent }} />
         </span>
-        <span {...stylex.props(styles.label)}>{trigger}</span>
+        <span {...stylex.props(styles.themeLabel)}>{trigger}</span>
         <span {...stylex.props(styles.mark, open && styles.chevronOpen)}>
           <Chevron />
         </span>

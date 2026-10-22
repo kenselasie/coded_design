@@ -25,12 +25,16 @@ const UseGuide = dynamic(
 );
 
 const NARROW = "@media (max-width: 980px)";
+const PHONE = "@media (max-width: 640px)";
 
 const styles = stylex.create({
   page: {
     display: "flex",
     flexDirection: "column",
     gap: "48px",
+    [PHONE]: {
+      gap: "36px",
+    },
   },
   bench: {
     display: "grid",
@@ -42,6 +46,9 @@ const styles = stylex.create({
       gridTemplateColumns: "1fr",
       rowGap: "28px",
     },
+    [PHONE]: {
+      rowGap: "20px",
+    },
   },
   left: {
     display: "flex",
@@ -50,11 +57,29 @@ const styles = stylex.create({
     gap: "16px",
     minWidth: 0,
     width: "100%",
+    [PHONE]: {
+      gap: "14px",
+    },
   },
   logoSlot: {
     display: "flex",
     alignItems: "center",
     minHeight: "83px",
+    [PHONE]: {
+      minHeight: 0,
+    },
+  },
+  logoDesktop: {
+    display: "block",
+    [PHONE]: {
+      display: "none",
+    },
+  },
+  logoPhone: {
+    display: "none",
+    [PHONE]: {
+      display: "block",
+    },
   },
   right: {
     display: "flex",
@@ -63,6 +88,9 @@ const styles = stylex.create({
     gap: "16px",
     minWidth: 0,
     width: "100%",
+    [PHONE]: {
+      gap: "12px",
+    },
   },
   lead: {
     margin: 0,
@@ -73,12 +101,18 @@ const styles = stylex.create({
     letterSpacing: "-0.025em",
     lineHeight: 1.15,
     maxWidth: "18ch",
+    [PHONE]: {
+      fontSize: font.xxl,
+      maxWidth: "none",
+      lineHeight: 1.2,
+    },
   },
   codedGuy: {
     color: colors.blue,
   },
   code: {
     width: "100%",
+    minWidth: 0,
   },
   agents: {
     display: "flex",
@@ -86,6 +120,8 @@ const styles = stylex.create({
     alignItems: "flex-start",
     gap: "12px",
     maxWidth: "72ch",
+    minWidth: 0,
+    width: "100%",
   },
 });
 
@@ -100,7 +136,12 @@ export function HomeLanding() {
       <div {...stylex.props(styles.bench)}>
         <div {...stylex.props(styles.left)}>
           <div {...stylex.props(styles.logoSlot)}>
-            <Logo wordmark size="lg" decorative />
+            <span {...stylex.props(styles.logoDesktop)}>
+              <Logo wordmark size="lg" decorative />
+            </span>
+            <span {...stylex.props(styles.logoPhone)}>
+              <Logo wordmark size="md" decorative />
+            </span>
           </div>
           <p {...stylex.props(styles.lead)}>
             Build your apps with a unique-looking design system from{" "}

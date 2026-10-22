@@ -15,6 +15,7 @@ const WorldGlobe = dynamic(
 );
 
 const NARROW = "@media (max-width: 980px)";
+const PHONE = "@media (max-width: 640px)";
 
 const styles = stylex.create({
   heading: {
@@ -24,6 +25,10 @@ const styles = stylex.create({
     minHeight: "83px",
     minWidth: 0,
     width: "100%",
+    [NARROW]: {
+      justifyContent: "flex-start",
+      minHeight: 0,
+    },
   },
   title: {
     margin: 0,
@@ -36,6 +41,15 @@ const styles = stylex.create({
     fontWeight: font.semibold,
     letterSpacing: "-0.03em",
     lineHeight: 1.1,
+    [NARROW]: {
+      textAlign: "left",
+      maxWidth: "none",
+      fontSize: font.xxl,
+    },
+    [PHONE]: {
+      fontSize: font.xl,
+      lineHeight: 1.2,
+    },
   },
   worlds: {
     color: colors.blue,
@@ -52,15 +66,23 @@ const styles = stylex.create({
     display: "flex",
     justifyContent: "center",
     width: "100%",
+    overflow: "visible",
     backgroundImage: `radial-gradient(ellipse 65% 55% at 50% 45%, color-mix(in srgb, ${colors.blueLight} 48%, transparent), transparent 72%)`,
+    [PHONE]: {
+      paddingInline: "4px",
+    },
   },
   globeWrap: {
     position: "relative",
     width: "100%",
     maxWidth: "min(100%, 34rem)",
     aspectRatio: "1",
+    marginInline: "auto",
     [NARROW]: {
-      maxWidth: "min(100%, 28rem)",
+      maxWidth: "min(92%, 22rem)",
+    },
+    [PHONE]: {
+      maxWidth: "min(88%, 17rem)",
     },
   },
   globeSlot: {

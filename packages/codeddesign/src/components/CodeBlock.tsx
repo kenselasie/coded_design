@@ -12,7 +12,10 @@ import { Icon } from "./Icon";
 const styles = stylex.create({
   block: {
     position: "relative",
-    overflow: "hidden",
+    overflowX: "auto",
+    overflowY: "hidden",
+    minWidth: 0,
+    maxWidth: "100%",
     borderRadius: radii.control,
     borderWidth: stroke.width,
     borderStyle: "solid",
@@ -84,6 +87,7 @@ const styles = stylex.create({
     maxWidth: "100%",
     whiteSpace: "pre-wrap",
     overflowWrap: "anywhere",
+    wordBreak: "break-word",
   },
 });
 
